@@ -1,0 +1,318 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=latex 2014.8.22)  12 OCT 2014 13:44
+entering extended mode
+ restricted \write18 enabled.
+ Source specials enabled.
+ %&-line parsing enabled.
+**document.tex
+(./document.tex
+LaTeX2e <2014/05/01>
+Babel <3.9k> and hyphenation patterns for 79 languages loaded.
+(/usr/local/texlive/2014/texmf-dist/tex/latex/seminar/seminar.cls
+Document Class: seminar 2014/01/17, 1.61
+Documentclass: `seminar' v1.61 <2014/01/17> (tvz,hv)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/pst-ovl/pst-ovl.sty
+Package: pst-ovl 2014/01/02 v0.01 LaTeX wrapper for `pst-ovl' (HV)
+File: pst-ovl.tex 2014/05/12 v0.06 overlay macros `pst-ovl' (HV)
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pst-ovl/pst-ovl.tex
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pstricks/pstricks.tex
+(/usr/local/texlive/2014/texmf-dist/tex/generic/xkeyval/pst-xkey.tex
+File: pst-xkey.tex 2005/11/25 v1.6 PSTricks specialization of xkeyval (HA)
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/05/25 v2.7 package option processing (HA)
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2014/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks14
+\XKV@tempa@toks=\toks15
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count79
+File: xkeyval.tex 2014/05/25 v2.7 key=value parser (HA)
+)))
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pstricks/pst-fp.tex
+`pst-fp' v0.05, 2010/01/17 (hv)
+\pstFP@xs=\count80
+\pstFP@xia=\count81
+\pstFP@xib=\count82
+\pstFP@xfa=\count83
+\pstFP@xfb=\count84
+\pstFP@rega=\count85
+\pstFP@regb=\count86
+\pstFP@regs=\count87
+\pstFP@times=\count88
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.te
+x
+\pgfutil@everybye=\toks16
+\pgfutil@tempdima=\dimen102
+\pgfutil@tempdimb=\dimen103
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-li
+sts.tex))
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks17
+\pgfkeys@temptoks=\toks18
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.c
+ode.tex
+\pgfkeys@tmptoks=\toks19
+))
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgf@x=\dimen104
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgf@xa=\dimen105
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgf@xb=\dimen106
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgf@xc=\dimen107
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgf@y=\dimen108
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgf@ya=\dimen109
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgf@yb=\dimen110
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgf@yc=\dimen111
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\c@pgf@counta=\count89
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\c@pgf@countb=\count90
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\c@pgf@countc=\count91
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\c@pgf@countd=\count92
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgfutil@tempcnta=\count93
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+\pgfutil@tempcntb=\count94
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen112
+\pgfmath@count=\count95
+\pgfmath@box=\box26
+\pgfmath@toks=\toks20
+\pgfmath@stack@operand=\toks21
+\pgfmath@stack@operation=\toks22
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.
+tex
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic
+.code.tex)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigo
+nometric.code.tex)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.rando
+m.code.tex)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.compa
+rison.code.tex)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.
+code.tex)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round
+.code.tex)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.
+code.tex)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integ
+erarithmetics.code.tex)))
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count96
+))
+\pgffor@iter=\dimen113
+\pgffor@skip=\dimen114
+\pgffor@stack=\toks23
+\pgffor@toks=\toks24
+)
+\psLoopIndex=\count97
+
+`PSTricks' v2.56  <2014/07/31> (tvz)
+\pst@dima=\dimen115
+\pst@dimb=\dimen116
+\pst@dimc=\dimen117
+\pst@dimd=\dimen118
+\pst@dimg=\dimen119
+\pst@dimh=\dimen120
+\pst@dimm=\dimen121
+\pst@dimn=\dimen122
+\pst@dimo=\dimen123
+\pst@dimp=\dimen124
+\pst@hbox=\box27
+\pst@ibox=\box28
+\pst@boxg=\box29
+\pst@cnta=\count98
+\pst@cntb=\count99
+\pst@cntc=\count100
+\pst@cntd=\count101
+\pst@cntg=\count102
+\pst@cnth=\count103
+\pst@cntm=\count104
+\pst@cntn=\count105
+\pst@cnto=\count106
+\pst@cntp=\count107
+\@zero=\count108
+\pst@toks=\toks25
+(/usr/local/texlive/2014/texmf-dist/tex/generic/pstricks/pstricks.con)
+\psunit=\dimen125
+\psxunit=\dimen126
+\psyunit=\dimen127
+\pst@C@@rType=\count109
+\pslinewidth=\dimen128
+\psk@startLW=\dimen129
+\psk@endLW=\dimen130
+\pst@customdefs=\toks26
+\pslinearc=\dimen131
+\pst@symbolStep=\dimen132
+\pst@symbolWidth=\dimen133
+\pst@symbolLinewidth=\dimen134
+\everypsbox=\toks27
+\psframesep=\dimen135
+\pslabelsep=\dimen136
+\sh@wgridXunit=\dimen137
+\sh@wgridYunit=\dimen138
+\pst@shift=\dimen139
+)
+`pst-ovl' v0.06, 2014/05/12 (tvz,hv)
+\theoverlaybox=\box30
+))
+\slidewidth=\dimen140
+\slideheight=\dimen141
+\footheight=\dimen142
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count110
+\c@section=\count111
+\c@subsection=\count112
+\c@subsubsection=\count113
+\c@paragraph=\count114
+\c@subparagraph=\count115
+\c@figure=\count116
+\c@table=\count117
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen143
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/seminar/sem-page.sty)
+\before@document=\toks28
+\after@document=\toks29
+\before@enddocument=\toks30
+\c@slide=\count118
+\slide@count=\count119
+\@slidebox=\box31
+\not@slidebox=\box32
+\slide@hook=\toks31
+\after@slide=\toks32
+\slide@footins=\insert233
+\slide@listdepth=\count120
+\saved@specials=\box33
+\before@newslide=\toks33
+\after@slidepage=\toks34
+\slidesep=\skip43
+\c@note=\count121
+\slideframewidth=\dimen144
+\slideframesep=\dimen145
+\semin=\dimen146
+\semcm=\dimen147
+)
+No file document.aux.
+\openout1 = `document.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 14.
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 14.
+ [1
+
+
+]
+
+*******************************************************
+***** !! PRINT THIS DOCUMENT IN LANDSCAPE MODE !! *****
+*******************************************************
+(./document.aux) ) 
+Here is how much of TeX's memory you used:
+ 7002 strings out of 493109
+ 129738 string characters out of 6134879
+ 175709 words of memory out of 5000000
+ 10451 multiletter control sequences out of 15000+600000
+ 3938 words of font info for 15 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 42i,6n,40p,490b,345s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on document.dvi (1 page, 876 bytes).

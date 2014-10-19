@@ -1,0 +1,48 @@
+\expandafter\ifx\csname doTocEntry\endcsname\relax \expandafter\endinput\fi 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-0}{}{\numberline {I}Introdu\IeC {\protect \c c}\IeC {\protect \~a}o}}{3}\relax 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-0}{}{\numberline {II}Classificador Linear}}{3}\relax 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-0}{}{\numberline {III}Perceptron}}{3}\relax 
+\doTocEntry\toclof{1}{\csname a:TocLink\endcsname{1}{x1-5r1}{}{\ignorespaces Modelo de um perceptron.}}{figure}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-1}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {III-A}\b:mbox }}Treinamento}}{7}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-1}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {III-B}\b:mbox }}Operador AND, OR e NOT}}{9}\relax 
+\doTocEntry\toclot{I}{\csname a:TocLink\endcsname{1}{x1-13r1}{}{\ignorespaces Tabela verdade do operador AND}}{table}\relax 
+\doTocEntry\toclof{2}{\csname a:TocLink\endcsname{1}{x1-14r2}{}{\ignorespaces Dados utilizados no treinamento. Em vermelho os valores onde o operador AND tem como resultado o valor 1 em fun\IeC {\c c}\IeC {\~a}o dos valores de X1 e X2}}{figure}\relax 
+\doTocEntry\toclof{3}{\csname a:TocLink\endcsname{1}{x1-15r3}{}{\ignorespaces Erro obtido durante cada \IeC {\'e}poca do treinamento do operador AND.}}{figure}\relax 
+\doTocEntry\toclof{4}{\csname a:TocLink\endcsname{1}{x1-16r4}{}{\ignorespaces Regi\IeC {\~a}o de decis\IeC {\~a}o calculada para a porta AND ap\IeC {\'o}s o treinamento. O fundo pontilhado indica a regi\IeC {\~a}o de decis\IeC {\~a}o. Em vermelho a regi\IeC {\~a}o em que as amostras s\IeC {\~a}o classificadas como 1. Os pontos de raio maior s\IeC {\~a}o os dados de treinamento.}}{figure}\relax 
+\doTocEntry\toclot{II}{\csname a:TocLink\endcsname{1}{x1-18r2}{}{\ignorespaces Tabela verdade do operador OR}}{table}\relax 
+\doTocEntry\toclof{5}{\csname a:TocLink\endcsname{1}{x1-19r5}{}{\ignorespaces Dados utilizados no treinamento. Em vermelho os valores onde o operador OR tem como resultado o valor 1 em fun\IeC {\c c}\IeC {\~a}o dos valores de X1 e X2}}{figure}\relax 
+\doTocEntry\toclof{6}{\csname a:TocLink\endcsname{1}{x1-20r6}{}{\ignorespaces Erro obtido durante cada \IeC {\'e}poca do treinamento}}{figure}\relax 
+\doTocEntry\toclof{7}{\csname a:TocLink\endcsname{1}{x1-21r7}{}{\ignorespaces Regi\IeC {\~a}o de decis\IeC {\~a}o calculada para a porta OR ap\IeC {\'o}s o treinamento. O fundo pontilhado indica a regi\IeC {\~a}o de decis\IeC {\~a}o. Em vermelho a regi\IeC {\~a}o em que as amostras s\IeC {\~a}o classificadas como 1. Os pontos de raio maior s\IeC {\~a}o os dados de treinamento.}}{figure}\relax 
+\doTocEntry\toclot{III}{\csname a:TocLink\endcsname{1}{x1-23r3}{}{\ignorespaces Tabela verdade do operador NOT}}{table}\relax 
+\doTocEntry\toclof{8}{\csname a:TocLink\endcsname{1}{x1-24r8}{}{\ignorespaces Dados utilizados no treinamento. Em vermelho os valores onde o operador NOT tem como resultado o valor 1 em fun\IeC {\c c}\IeC {\~a}o do valor X}}{figure}\relax 
+\doTocEntry\toclof{9}{\csname a:TocLink\endcsname{1}{x1-25r9}{}{\ignorespaces Erro obtido durante cada \IeC {\'e}poca do treinamento}}{figure}\relax 
+\doTocEntry\toclof{10}{\csname a:TocLink\endcsname{1}{x1-26r10}{}{\ignorespaces Regi\IeC {\~a}o de decis\IeC {\~a}o calculada para a porta NOT ap\IeC {\'o}s o treinamento. O fundo pontilhado indica a regi\IeC {\~a}o de decis\IeC {\~a}o. Em vermelho a regi\IeC {\~a}o em que as amostras s\IeC {\~a}o classificadas como 1. Os pontos de raio maior s\IeC {\~a}o os dados de treinamento.}}{figure}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-13}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {III-C}\b:mbox }}Setosa vs Outras}}{45}\relax 
+\doTocEntry\toclof{11}{\csname a:TocLink\endcsname{1}{x1-28r11}{}{\ignorespaces Largura da p\IeC {\'e}tala e s\IeC {\'e}pala da \IeC {\'\i }ris. Cada esp\IeC {\'e}cie \IeC {\'e} representada por uma cor. Em azul temos a \IeC {\'I}ris Setosa, em vermelho \IeC {\'I}ris Versicolor e verde a \IeC {\'I}ris Virg\IeC {\'\i }nica.}}{figure}\relax 
+\doTocEntry\toclof{12}{\csname a:TocLink\endcsname{1}{x1-29r12}{}{\ignorespaces Regi\IeC {\~a}o de decis\IeC {\~a}o calculada para a classe setosa. No eixo vertical temos o comprimento da s\IeC {\'e}pala e no eixo horizontal a largura da s\IeC {\'e}pala.}}{figure}\relax 
+\doTocEntry\toclot{IV}{\csname a:TocLink\endcsname{1}{x1-30r4}{}{\ignorespaces Resultado da acur\IeC {\'a}cia utilizando 20\% dos dados para treinamento}}{table}\relax 
+\doTocEntry\toclot{V}{\csname a:TocLink\endcsname{1}{x1-31r5}{}{\ignorespaces Resultado da acur\IeC {\'a}cia utilizando 50\% dos dados para treinamento}}{table}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-17}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {III-D}\b:mbox }}Adaline}}{57}\relax 
+\doTocEntry\toclof{13}{\csname a:TocLink\endcsname{1}{x1-33r13}{}{\ignorespaces Dados utilizados para o treinamento do Adaline.}}{figure}\relax 
+\doTocEntry\toclof{14}{\csname a:TocLink\endcsname{1}{x1-34r14}{}{\ignorespaces Erro m\IeC {\'e}dio quadr\IeC {\'a}tico gerado durante o treinamento do Adaline.}}{figure}\relax 
+\doTocEntry\toclof{15}{\csname a:TocLink\endcsname{1}{x1-35r15}{}{\ignorespaces Resultado ap\IeC {\'o}s o treinamento. Em vermelho temos a reta aproximada aos dados.}}{figure}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-20}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {III-E}\b:mbox }}Setosa vs Virg\IeC {\protect \'\i }nica vs Versicolor}}{66}\relax 
+\doTocEntry\toclot{VI}{\csname a:TocLink\endcsname{1}{x1-37r6}{}{\ignorespaces Mapeamento da sa\IeC {\'\i }da de acordo com a classe da \IeC {\'I}ris.}}{table}\relax 
+\doTocEntry\toclof{16}{\csname a:TocLink\endcsname{1}{x1-38r16}{}{\ignorespaces Perceptrons utilizados para realizar a classifica\IeC {\c c}\IeC {\~a}o das esp\IeC {\'e}cies de \IeC {\'I}ris. O perceptron P1, P2 e P3 classificam a esp\IeC {\'e}cie setosa, virg\IeC {\'\i }nica e versicolor respectivamente.}}{figure}\relax 
+\doTocEntry\toclof{17}{\csname a:TocLink\endcsname{1}{x1-39r17}{}{\ignorespaces Em vermelho o erro m\IeC {\'e}dio quadr\IeC {\'a}tico obtido durante o treinamento para o perceptron da classe Setosa, em azul e verde as classes versicolor e vig\IeC {\'\i }nica respectivamente.}}{figure}\relax 
+\doTocEntry\toclot{VII}{\csname a:TocLink\endcsname{1}{x1-40r7}{}{\ignorespaces Resultado da acur\IeC {\'a}cia utilizando 20\% dos dados para treinamento das 3 classes de \IeC {\'I}ris}}{table}\relax 
+\doTocEntry\toclot{VIII}{\csname a:TocLink\endcsname{1}{x1-41r8}{}{\ignorespaces Resultado da acur\IeC {\'a}cia utilizando 50\% dos dados para treinamento das 3 classes de \IeC {\'I}ris}}{table}\relax 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-25}{}{\numberline {IV}Conclus\IeC {\protect \~a}o}}{81}\relax 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-25}{}{\numberline {V}Ap\IeC {\protect \^e}ndice}}{82}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-25}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {V-A}\b:mbox }}Gera Base de Treinamento}}{82}\relax 
+\doTocEntry\toclol{}{\csname a:TocLink\endcsname{1}{x1-45}{}{code/perceptron/geraBD.m}}{82}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-26}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {V-B}\b:mbox }}Carrega Dataset}}{82}\relax 
+\doTocEntry\toclol{}{\csname a:TocLink\endcsname{1}{x1-71}{}{code/mlp/carregaDados.m}}{82}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-27}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {V-C}\b:mbox }}Caracter\IeC {\protect \'\i }sticas Combinadas para o DataSet da \IeC {\protect \'I}ris}}{82}\relax 
+\doTocEntry\toclof{19}{\csname a:TocLink\endcsname{1}{x1-108r19}{}{\ignorespaces Caract\IeC {\'e}risticas do DataSet da \IeC {\'I}ris combinados}}{figure}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-28}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {V-D}\b:mbox }}Implementa\IeC {\protect \c c}\IeC {\protect \~a}o do Perceptron}}{86}\relax 
+\doTocEntry\toclol{}{\csname a:TocLink\endcsname{1}{x1-110}{}{code/perceptron/perceptron.m}}{86}\relax 
+\doTocEntry\tocsubsection{}{\csname a:TocLink\endcsname{1}{Q1-1-29}{}{\numberline {\unhbox \voidb@x \hbox {\a:mbox {V-E}\b:mbox }}Exemplo de utiliza\IeC {\protect \c c}\IeC {\protect \~a}o do Perceptron}}{86}\relax 
+\doTocEntry\toclol{}{\csname a:TocLink\endcsname{1}{x1-165}{}{code/perceptron/testPerceptron.m}}{86}\relax 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-30}{}{Refer\^encias}}{86}\relax 
+\par 

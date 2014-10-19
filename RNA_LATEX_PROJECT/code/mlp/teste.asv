@@ -1,0 +1,39 @@
+clc; clear all; close all;
+%% Parâmetros
+%1-setosa
+%2-versicolor
+%3-virgínica
+
+%modo 
+%. 
+%     Escolha 1 para classificar entre setosa e outras
+%     Escolha 2 para classificar entre versicolor e outras
+%     Escolha 3 para classificar entre virgínica e outras
+%     Escolha 4 para classificar as 3 entre si
+
+modo = 1;
+%%
+
+
+
+%Normalizando e adicionado o bias ao X.
+mx = mean(x);
+sx = std(x);
+nx = (x - repmat(mx,m,1)) ./ repmat(sx,m,1);
+nx = [ -1 * ones(m,1) nx]; 
+
+%Treinando a Rede
+[W err] = mlpTreina(nx , y, 0.01,1000);
+
+
+%Plotando o Erro
+figure;
+plot(err);
+
+%Avaliando o erro para os próprios dados de treinamento
+y = mlpAvalia(nx , W)';
+
+figure;
+mostraRegiaoDecisao(W,-1,1)
+mostraResultado2( nx,y,xLabelNames,50);
+

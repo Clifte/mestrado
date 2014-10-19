@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Sun Oct 12 14:58:12 BRT 2014
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=Trabalho 2 PDI.tex
+outputFile=Trabalho 2 PDI.pdf
+langSpell=pt
+markDer=true
+srcDir=

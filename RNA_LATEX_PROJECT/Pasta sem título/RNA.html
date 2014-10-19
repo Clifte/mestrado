@@ -1,0 +1,3502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html xml:lang="pt" > 
+<head><title></title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)"> 
+<!-- html --> 
+<meta name="src" content="RNA.tex"> 
+<meta name="date" content="2014-09-26 17:48:00"> 
+<link rel="stylesheet" type="text/css" href="RNA.css"> 
+</head><body 
+>
+<!--l. 89--><p class="noindent" >
+                                                                                                  
+                                                                                                  
+<!--l. 89--><p class="indent" >
+                                                                                                  
+                                                                                                  
+<!--l. 89--><p class="noindent" ><span 
+class="ptmr8t-x-x-240">Relat</span><span 
+class="ptmr8t-x-x-240">ório de Atividade - Redes Neurais Artificiais</span>
+<!--l. 89--><p class="noindent" ><span 
+class="ptmr8t-x-x-140">David Clifte,</span><span 
+class="ptmr8t-x-x-140">&#x00A0;</span><span 
+class="ptmri8t-x-x-140">Mestrando em Ci</span><span 
+class="ptmri8t-x-x-140">ências da Computa</span><span 
+class="ptmri8t-x-x-140">ç</span><span 
+class="ptmri8t-x-x-140">ão,</span><span 
+class="ptmri8t-x-x-140">&#x00A0;IFCE,</span>
+<a 
+ id="x1-2r1"></a>
+<!--l. 103--><p class="noindent" ><span 
+class="ptmrc8t-x-x-120">I.  I<span 
+class="small-caps">N</span><span 
+class="small-caps">T</span><span 
+class="small-caps">R</span><span 
+class="small-caps">O</span><span 
+class="small-caps">D</span><span 
+class="small-caps">U</span></span><span 
+class="ptmrc8t-x-x-120">ç</span><span 
+class="ptmrc8t-x-x-120">ã<span 
+class="small-caps">O</span></span>
+<a 
+ id="Q1-1-0"></a>
+     <!--l. 119--><p class="noindent" ><span 
+class="ptmb8t-x-x-335">N</span>ESTE trabalho é apresentado o resultado da implementação do Perceptron e do Adaline no Matlab.
+     Inicialmente é apresentado o Classificador Linear, base do funcionamento para o Perceptron e o Adaline e
+então é apresentado os métodos e resultados do trabalho.
+<!--l. 124--><p class="indent" >                                                                                      Setembro 21,
+2014
+<!--l. 127--><p class="indent" >
+<a 
+ id="x1-3r2"></a>
+<!--l. 127--><p class="noindent" ><span 
+class="ptmrc8t-x-x-120">II.  C<span 
+class="small-caps">L</span><span 
+class="small-caps">A</span><span 
+class="small-caps">S</span><span 
+class="small-caps">S</span><span 
+class="small-caps">I</span><span 
+class="small-caps">fi</span><span 
+class="small-caps">C</span><span 
+class="small-caps">A</span><span 
+class="small-caps">D</span><span 
+class="small-caps">O</span><span 
+class="small-caps">R</span> L<span 
+class="small-caps">I</span><span 
+class="small-caps">N</span><span 
+class="small-caps">E</span><span 
+class="small-caps">A</span><span 
+class="small-caps">R</span></span>
+<a 
+ id="Q1-1-0"></a>
+<!--l. 128--><p class="indent" >  Um classificador linear é capaz de dividir duas classes através de uma, reta, plano ou hiperplano, dependendo
+do número de dimensões das características. Isso é feito através do valor obtido da combinação linear das
+características. Dependendo do valor escalar obtido dessa combinação é feita a decisão de qual classe pertence o
+vetor de características ou vetor de entradas.
+<!--l. 134--><p class="indent" >  Uma combinação linear é o resultado do produto de cada termo de um vetor por uma constante e os
+resultados são então somados. Como exemplo temos a combinação linear de <span 
+class="cmmi-12">a </span><span 
+class="cmsy-10x-x-120">&#x00D7;</span><img 
+src="RNA0x.png" alt="-&#x2192;x"  class="mathpalette" > <span 
+class="cmr-12">+ </span><span 
+class="cmmi-12">b </span><span 
+class="cmsy-10x-x-120">&#x00D7;</span><img 
+src="RNA1x.png" alt="-&#x2192;y"  class="mathpalette" > onde a e b são
+constantes e <img 
+src="RNA2x.png" alt="-&#x2192;x"  class="mathpalette" > e <img 
+src="RNA3x.png" alt="-&#x2192;y"  class="mathpalette" > vetores pertencentes ao mesmo espaço vetorial.
+  Podemos ainda generalizar combinação linear como um produto de matrizes. Dada uma matriz <span 
+class="ptmb8t-x-x-120">A </span>onde cada
+coluna é um vetor que será combinado. Seja <span 
+class="ptmb8t-x-x-120">C </span>uma matriz com os coeficientes. A combinação linear pode ser
+representada como: <br 
+class="newline" />
+<!--l. 146--><p class="indent" >  <span 
+class="cmmi-12">A </span><span 
+class="cmsy-10x-x-120">&#x00D7;</span><span 
+class="cmmi-12">B </span><span 
+class="cmr-12">= </span><img 
+src="RNA4x.png" alt="&#x230A;               &#x230B;
+  a11  a1..  a1n
+|&#x2308; a..1  a....  a....|&#x2309;
+ am1   am.. amn"  class="left" align="middle"> <span 
+class="cmsy-10x-x-120">&#x00D7;</span><img 
+src="RNA5x.png" alt="&#x230A;  &#x230B;
+ c1
+|&#x2308;c..|&#x2309;
+ cn"  class="left" align="middle"> <span 
+class="cmr-12">= </span><span 
+class="cmmi-12">c</span><sub><span 
+class="cmr-8">1</span></sub> <span 
+class="cmsy-10x-x-120">&#x00D7;</span><img 
+src="RNA6x.png" alt="&#x230A; a11&#x230B;
+| a  |
+&#x2308;  ..1&#x2309;
+  am1"  class="left" align="middle"> <span 
+class="cmr-12">+ </span><span 
+class="cmmi-12">c</span><sub>
+<span 
+class="cmmi-8">..</span></sub> <span 
+class="cmsy-10x-x-120">&#x00D7;</span><img 
+src="RNA7x.png" alt="&#x230A;a1..&#x230B;
+|a  |
+&#x2308; ....&#x2309;
+ am.."  class="left" align="middle"> <span 
+class="cmr-12">+ </span><span 
+class="cmmi-12">... </span><span 
+class="cmr-12">+ </span><span 
+class="cmmi-12">c</span><sub>
+<span 
+class="cmmi-8">n</span></sub> <span 
+class="cmsy-10x-x-120">&#x00D7;</span><img 
+src="RNA8x.png" alt="&#x230A;a1n &#x230B;
+|a   |
+&#x2308; ....&#x2309;
+ amn"  class="left" align="middle"> <br 
+class="newline" />A saída obtida por um classificador linear pode ser obtida através da seguinte equação. <span 
+class="cmmi-12">y </span><span 
+class="cmr-12">= </span><span 
+class="cmmi-12">f</span><span 
+class="cmr-12">(</span><img 
+src="RNA9x.png" alt="-&#x2192;w"  class="mathpalette" ><span 
+class="cmsy-10x-x-120">&#x22C5;</span><img 
+src="RNA10x.png" alt="-&#x2192;x"  class="mathpalette" ><span 
+class="cmr-12">) = </span><span 
+class="cmmi-12">f</span><img 
+src="RNA11x.png" alt=" (&#x2211;       )
+    j wjxj"  class="left" align="middle">,
+onde <img 
+src="RNA12x.png" alt="-&#x2192;
+ w"  class="mathpalette" > é um vetor com valores reais que representam os coeficientes da combinação linear, geralmente
+chamado de pesos do classificador, <img 
+src="RNA13x.png" alt="-&#x2192;x"  class="mathpalette" > o vetor de características que será avaliado e y o valor escalar resultante
+da combinação linear.
+<a 
+ id="x1-4r3"></a>
+<!--l. 177--><p class="noindent" ><span 
+class="ptmrc8t-x-x-120">III.  P<span 
+class="small-caps">E</span><span 
+class="small-caps">R</span><span 
+class="small-caps">C</span><span 
+class="small-caps">E</span><span 
+class="small-caps">P</span><span 
+class="small-caps">T</span><span 
+class="small-caps">R</span><span 
+class="small-caps">O</span><span 
+class="small-caps">N</span></span>
+<a 
+ id="Q1-1-0"></a>
+<!--l. 178--><p class="indent" >  Um perceptron é um classificador linear. Se dois conjuntos de pontos podem ser separados linearmente
+pode-se utilizar o perceptron para fazer a classificação, para tanto é necessário ajustar os pesos para as
+sinapses.
+                                                                                                  
+                                                                                                  
+<!--l. 182--><p class="indent" >  O perceptron tem duas limitações. Primeiro, os valores de saída do perceptron podem assumir somente dois
+valores (Verdadeiro ou Falso). Segundo, perceptrons somente podem classificar grupos de vetores linearmente
+separados, como dito anteriormente. Para realizar a classificação de mais de uma classe é necessário um número
+maior de perceptrons, entretanto ainda sim as classes devem ser linearmente separáveis.Na figura <a 
+href="#x1-5r1">1<!--tex4ht:ref: fig:perceptron --></a> temos a
+representação de um perceptron. De forma geral, nos neurônios artificiais os seguintes elementos estão
+envolvidos:
+<!--l. 192--><p class="indent" >  Conjunto de sinapses (W): Ligações entre neurônios. Cada ligação possui um valor (peso), que representa a
+sua força: os estímulos de entrada são multiplicados pelos repectivos pesos de cada ligação, podendo gerar um
+sinal tanto positivo (exitatório) quanto negativo (inibitório).
+<!--l. 197--><p class="indent" >  Combinador Linear(): Executa o somatório dos sinais produzidos pelo produto entre os pesos sinápticos e
+as entradas fornecidas ao neurônio. Em outras palavras, é o integrador dos sinais que chegam ao
+neurônio.
+<!--l. 201--><p class="indent" >  Como pode ser observado o vetor de entrada <span 
+class="ptmri8t-x-x-120">in(t) </span>possui os seguintes valores (x1, x2, ..., xn). (w1, w2, ..., wn)
+representam o respectivo valor do peso do vetor de entrada.
+<!--l. 206--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+
+<!--l. 208--><p class="noindent" ><img 
+src="images/perceptron.png" alt="PIC"  
+> <a 
+ id="x1-5r1"></a>
+Figura&#x00A0;1: Modelo de um perceptron.
+                                                                                                  
+                                                                                                  
+<!--l. 211--><p class="indent" >  </div><hr class="endfigure">
+<a 
+ id="x1-6r1"></a>
+<!--l. 215--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">A.  Treinamento</span>
+<a 
+ id="Q1-1-1"></a>
+<!--l. 216--><p class="indent" >  O algoritmo de aprendizagem é um método adaptativo em que o perceptron faz os ajustes necessários nos
+pesos para se adequar a saída desejada. Isso é feito através da apresentação repetida das <span 
+class="cmmi-12">n </span>amostras de
+treinamento e da correção dos pesos para cada amostra. A correção é feita até que o erro das amostras de
+treinamentos seja minimizado. O vetor de entrada é combinado com os pesos e o resultado, um escalar, é
+avaliado por uma função degral.
+<!--l. 224--><p class="indent" >  Durante a fase de treinamento o perceptron é acionado por um vetor de entradas <img 
+src="RNA14x.png" alt="-&#x2192;
+ x"  class="mathpalette" ><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">) </span>onde <span 
+class="cmmi-12">n </span>representa a
+amostra apresentada ao perceptron. O sinal de saída <span 
+class="cmmi-12">y</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">) </span>é calculado pelo perceptron e então comparado com a
+saída desejada <span 
+class="cmmi-12">d</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">)</span>. Com isso o erro <span 
+class="cmmi-12">e</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">) </span>é para o perceptron é produzido.
+<table 
+class="align">
+                                        <tr><td 
+class="align-odd"><span 
+class="cmmi-12">e</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">) = </span><span 
+class="cmmi-12">d</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">) </span><span 
+class="cmsy-10x-x-120">-</span><span 
+class="cmmi-12">y</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">)</span></td>                                        <td 
+class="align-even"></td>                                        <td 
+class="align-label"><a 
+ id="x1-7r1"></a>(1)                                        </td></tr></table>
+O <span 
+class="cmmi-12">e</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">) </span>é utilizado para fazer a correção dos pesos utilizados pelo perceptron. Isso é feito atravéz da
+minimização da função de custo, definida em função do erro como:
+<table 
+class="align">
+                                          <tr><td 
+class="align-odd"><span 
+class="cmmi-12">&#x03F5;</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">) =</span> <img 
+src="RNA15x.png" alt="1-
+2"  class="frac" align="middle"><span 
+class="cmmi-12">e</span><sup><span 
+class="cmr-8">2</span></sup><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">)</span></td>                                          <td 
+class="align-even"></td>                                          <td 
+class="align-label"><a 
+ id="x1-8r2"></a>(2)                                          </td></tr></table>
+                                                                                                  
+                                                                                                  
+  O ajuste no peso é feito atravéz da regra delta, definida por Widrow-Hoff. Na regra é realizado o ajuste dos
+pesos sinápticos <span 
+class="cmmi-12">w</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">i</span><span 
+class="cmr-12">)</span>, onde <span 
+class="cmmi-12">i </span>representa o peso do neurônio assiciado a entrada <span 
+class="cmmi-12">x</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">i</span><span 
+class="cmr-12">)</span>.
+<table 
+class="align">
+                                         <tr><td 
+class="align-odd"><span 
+class="cmr-12">&#x0394;</span><span 
+class="cmmi-12">W </span><span 
+class="cmr-12">= </span><span 
+class="cmmi-12">&#x03B7;e</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">)</span><span 
+class="cmmi-12">x</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">n</span><span 
+class="cmr-12">)</span></td>                                         <td 
+class="align-even"></td>                                         <td 
+class="align-label"><a 
+ id="x1-9r3"></a>(3)                                         </td></tr></table>
+<!--l. 245--><p class="indent" >  O ajuste feito em um peso sináptico de um perceptron é proporcional ao produto do sinal de erro pelo sinal de
+entrada da sinapse em questão. De acordo com o valor do peso da conexão podemos verificar se ela é do tipo
+inibitória ou excitatória. Caso o valor do peso seja maior que zero a conexão é dita excitatória, caso contrário,
+inibitória.
+<!--l. 251--><p class="indent" >  Afim de simplificar os cálculos, é comum fazer a adição do bias ao vetor de pesos e ao vetor de
+entrada. Essa versão adicionada de bias é comumente chamada de versão extendida da entrada e dos
+pesos.<br 
+class="newline" />Tendo como base a figura <a 
+href="#x1-5r1">1<!--tex4ht:ref: fig:perceptron --></a> temos: <span 
+class="cmmi-12">x </span>é o vetor de entrada, <span 
+class="cmmi-12">w </span>é o vetor de pesos, <span 
+class="cmmi-12">&#x03B8; </span>é o bias e y
+é a saída calculada em função dos pesos e da entrada. A saída é calculada usando a seguinte
+equação:
+<!--l. 259--><p class="indent" >
+<table 
+class="align">
+                                        <tr><td 
+class="align-odd"><span 
+class="cmmi-12">y </span><span 
+class="cmr-12">= </span><span 
+class="cmmi-12">f</span><span 
+class="cmr-12">(</span><span 
+class="cmex-10">&#x2211;</span>
+  <sub><span 
+class="cmmi-8">j</span><span 
+class="cmr-8">=1</span></sub><sup><span 
+class="cmmi-8">n</span></sup><span 
+class="cmmi-12">x</span><sub>
+<span 
+class="cmmi-8">j</span></sub><span 
+class="cmmi-12">w</span><sub><span 
+class="cmmi-8">j</span></sub> <span 
+class="cmr-12">+ </span><span 
+class="cmmi-12">&#x03B8;</span><span 
+class="cmr-12">)</span></td>                                        <td 
+class="align-even"></td>                                        <td 
+class="align-label"><a 
+ id="x1-10r4"></a>(4)                                        </td></tr></table>
+                                                                                                  
+                                                                                                  
+<!--l. 263--><p class="indent" >  Onde <span 
+class="cmmi-12">n </span>é o número de entradas, <span 
+class="cmmi-12">f</span><span 
+class="cmr-12">(</span><img 
+src="RNA16x.png" alt="-&#x2192;w"  class="mathpalette" ><sup><span 
+class="cmmi-8">T</span> </sup> <span 
+class="cmsy-10x-x-120">&#x22C5;</span><img 
+src="RNA17x.png" alt="-&#x2192;x"  class="mathpalette" ><span 
+class="cmr-12">) </span>é a função de ativação aplicada na saída calculada,
+no perceptron é uma função degral. Como dito anteriormente é comum adicionar o bias ao vetor
+de entrada e ao vetor de pesos. O valor adicionado ao bias de entrada neste trabalho foi 1. Com
+a versão extendida da entrada e dos pesos o calculo realizado é apenas um produto de matrizes
+<span 
+class="cmmi-12">y </span><span 
+class="cmr-12">= </span><img 
+src="RNA18x.png" alt="-&#x2192;w"  class="mathpalette" ><sup><span 
+class="cmmi-8">T</span> </sup> <span 
+class="cmsy-10x-x-120">&#x22C5;</span><img 
+src="RNA19x.png" alt="-&#x2192;x"  class="mathpalette" >.
+<a 
+ id="x1-11r2"></a>
+<!--l. 271--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">B.  Operador AND, OR e NOT</span>
+<a 
+ id="Q1-1-1"></a>
+<!--l. 272--><p class="indent" >  A base de dados foi criada para os operadores AND, OR e NOT de forma programática. Dado um conjunto de
+dados gerados aleatóriamente, os valores das saídas foram calculados de acordo com o operador desejado. Os
+detalhes para a contrução da base podem ser verificados na sessão <a 
+href="#x1-44r1"> mbox V-A<img 
+src="RNA20x.png" alt=" :
+¯   "  class="b" >mbox <!--tex4ht:ref: subsec:geraBase --></a> localizada no
+Apêndice.
+<!--l. 285--><p class="indent" >
+<a 
+ id="x1-12r1"></a>
+<!--l. 286--><p class="indent" >  Nesta sessão são exibido os resultados obtidos para o operador lógico AND. A tabela verdade do operador
+AND pode ser visualizada na tabela <a 
+href="#x1-13r1">I<!--tex4ht:ref: tab:verd_AND --></a>; Os dados utilizados no treinamento estão expressos na figura
+<a 
+href="#x1-14r2">2<!--tex4ht:ref: fig:AND_dados --></a>.
+                                                                                                  
+                                                                                                  
+<!--l. 292--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-13r1"></a>
+Tabela&#x00A0;I: Tabela verdade do operador AND
+<div class="tabular"> <table id="TBL-1" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-1-1g"><col 
+id="TBL-1-1"></colgroup><colgroup id="TBL-1-2g"><col 
+id="TBL-1-2"></colgroup><colgroup id="TBL-1-3g"><col 
+id="TBL-1-3"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-1"  
+class="td11"> <span 
+class="cmmi-12">x</span><sub><span 
+class="cmr-8">1</span></sub>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-2"  
+class="td11"> <span 
+class="cmmi-12">x</span><sub><span 
+class="cmr-8">2</span></sub>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-3"  
+class="td11"> <span 
+class="cmmi-12">y </span></td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-1"  
+class="td11">  0    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-2"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-3"  
+class="td11"> 0  </td></tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-1"  
+class="td11"> 0 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-2"  
+class="td11"> 1 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-3"  
+class="td11"> 0</td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-1"  
+class="td11">  1    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-2"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-3"  
+class="td11"> 0  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-1"  
+class="td11">  1    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-2"  
+class="td11"> 1   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-3"  
+class="td11"> 1  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-1"  
+class="td11">    </td></tr></table></div>
+                                                                                                  
+                                                                                                  
+  </div><hr class="endfloat" />
+<!--l. 308--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 311--><p class="noindent" ><img 
+src="RNA21x.png" alt="PIC" class="graphics" width="284.52756pt" height="139.40044pt" ><!--tex4ht:graphics  
+name="RNA21x.png" src="eps/and/ANDDesired.eps"  
+--> <a 
+ id="x1-14r2"></a>
+Figura&#x00A0;2:  Dados  utilizados  no  treinamento.  Em  vermelho  os  valores  onde  o  operador  AND  tem  como
+resultado o valor 1 em função dos valores de X1 e X2
+                                                                                                  
+                                                                                                  
+<!--l. 315--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 317--><p class="indent" >  A seguir, figura <a 
+href="#x1-15r3">3<!--tex4ht:ref: fig:AND_err --></a>, é exibido o erro quadrático médio obtido durante o treinamento. É exibido
+também o erro global, percentual de acerto da época durante o treinamento usando as amostras de
+treinamento.
+<!--l. 322--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 325--><p class="noindent" ><img 
+src="RNA22x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.30438pt" ><!--tex4ht:graphics  
+name="RNA22x.png" src="eps/and/andErr.eps"  
+--> <a 
+ id="x1-15r3"></a>
+Figura&#x00A0;3: Erro obtido durante cada época do treinamento do operador AND.
+                                                                                                  
+                                                                                                  
+<!--l. 328--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 330--><p class="indent" >  Após o treinamento é possível calcular a região de decisão traçada pelo perceptron, figura <a 
+href="#x1-16r4">4<!--tex4ht:ref: fig:andReg --></a>.
+<!--l. 333--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 336--><p class="noindent" ><img 
+src="RNA23x.png" alt="PIC" class="graphics" width="284.52756pt" height="178.47716pt" ><!--tex4ht:graphics  
+name="RNA23x.png" src="eps/and/ANDRegiao.eps"  
+--> <a 
+ id="x1-16r4"></a>
+Figura&#x00A0;4: Região de decisão calculada para a porta AND após o treinamento. O fundo pontilhado indica
+a região de decisão. Em vermelho a região em que as amostras são classificadas como 1. Os pontos de
+raio maior são os dados de treinamento.
+                                                                                                  
+                                                                                                  
+<!--l. 342--><p class="indent" >  </div><hr class="endfigure">
+<a 
+ id="x1-17r2"></a>
+<!--l. 345--><p class="indent" >  Nesta sessão são exibido os resultados obtidos para o operador lógico OR. A tabela verdade do operador OR
+pode ser visualizada na tabela <a 
+href="#x1-18r2">II<!--tex4ht:ref: tab:verd_OR --></a>; Os dados utilizados no treinamento estão expressos na figura
+<a 
+href="#x1-19r5">5<!--tex4ht:ref: fig:OR_dados --></a>.
+                                                                                                  
+                                                                                                  
+<!--l. 350--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-18r2"></a>
+Tabela&#x00A0;II: Tabela verdade do operador OR
+<div class="tabular"> <table id="TBL-2" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-2-1g"><col 
+id="TBL-2-1"></colgroup><colgroup id="TBL-2-2g"><col 
+id="TBL-2-2"></colgroup><colgroup id="TBL-2-3g"><col 
+id="TBL-2-3"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-1"  
+class="td11"> <span 
+class="cmmi-12">x</span><sub><span 
+class="cmr-8">1</span></sub>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-2"  
+class="td11"> <span 
+class="cmmi-12">x</span><sub><span 
+class="cmr-8">2</span></sub>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-3"  
+class="td11"> <span 
+class="cmmi-12">y </span></td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-1"  
+class="td11">  0    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-2"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-3"  
+class="td11"> 0  </td></tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-1"  
+class="td11"> 0 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-2"  
+class="td11"> 1 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-3"  
+class="td11"> 1</td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-1"  
+class="td11">  1    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-2"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-3"  
+class="td11"> 1  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-1"  
+class="td11">  1    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-2"  
+class="td11"> 1   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-3"  
+class="td11"> 1  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-1"  
+class="td11">    </td></tr></table></div>
+                                                                                                  
+                                                                                                  
+  </div><hr class="endfloat" />
+<!--l. 367--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 370--><p class="noindent" ><img 
+src="RNA24x.png" alt="PIC" class="graphics" width="284.52756pt" height="139.40044pt" ><!--tex4ht:graphics  
+name="RNA24x.png" src="eps/or/ORDesired.eps"  
+--> <a 
+ id="x1-19r5"></a>
+Figura&#x00A0;5:  Dados  utilizados  no  treinamento.  Em  vermelho  os  valores  onde  o  operador  OR  tem  como
+resultado o valor 1 em função dos valores de X1 e X2
+                                                                                                  
+                                                                                                  
+<!--l. 374--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 376--><p class="indent" >  A seguir, figura <a 
+href="#x1-20r6">6<!--tex4ht:ref: fig:OR_err --></a> é exibido o erro quadrático médio obtido durante o treinamento. É exibido também o erro
+global, percentual de acerto da época durante o treinamento usando as amostras de treinamento.
+<hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 383--><p class="noindent" ><img 
+src="RNA25x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.30438pt" ><!--tex4ht:graphics  
+name="RNA25x.png" src="eps/or/orErr.eps"  
+--> <a 
+ id="x1-20r6"></a>
+Figura&#x00A0;6: Erro obtido durante cada época do treinamento
+                                                                                                  
+                                                                                                  
+<!--l. 386--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 388--><p class="indent" >  Após o treinamento é possível calcular a região de decisão traçada pelo perceptron, figura <a 
+href="#x1-21r7">7<!--tex4ht:ref: fig:ORReg --></a>.
+<!--l. 391--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 394--><p class="noindent" ><img 
+src="RNA26x.png" alt="PIC" class="graphics" width="284.52756pt" height="178.47716pt" ><!--tex4ht:graphics  
+name="RNA26x.png" src="eps/or/ORRegiao.eps"  
+--> <a 
+ id="x1-21r7"></a>
+Figura&#x00A0;7:  Região  de  decisão  calculada  para  a  porta  OR  após  o  treinamento.  O  fundo  pontilhado  indica
+a região de decisão. Em vermelho a região em que as amostras são classificadas como 1. Os pontos de
+raio maior são os dados de treinamento.
+                                                                                                  
+                                                                                                  
+<!--l. 400--><p class="indent" >  </div><hr class="endfigure">
+<a 
+ id="x1-22r3"></a>
+<!--l. 404--><p class="indent" >  Nesta sessão são exibido os resultados obtidos para o operador lógico NOT. A tabela verdade do operador
+NOT pode ser visualizada na tabela <a 
+href="#x1-23r3">III<!--tex4ht:ref: tab:verd_NOT --></a>; Os dados utilizados no treinamento estão expressos na figura
+<a 
+href="#x1-24r8">8<!--tex4ht:ref: fig:NOT_dados --></a>.
+                                                                                                  
+                                                                                                  
+<!--l. 409--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-23r3"></a>
+Tabela&#x00A0;III: Tabela verdade do operador NOT
+<div class="tabular"> <table id="TBL-3" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-3-1g"><col 
+id="TBL-3-1"></colgroup><colgroup id="TBL-3-2g"><col 
+id="TBL-3-2"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-1"  
+class="td11"> <span 
+class="cmmi-12">x </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-2"  
+class="td11"> <span 
+class="cmmi-12">y </span></td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-1"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-2"  
+class="td11"> 1  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-1"  
+class="td11"> 1   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-2"  
+class="td11"> 0  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-1"  
+class="td11">   </td></tr></table></div>
+                                                                                                  
+                                                                                                  
+  </div><hr class="endfloat" />
+<!--l. 424--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 427--><p class="noindent" ><img 
+src="RNA27x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.30438pt" ><!--tex4ht:graphics  
+name="RNA27x.png" src="eps/not/NOTDesired.eps"  
+--> <a 
+ id="x1-24r8"></a>
+Figura&#x00A0;8:  Dados  utilizados  no  treinamento.  Em  vermelho  os  valores  onde  o  operador  NOT  tem  como
+resultado o valor 1 em função do valor X
+                                                                                                  
+                                                                                                  
+<!--l. 431--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 433--><p class="indent" >  A seguir, figura <a 
+href="#x1-25r9">9<!--tex4ht:ref: fig:Not_err --></a> é exibido o erro quadrático médio obtido durante o treinamento. É exibido também o erro
+global, percentual de acerto da época durante o treinamento usando as amostras de treinamento.
+<hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 440--><p class="noindent" ><img 
+src="RNA28x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.30438pt" ><!--tex4ht:graphics  
+name="RNA28x.png" src="eps/not/notErr.eps"  
+--> <a 
+ id="x1-25r9"></a>
+Figura&#x00A0;9: Erro obtido durante cada época do treinamento
+                                                                                                  
+                                                                                                  
+<!--l. 443--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 445--><p class="indent" >  Após o treinamento é possível calcular a região de decisão traçada pelo perceptron, figura <a 
+href="#x1-26r10">10<!--tex4ht:ref: fig:NotReg --></a>.
+<!--l. 448--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 451--><p class="noindent" ><img 
+src="RNA29x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.30438pt" ><!--tex4ht:graphics  
+name="RNA29x.png" src="eps/not/NOTRegiao.eps"  
+--> <a 
+ id="x1-26r10"></a>
+Figura&#x00A0;10: Região de decisão calculada para a porta NOT após o treinamento. O fundo pontilhado indica
+a região de decisão. Em vermelho a região em que as amostras são classificadas como 1. Os pontos de
+raio maior são os dados de treinamento.
+                                                                                                  
+                                                                                                  
+<!--l. 457--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 459--><p class="indent" >  Diferentemente dos outros operadores, o operador NOT possui apenas um operando. Isso faz com que a
+região de decisão seja apenas uma linha. Na <a 
+href="#x1-26r10">10<!--tex4ht:ref: fig:NotReg --></a> pode-se perceber que para entradas acima de 0.8 os
+valores são mapeados para 0 ao contrário dos valores menores que 0.8 que são mapeados para
+1.
+<a 
+ id="x1-27r3"></a>
+<!--l. 464--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">C.  Setosa vs Outras</span>
+<a 
+ id="Q1-1-13"></a>
+<!--l. 466--><p class="indent" >  Este problema consiste em classificar a espécie de Íris Setosa das outras( Íris Virgínica e Íris Versicolor). O
+dataset utilizado para o treinamento consiste de 50 amostras de cada uma das três espécies e a
+classificação será feita com base nas 4 características disponíveis. Largura e comprimento da pétala e
+sépala.
+<!--l. 471--><p class="indent" >  Abaixo, na figura <a 
+href="#x1-28r11">11<!--tex4ht:ref: fig:irisDataset --></a> temos a disposição dos dados tendo como característica as larguras da sépala e pétala. A
+distribuição de outras características pode ser visualizada na subsessão <a 
+href="#x1-107r3"> mbox V-C<img 
+src="RNA30x.png" alt=":
+¯   "  class="b" >mbox <!--tex4ht:ref: subsec:IrisDataset --></a> localizada no
+Apêndice.
+<!--l. 477--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 480--><p class="noindent" ><img 
+src="RNA31x.png" alt="PIC" class="graphics" width="284.52756pt" height="235.07213pt" ><!--tex4ht:graphics  
+name="RNA31x.png" src="eps/3classes/input/sWid-vs-pWid.eps"  
+--> <a 
+ id="x1-28r11"></a>
+Figura&#x00A0;11: Largura da pétala e sépala da íris. Cada espécie é representada por uma cor. Em azul temos
+a Íris Setosa, em vermelho Íris Versicolor e verde a Íris Virgínica.
+                                                                                                  
+                                                                                                  
+<!--l. 485--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 487--><p class="indent" >  Foi necessário realizar alguns ajustes nos dado de entrada para que ele possa ser processado pelo perceptron.
+Para este problema a classe setosa recebeu o valor 1 como identificador e as outras duas classes receberam o
+valor 0. Veja a subsessão <a 
+href="#x1-70r2"> mbox V-B<img 
+src="RNA32x.png" alt=":
+¯   "  class="b" >mbox <!--tex4ht:ref: subsec:carregaDataset --></a> localizada no Apêndice.
+<!--l. 492--><p class="indent" >  Os dados coletados foram separados em duas categorias: dados de treinamento, utilizados para o treinamento
+do perceptron e dados de teste, utilizados para verificar sua performance.
+<!--l. 496--><p class="indent" >  Após o treinamento é possível calcular a região de decisão traçada pelo perceptron, figura <a 
+href="#x1-29r12">12<!--tex4ht:ref: fig:decSetosa --></a>. Os pontos
+existentes nesta região são os pontos utilizados como teste.
+<!--l. 500--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 503--><p class="noindent" ><img 
+src="RNA33x.png" alt="PIC" class="graphics" width="284.52756pt" height="241.20096pt" ><!--tex4ht:graphics  
+name="RNA33x.png" src="eps/setosa/regiao/sLen-vs-sWid.eps"  
+--> <a 
+ id="x1-29r12"></a>
+Figura&#x00A0;12: Região de decisão calculada para a classe setosa. No eixo vertical temos o comprimento da
+sépala e no eixo horizontal a largura da sépala.
+                                                                                                  
+                                                                                                  
+<!--l. 507--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 509--><p class="indent" >  A acurácia média e o desvio padrão obtido para 100, 50 e 25 repetições são exibidas na tabela <a 
+href="#x1-30r4">IV<!--tex4ht:ref: tab:acurrSet --></a> e <a 
+href="#x1-31r5">V<!--tex4ht:ref: tab:acurrSet2 --></a>
+Percebe-se que com apenas 50% dos dados para treinamento é possível obter-se uma grande taxa de acerto,
+cerca de 98%.
+                                                                                                  
+                                                                                                  
+<!--l. 515--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-30r4"></a>
+Tabela&#x00A0;IV: Resultado da acurácia utilizando 20% dos dados para treinamento
+<div class="tabular"> <table id="TBL-4" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-4-1g"><col 
+id="TBL-4-1"></colgroup><colgroup id="TBL-4-2g"><col 
+id="TBL-4-2"></colgroup><colgroup id="TBL-4-3g"><col 
+id="TBL-4-3"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-4-1-1"  
+class="td11"> Repetições  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-4-1-2"  
+class="td11"> Média  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-4-1-3"  
+class="td11"> Desvio  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-4-2-1"  
+class="td11">    25          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-4-2-2"  
+class="td11"> 0.9938  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-4-2-3"  
+class="td11"> 0.0128  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-4-3-1"  
+class="td11">    50          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-4-3-2"  
+class="td11">  0.99    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-4-3-3"  
+class="td11"> 0.0194  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-4-4-1"  
+class="td11">    100         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-4-4-2"  
+class="td11"> 0.9909  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-4-4-3"  
+class="td11"> 0.0179  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-4-5-1"  
+class="td11">          </td></tr></table></div>
+                                                                                                  
+                                                                                                  
+  </div><hr class="endfloat" />
+                                                                                                  
+                                                                                                  
+<!--l. 531--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-31r5"></a>
+Tabela&#x00A0;V: Resultado da acurácia utilizando 50% dos dados para treinamento
+<div class="tabular"> <table id="TBL-5" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-5-1g"><col 
+id="TBL-5-1"></colgroup><colgroup id="TBL-5-2g"><col 
+id="TBL-5-2"></colgroup><colgroup id="TBL-5-3g"><col 
+id="TBL-5-3"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-5-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-5-1-1"  
+class="td11"> Repetições  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-5-1-2"  
+class="td11"> Média  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-5-1-3"  
+class="td11"> Desvio  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-5-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-5-2-1"  
+class="td11">    25          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-5-2-2"  
+class="td11"> 0.9875  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-5-2-3"  
+class="td11"> 0.0161  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-5-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-5-3-1"  
+class="td11">    50          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-5-3-2"  
+class="td11"> 0.9875  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-5-3-3"  
+class="td11"> 0.0160  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-5-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-5-4-1"  
+class="td11">    100         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-5-4-2"  
+class="td11"> 0.9864  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-5-4-3"  
+class="td11"> 0.0182  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-5-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-5-5-1"  
+class="td11">          </td></tr></table></div>
+                                                                                                  
+                                                                                                  
+  </div><hr class="endfloat" />
+<a 
+ id="x1-32r4"></a>
+<!--l. 547--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">D.  Adaline</span>
+<a 
+ id="Q1-1-17"></a>
+<!--l. 548--><p class="indent" >  O Adaline difencia-se do perceptron basicamente pelo não uso da função de ativação. Durante a fase de
+aprendizagem o adaline ajusta o pesos de acordo com o erro e o valor da entrada. O Adaline assim como o
+perceptron aceita várias entradas e apenas uma saída. Se a diferença entre a saída desejada e o valor calculado
+for maior que um dado limiar os pesos das entradas são atualizados. O Adaline tem como principal utilização a
+aproximação de funções lineares. Na figura <a 
+href="#x1-33r13">13<!--tex4ht:ref: fig:regressao --></a> é exibido um comportamento aproximado da seguinte função
+<span 
+class="cmmi-12">f</span><span 
+class="cmr-12">(</span><span 
+class="cmmi-12">x</span><span 
+class="cmr-12">) = 3 </span><span 
+class="cmsy-10x-x-120">&#x00D7;</span><span 
+class="cmmi-12">x </span><span 
+class="cmr-12">+ 8</span>. Os dados exibidos na figura foram utilizados no treinamento, o qual gerou o gráfico plotado
+na figura <a 
+href="#x1-34r14">14<!--tex4ht:ref: fig:regressaoErro --></a>. Na figura <a 
+href="#x1-35r15">15<!--tex4ht:ref: fig:regressaoResultado --></a> é exibido o resultado após o treinamento do Adaline. Vale ressaltar que após o
+treinamento os valores dos pesos do Adaline são os coeficientes da função linear aproximada por
+ela.
+<!--l. 561--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 564--><p class="noindent" ><img 
+src="RNA34x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.30438pt" ><!--tex4ht:graphics  
+name="RNA34x.png" src="eps/adaline/amostras.eps"  
+--> <a 
+ id="x1-33r13"></a>
+Figura&#x00A0;13: Dados utilizados para o treinamento do Adaline.
+                                                                                                  
+                                                                                                  
+<!--l. 567--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 569--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 572--><p class="noindent" ><img 
+src="RNA35x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.30438pt" ><!--tex4ht:graphics  
+name="RNA35x.png" src="eps/adaline/erro.eps"  
+--> <a 
+ id="x1-34r14"></a>
+Figura&#x00A0;14: Erro médio quadrático gerado durante o treinamento do Adaline.
+                                                                                                  
+                                                                                                  
+<!--l. 575--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 577--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 580--><p class="noindent" ><img 
+src="RNA36x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.30438pt" ><!--tex4ht:graphics  
+name="RNA36x.png" src="eps/adaline/resultado.eps"  
+--> <a 
+ id="x1-35r15"></a>
+Figura&#x00A0;15: Resultado após o treinamento. Em vermelho temos a reta aproximada aos dados.
+                                                                                                  
+                                                                                                  
+<!--l. 584--><p class="indent" >  </div><hr class="endfigure">
+<a 
+ id="x1-36r5"></a>
+<!--l. 587--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">E.  Setosa vs Virg</span><span 
+class="ptmri8t-x-x-120">ínica vs Versicolor</span>
+<a 
+ id="Q1-1-20"></a>
+<!--l. 588--><p class="indent" >  Este problema consiste em classificar as espécie de Íris individualmente, Íris Setosa Íris Virgínica e Íris
+Versicolor. O conjunto de dados utilizados é o mesmo utilizado na subsessão <a 
+href="#x1-27r3"> mbox III-C<img 
+src="RNA37x.png" alt=":
+¯   "  class="b" >mbox <!--tex4ht:ref: subsec:setOutras --></a>.
+<!--l. 592--><p class="indent" >  Na figura <a 
+href="#x1-28r11">11<!--tex4ht:ref: fig:irisDataset --></a> temos a disposição dos dados tendo como característica as larguras da sépala e pétala. A
+distribuição de outras características pode ser visualizada na subsessão <a 
+href="#x1-107r3"> mbox V-C<img 
+src="RNA38x.png" alt=":
+¯   "  class="b" >mbox <!--tex4ht:ref: subsec:IrisDataset --></a> localizada no
+Apêndice.
+<!--l. 597--><p class="indent" >  Os ajustes necessários para o treinamento foram feitos no momento que o dataset é carregado pela aplicação.
+Desta vez foram utilizados 3 perceptrons fazendo com que a saída desejada seja mapeada da forma exposta na
+tabela <a 
+href="#x1-37r6">VI<!--tex4ht:ref: tab:mapMLP --></a>. Veja o Apêndice <a 
+href="#x1-70r2"> mbox V-B<img 
+src="RNA39x.png" alt=":
+¯   "  class="b" >mbox <!--tex4ht:ref: subsec:carregaDataset --></a> para mais detalhes de como é feito o tratamento do
+dataset.
+<!--l. 602--><p class="indent" >  Para a solução deste problema serão utilizados 3 perceptrons dispostos de acordo com a figura
+<a 
+href="#x1-38r16">16<!--tex4ht:ref: fig:mlp --></a>.
+                                                                                                  
+                                                                                                  
+<!--l. 605--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-37r6"></a>
+Tabela&#x00A0;VI: Mapeamento da saída de acordo com a classe da Íris.
+<div class="tabular"> <table id="TBL-6" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-6-1g"><col 
+id="TBL-6-1"></colgroup><colgroup id="TBL-6-2g"><col 
+id="TBL-6-2"></colgroup><colgroup id="TBL-6-3g"><col 
+id="TBL-6-3"></colgroup><colgroup id="TBL-6-4g"><col 
+id="TBL-6-4"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-6-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-6-1-1"  
+class="td11">  Tipo      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-1-2"  
+class="td11"> <span 
+class="cmmi-12">y</span><span 
+class="cmr-12">1  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-1-3"  
+class="td11"> <span 
+class="cmmi-12">y</span><span 
+class="cmr-12">2  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-1-4"  
+class="td11"> <span 
+class="cmmi-12">y</span><span 
+class="cmr-12">3  </span></td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-6-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-6-2-1"  
+class="td11">  Setosa     </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-2-2"  
+class="td11"> 1   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-2-3"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-2-4"  
+class="td11"> 0   </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-6-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-6-3-1"  
+class="td11"> Versicolor  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-3-2"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-3-3"  
+class="td11"> 1   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-3-4"  
+class="td11"> 0   </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-6-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-6-4-1"  
+class="td11"> Virgínica  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-4-2"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-4-3"  
+class="td11"> 0   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-6-4-4"  
+class="td11"> 1   </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-6-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-6-5-1"  
+class="td11">         </td></tr></table></div>
+                                                                                                  
+                                                                                                  
+  </div><hr class="endfloat" />
+<!--l. 621--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 624--><p class="noindent" ><img 
+src="RNA40x.png" alt="PIC" class="graphics" width="284.52756pt" height="184.64107pt" ><!--tex4ht:graphics  
+name="RNA40x.png" src="eps/3classes/mlp.eps"  
+--> <a 
+ id="x1-38r16"></a>
+Figura&#x00A0;16: Perceptrons utilizados para realizar a classificação das espécies de Íris. O perceptron P1, P2
+e P3 classificam a espécie setosa, virgínica e versicolor respectivamente.
+                                                                                                  
+                                                                                                  
+<!--l. 629--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 631--><p class="indent" >  Neste modelo pode-se perceber que os perceptrons são independentes entre si. Cada um, assim como o
+problema relatado na subssessão <a 
+href="#x1-27r3"> mbox III-C<img 
+src="RNA41x.png" alt=":
+¯   "  class="b" >mbox <!--tex4ht:ref: subsec:setOutras --></a>, é responsável por verificar se aquele dado de entrada
+pertence a classe na qual o perceptron foi treinado. Após o treinamento obtemos o seguinte gráfico do erro
+quadrático médio.
+<!--l. 638--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 641--><p class="noindent" ><img 
+src="RNA42x.png" alt="PIC" class="graphics" width="284.52756pt" height="169.79073pt" ><!--tex4ht:graphics  
+name="RNA42x.png" src="eps/3classes/erro.eps"  
+--> <a 
+ id="x1-39r17"></a>
+Figura&#x00A0;17:  Em  vermelho  o  erro  médio  quadrático  obtido  durante  o  treinamento  para  o  perceptron  da
+classe Setosa, em azul e verde as classes versicolor e vigínica respectivamente.
+                                                                                                  
+                                                                                                  
+<!--l. 646--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 650--><p class="indent" >  A acurácia média e o desvio padrão obtido para 100,50 e 25 repetições são exibidas na tabela <a 
+href="#x1-40r7">VII<!--tex4ht:ref: tab:acurr3 --></a> e <a 
+href="#x1-41r8">VIII<!--tex4ht:ref: tab:acurr32 --></a>
+Percebe-se que não foi possível obter um resultado melhor que 65 %. Este resultado é esperado tendo em vista
+que as classes virgínica e versicolor não podem ser separadas linearmente.
+                                                                                                  
+                                                                                                  
+<!--l. 656--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-40r7"></a>
+Tabela&#x00A0;VII: Resultado da acurácia utilizando 20% dos dados para treinamento das 3 classes de Íris
+<div class="tabular"> <table id="TBL-7" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-7-1g"><col 
+id="TBL-7-1"></colgroup><colgroup id="TBL-7-2g"><col 
+id="TBL-7-2"></colgroup><colgroup id="TBL-7-3g"><col 
+id="TBL-7-3"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-7-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-7-1-1"  
+class="td11"> Repetições  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-7-1-2"  
+class="td11"> Média  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-7-1-3"  
+class="td11"> Desvio  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-7-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-7-2-1"  
+class="td11">    25          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-7-2-2"  
+class="td11"> 0.6212  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-7-2-3"  
+class="td11"> 0.0767  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-7-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-7-3-1"  
+class="td11">    50          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-7-3-2"  
+class="td11"> 0.6331  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-7-3-3"  
+class="td11"> 0.0808  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-7-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-7-4-1"  
+class="td11">    100         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-7-4-2"  
+class="td11"> 0.6431  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-7-4-3"  
+class="td11"> 0.0795  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-7-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-7-5-1"  
+class="td11">          </td></tr></table></div>
+                                                                                                  
+                                                                                                  
+  </div><hr class="endfloat" />
+                                                                                                  
+                                                                                                  
+<!--l. 672--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-41r8"></a>
+Tabela&#x00A0;VIII: Resultado da acurácia utilizando 50% dos dados para treinamento das 3 classes de Íris
+<div class="tabular"> <table id="TBL-8" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-8-1g"><col 
+id="TBL-8-1"></colgroup><colgroup id="TBL-8-2g"><col 
+id="TBL-8-2"></colgroup><colgroup id="TBL-8-3g"><col 
+id="TBL-8-3"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-8-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-8-1-1"  
+class="td11"> Repetições  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-8-1-2"  
+class="td11"> Média  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-8-1-3"  
+class="td11"> Desvio  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-8-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-8-2-1"  
+class="td11">    25          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-8-2-2"  
+class="td11"> 0.6270  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-8-2-3"  
+class="td11"> 0.0877  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-8-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-8-3-1"  
+class="td11">    50          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-8-3-2"  
+class="td11"> 0.6247  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-8-3-3"  
+class="td11"> 0.0778  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-8-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-8-4-1"  
+class="td11">    100         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-8-4-2"  
+class="td11"> 0.6227  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-8-4-3"  
+class="td11"> 0.0807  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-8-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-8-5-1"  
+class="td11">          </td></tr></table></div>
+                                                                                                  
+                                                                                                  
+  </div><hr class="endfloat" />
+<a 
+ id="x1-42r4"></a>
+<!--l. 687--><p class="noindent" ><span 
+class="ptmrc8t-x-x-120">IV.  C<span 
+class="small-caps">O</span><span 
+class="small-caps">N</span><span 
+class="small-caps">C</span><span 
+class="small-caps">L</span><span 
+class="small-caps">U</span><span 
+class="small-caps">S</span></span><span 
+class="ptmrc8t-x-x-120">ã<span 
+class="small-caps">O</span></span>
+<a 
+ id="Q1-1-25"></a>
+<!--l. 688--><p class="indent" >  Este trabalho permitiu fazermos uma análise do perceptron e do adaline. Foi percebido ao longo do trabalho a
+grande capacidade do perceptron de realizar a separação linear de duas classes. Por parte do adaline
+foi dado um exemplo de como se fazer a aproximação de funções lineares dado uma distribuição
+de  dados.  Foi  apresentado  também  o  resultado  da  classificação  de  3  classes  sendo  2  delas  não
+separável linearmente, utilizando 3 perceptrons. Foi verificado um resultado não satisfatório para esta
+classificação.
+                                                                                                  
+                                                                                                  
+<a 
+ id="x1-43r5"></a>
+<span 
+class="ptmrc8t-x-x-120">V.  A<span 
+class="small-caps">P</span></span><span 
+class="ptmrc8t-x-x-120">ê<span 
+class="small-caps">N</span><span 
+class="small-caps">D</span><span 
+class="small-caps">I</span><span 
+class="small-caps">C</span><span 
+class="small-caps">E</span></span>
+<a 
+ id="Q1-1-25"></a>
+<!--l. 707--><p class="indent" >
+<a 
+ id="x1-44r1"></a>
+<!--l. 707--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">A.  Gera Base de Treinamento</span>
+<a 
+ id="Q1-1-25"></a>
+<!--l. 709--><p class="indent" >  Abaixo é possível visualizar o código implementado em Matlab para gerar a base de dados para os operadores
+AND, OR e NOT. Através do parâmetro tipo é possível selecionar o tipo de base de dados que será gerado. As
+opções são AND, OR e NOT. Para a base NOT é importante ressaltar que os valores de X apresentam apenas
+uma dimensão. A base de dados gera uma nuvem em torno dos valores 0 e 1 com variação de até 0.2, isso é
+feito nos passos da linha 4 à 7. Após a criação da núvem é feita uma operação utilizando os operadores do
+matlab.
+  <!--l. 719--><div class="lstinputlisting">
+<a 
+ id="x1-45"></a>
+   <span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-46r1"></a><span 
+class="ptmr8t-x-x-60">1</span></span><span 
+class="pcrr8t-x-x-90">function</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">]</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">geraBD</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">tipo</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-47r2"></a><span 
+class="ptmr8t-x-x-60">2</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-48r3"></a><span 
+class="ptmr8t-x-x-60">3</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Gerando</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">dados</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">de</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">treinamento</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">aleatoriamente</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-49r4"></a><span 
+class="ptmr8t-x-x-60">4</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">r1</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">rand</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">,2)</span><span 
+class="pcrr8t-x-x-90">*2</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">-</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">1)</span><span 
+class="pcrr8t-x-x-90">/5;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Gerando</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">valores</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">na</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">faixa</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">de</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[-0</span><span 
+class="pcrr8t-x-x-90">.2</span><span 
+class="pcrr8t-x-x-90">;0</span><span 
+class="pcrr8t-x-x-90">.2</span><span 
+class="pcrr8t-x-x-90">]</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-50r5"></a><span 
+class="ptmr8t-x-x-60">5</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">r2</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">round</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">rand</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">,2)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Gerando</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">valores</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">valores</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">0</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">ou</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">1</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-51r6"></a><span 
+class="ptmr8t-x-x-60">6</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">r</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">r1</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">+</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">r2</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-52r7"></a><span 
+class="ptmr8t-x-x-60">7</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">r</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-53r8"></a><span 
+class="ptmr8t-x-x-60">8</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-54r9"></a><span 
+class="ptmr8t-x-x-60">9</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">if</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">strcmp</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">tipo</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">AND</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-55r10"></a><span 
+class="ptmr8t-x-x-60">10</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">round</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,1)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&amp;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">round</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,2)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-56r11"></a><span 
+class="ptmr8t-x-x-60">11</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-57r12"></a><span 
+class="ptmr8t-x-x-60">12</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-58r13"></a><span 
+class="ptmr8t-x-x-60">13</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-59r14"></a><span 
+class="ptmr8t-x-x-60">14</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">if</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">strcmp</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">tipo</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">OR</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-60r15"></a><span 
+class="ptmr8t-x-x-60">15</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">round</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,1)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">|</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">round</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,2)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-61r16"></a><span 
+class="ptmr8t-x-x-60">16</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-62r17"></a><span 
+class="ptmr8t-x-x-60">17</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-63r18"></a><span 
+class="ptmr8t-x-x-60">18</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">if</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">strcmp</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">tipo</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">NOT</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-64r19"></a><span 
+class="ptmr8t-x-x-60">19</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">r</span><span 
+class="pcrr8t-x-x-90">(:,1)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-65r20"></a><span 
+class="ptmr8t-x-x-60">20</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="cmsy-9">¬</span><span 
+class="pcrr8t-x-x-90">round</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,1)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-66r21"></a><span 
+class="ptmr8t-x-x-60">21</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-67r22"></a><span 
+class="ptmr8t-x-x-60">22</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-68r23"></a><span 
+class="ptmr8t-x-x-60">23</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-69r24"></a><span 
+class="ptmr8t-x-x-60">24</span></span><span 
+class="pcrr8t-x-x-90">end</span>
+   
+  </div>
+<!--l. 721--><p class="indent" >
+<a 
+ id="x1-70r2"></a>
+<!--l. 721--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">B.  Carrega Dataset</span>
+<a 
+ id="Q1-1-26"></a>
+<!--l. 723--><p class="indent" >  Abaixo é possível visualizar o código implementado em Matlab para carregar os dados da Íris. De acordo
+com o valor da variável <span 
+class="ptmri8t-x-x-120">modo</span>, a saída y, utilizada como saída deseja pelo classificador, é alterada.
+<!--l. 727--><div class="lstinputlisting">
+<a 
+ id="x1-71"></a>
+   <span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-72r1"></a><span 
+class="ptmr8t-x-x-60">1</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Parametros</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-73r2"></a><span 
+class="ptmr8t-x-x-60">2</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">1-</span><span 
+class="pcrr8t-x-x-90">setosa</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-74r3"></a><span 
+class="ptmr8t-x-x-60">3</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">2-</span><span 
+class="pcrr8t-x-x-90">versicolor</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-75r4"></a><span 
+class="ptmr8t-x-x-60">4</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">3-</span><span 
+class="pcrr8t-x-x-90">virginica</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-76r5"></a><span 
+class="ptmr8t-x-x-60">5</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-77r6"></a><span 
+class="ptmr8t-x-x-60">6</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">modo</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-78r7"></a><span 
+class="ptmr8t-x-x-60">7</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">.</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-79r8"></a><span 
+class="ptmr8t-x-x-60">8</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Escolha</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">1</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">para</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">classificar</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">entre</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">setosa</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">e</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">outras</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-80r9"></a><span 
+class="ptmr8t-x-x-60">9</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Escolha</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">2</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">para</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">classificar</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">entre</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">versicolor</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">e</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">outras</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-81r10"></a><span 
+class="ptmr8t-x-x-60">10</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Escolha</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">3</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">para</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">classificar</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">entre</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">virginica</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">e</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">outras</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-82r11"></a><span 
+class="ptmr8t-x-x-60">11</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Escolha</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">4</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">para</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">classificar</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">as</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">3</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">entre</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">si</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-83r12"></a><span 
+class="ptmr8t-x-x-60">12</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-84r13"></a><span 
+class="ptmr8t-x-x-60">13</span></span><span 
+class="pcrr8t-x-x-90">function</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">]</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">carregaDados</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">modo</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">path</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-85r14"></a><span 
+class="ptmr8t-x-x-60">14</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-86r15"></a><span 
+class="ptmr8t-x-x-60">15</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Carregando</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">dados</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-87r16"></a><span 
+class="ptmr8t-x-x-60">16</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">csvread</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">path</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-88r17"></a><span 
+class="ptmr8t-x-x-60">17</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-89r18"></a><span 
+class="ptmr8t-x-x-60">18</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">m</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">]</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">size</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-90r19"></a><span 
+class="ptmr8t-x-x-60">19</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-91r20"></a><span 
+class="ptmr8t-x-x-60">20</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Ajustando</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">saida</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">desejada</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-92r21"></a><span 
+class="ptmr8t-x-x-60">21</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-93r22"></a><span 
+class="ptmr8t-x-x-60">22</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-94r23"></a><span 
+class="ptmr8t-x-x-60">23</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">if</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">modo</span><span 
+class="cmsy-6">&#x2265;</span><span 
+class="pcrr8t-x-x-90">1</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&amp;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">modo</span><span 
+class="cmsy-6">&#x2264;</span><span 
+class="pcrr8t-x-x-90">3)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-95r24"></a><span 
+class="ptmr8t-x-x-60">24</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">zeros</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">m</span><span 
+class="pcrr8t-x-x-90">,1)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-96r25"></a><span 
+class="ptmr8t-x-x-60">25</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">(:,1)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,5)</span><span 
+class="pcrr8t-x-x-90">==</span><span 
+class="pcrr8t-x-x-90">modo</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-97r26"></a><span 
+class="ptmr8t-x-x-60">26</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">else</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-98r27"></a><span 
+class="ptmr8t-x-x-60">27</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">zeros</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">m</span><span 
+class="pcrr8t-x-x-90">,3)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-99r28"></a><span 
+class="ptmr8t-x-x-60">28</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">(:,1)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,5)</span><span 
+class="pcrr8t-x-x-90">==1;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-100r29"></a><span 
+class="ptmr8t-x-x-60">29</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">(:,2)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,5)</span><span 
+class="pcrr8t-x-x-90">==2;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-101r30"></a><span 
+class="ptmr8t-x-x-60">30</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">(:,3)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,5)</span><span 
+class="pcrr8t-x-x-90">==3;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-102r31"></a><span 
+class="ptmr8t-x-x-60">31</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-103r32"></a><span 
+class="ptmr8t-x-x-60">32</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-104r33"></a><span 
+class="ptmr8t-x-x-60">33</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">apagando</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">5</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">coluna.</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-105r34"></a><span 
+class="ptmr8t-x-x-60">34</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(:,5)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[];</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-106r35"></a><span 
+class="ptmr8t-x-x-60">35</span></span><span 
+class="pcrr8t-x-x-90">end</span>
+   
+  </div>
+<!--l. 731--><p class="indent" >
+<a 
+ id="x1-107r3"></a>
+<!--l. 731--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">C.  Caracter</span><span 
+class="ptmri8t-x-x-120">ísticas Combinadas para o DataSet da </span><span 
+class="ptmri8t-x-x-120">Íris</span>
+<a 
+ id="Q1-1-27"></a>
+<!--l. 734--><p class="indent" >  Abaixo temos as caractéristicas do DataSet da Íris combinados. É fácil perceber que a classe que está
+em azul(Setosa) é linearmente separável em praticamente qualquer combinação de características.
+Diferentemente  das  outras  duas  classes,  Versicolor  e  Vigínica  que  têm  uma  região  em  comum
+em várias características principalmente quando relacionamos o comprimento com a largura da
+sépala.
+<!--l. 740--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!--l. 742--><p class="noindent" >
+<!--l. 743--><p class="noindent" ><img 
+src="RNA43x.png" alt="PIC" class="graphics" width="154.80157pt" height="127.89546pt" ><!--tex4ht:graphics  
+name="RNA43x.png" src="eps/3classes/input/pLen-vs-pWid.eps"  
+-->
+<!--l. 746--><p class="noindent" ><img 
+src="RNA44x.png" alt="PIC" class="graphics" width="154.80157pt" height="127.89546pt" ><!--tex4ht:graphics  
+name="RNA44x.png" src="eps/3classes/input/sLen-vs-pLen.eps"  
+-->
+<!--l. 749--><p class="noindent" ><img 
+src="RNA45x.png" alt="PIC" class="graphics" width="154.80157pt" height="127.89546pt" ><!--tex4ht:graphics  
+name="RNA45x.png" src="eps/3classes/input/sLen-vs-pWid.eps"  
+-->
+<!--l. 752--><p class="noindent" >
+<!--l. 753--><p class="noindent" ><img 
+src="RNA46x.png" alt="PIC" class="graphics" width="154.80157pt" height="131.2255pt" ><!--tex4ht:graphics  
+name="RNA46x.png" src="eps/3classes/input/sLen-vs-sWid.eps"  
+-->
+                                                                                                  
+                                                                                                  
+<!--l. 756--><p class="noindent" ><img 
+src="RNA47x.png" alt="PIC" class="graphics" width="154.80157pt" height="127.89546pt" ><!--tex4ht:graphics  
+name="RNA47x.png" src="eps/3classes/input/sWid-vs-pWid.eps"  
+-->
+<!--l. 759--><p class="noindent" ><img 
+src="RNA48x.png" alt="PIC" class="graphics" width="154.80157pt" height="127.89546pt" ><!--tex4ht:graphics  
+name="RNA48x.png" src="eps/3classes/input/sWid-vs-pLen.eps"  
+--><a 
+ id="x1-108r19"></a>
+Figura&#x00A0;19: Caractéristicas do DataSet da Íris combinados
+                                                                                                  
+                                                                                                  
+<!--l. 762--><p class="indent" >  </div><hr class="endfigure">
+<a 
+ id="x1-109r4"></a>
+<!--l. 765--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">D.  Implementa</span><span 
+class="ptmri8t-x-x-120">ç</span><span 
+class="ptmri8t-x-x-120">ão do Perceptron</span>
+<a 
+ id="Q1-1-28"></a>
+<!--l. 767--><p class="indent" >  Abaixo é possível visualizar o código implementado em Matlab para executar o treinamento do perceptron.
+Está função considera que o bias foi previamente adicionado como se fosse uma característica do dado de
+entrada. <!--l. 771--><div class="lstinputlisting">
+<a 
+ id="x1-110"></a>
+   <span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-111r1"></a><span 
+class="ptmr8t-x-x-60">1</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-112r2"></a><span 
+class="ptmr8t-x-x-60">2</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Treina</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">uma</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">rede</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">neural</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">MLP</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">com</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">apenas</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">uma</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">camanda</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-113r3"></a><span 
+class="ptmr8t-x-x-60">3</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Retorna</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">os</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">pesos</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">e</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">o</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Erro</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">de</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">cada</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">oca</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-114r4"></a><span 
+class="ptmr8t-x-x-60">4</span></span><span 
+class="pcrr8t-x-x-90">function</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">Ws</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">]</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">perceptron</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">d</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">maxEpoca</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-115r5"></a><span 
+class="ptmr8t-x-x-60">5</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-116r6"></a><span 
+class="ptmr8t-x-x-60">6</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">nAmostras</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">nEnt</span><span 
+class="pcrr8t-x-x-90">]</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">size</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-117r7"></a><span 
+class="ptmr8t-x-x-60">7</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-118r8"></a><span 
+class="ptmr8t-x-x-60">8</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Ws</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">rand</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">length</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">d</span><span 
+class="pcrr8t-x-x-90">(1,:)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">nEnt</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-119r9"></a><span 
+class="ptmr8t-x-x-60">9</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-120r10"></a><span 
+class="ptmr8t-x-x-60">10</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[];</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-121r11"></a><span 
+class="ptmr8t-x-x-60">11</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-122r12"></a><span 
+class="ptmr8t-x-x-60">12</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-123r13"></a><span 
+class="ptmr8t-x-x-60">13</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">for</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">epc</span><span 
+class="pcrr8t-x-x-90">=1:</span><span 
+class="pcrr8t-x-x-90">maxEpoca</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-124r14"></a><span 
+class="ptmr8t-x-x-60">14</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-125r15"></a><span 
+class="ptmr8t-x-x-60">15</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">cont</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-126r16"></a><span 
+class="ptmr8t-x-x-60">16</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">em</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[];</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-127r17"></a><span 
+class="ptmr8t-x-x-60">17</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-128r18"></a><span 
+class="ptmr8t-x-x-60">18</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">ordem</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">randperm</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">nAmostras</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-129r19"></a><span 
+class="ptmr8t-x-x-60">19</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-130r20"></a><span 
+class="ptmr8t-x-x-60">20</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">for</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">j</span><span 
+class="pcrr8t-x-x-90">=1:</span><span 
+class="pcrr8t-x-x-90">nAmostras</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-131r21"></a><span 
+class="ptmr8t-x-x-60">21</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">i</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">ordem</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">j</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-132r22"></a><span 
+class="ptmr8t-x-x-60">22</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-133r23"></a><span 
+class="ptmr8t-x-x-60">23</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">xi</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">i</span><span 
+class="pcrr8t-x-x-90">,:)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-134r24"></a><span 
+class="ptmr8t-x-x-60">24</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Ws</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">*</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">xi</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-135r25"></a><span 
+class="ptmr8t-x-x-60">25</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-136r26"></a><span 
+class="ptmr8t-x-x-60">26</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">em</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">j</span><span 
+class="pcrr8t-x-x-90">,:)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">d</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">i</span><span 
+class="pcrr8t-x-x-90">,:)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">-</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-137r27"></a><span 
+class="ptmr8t-x-x-60">27</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-138r28"></a><span 
+class="ptmr8t-x-x-60">28</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x003E;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-139r29"></a><span 
+class="ptmr8t-x-x-60">29</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-140r30"></a><span 
+class="ptmr8t-x-x-60">30</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">e</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">d</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">i</span><span 
+class="pcrr8t-x-x-90">,:)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">-</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-141r31"></a><span 
+class="ptmr8t-x-x-60">31</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-142r32"></a><span 
+class="ptmr8t-x-x-60">32</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">if</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">sum</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">e</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="cmmi-6">&#x2260;</span><span 
+class="pcrr8t-x-x-90">0</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-143r33"></a><span 
+class="ptmr8t-x-x-60">33</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">cont</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">cont</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">+</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">1;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-144r34"></a><span 
+class="ptmr8t-x-x-60">34</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-145r35"></a><span 
+class="ptmr8t-x-x-60">35</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-146r36"></a><span 
+class="ptmr8t-x-x-60">36</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">dW</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">e</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">*</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">xi</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">*</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-147r37"></a><span 
+class="ptmr8t-x-x-60">37</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Ws</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Ws</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">+</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">dW</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-148r38"></a><span 
+class="ptmr8t-x-x-60">38</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-149r39"></a><span 
+class="ptmr8t-x-x-60">39</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-150r40"></a><span 
+class="ptmr8t-x-x-60">40</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">em</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">mean</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">em.</span><span 
+class="pcrr8t-x-x-90">^2)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-151r41"></a><span 
+class="ptmr8t-x-x-60">41</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-152r42"></a><span 
+class="ptmr8t-x-x-60">42</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">cont</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">cont</span><span 
+class="pcrr8t-x-x-90">/</span><span 
+class="pcrr8t-x-x-90">nAmostras</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-153r43"></a><span 
+class="ptmr8t-x-x-60">43</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">cont</span><span 
+class="pcrr8t-x-x-90">];</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-154r44"></a><span 
+class="ptmr8t-x-x-60">44</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">epc</span><span 
+class="pcrr8t-x-x-90">,:)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">cont</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">em</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">];</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-155r45"></a><span 
+class="ptmr8t-x-x-60">45</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-156r46"></a><span 
+class="ptmr8t-x-x-60">46</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">if</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">cont</span><span 
+class="pcrr8t-x-x-90">==0</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-157r47"></a><span 
+class="ptmr8t-x-x-60">47</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">break</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-158r48"></a><span 
+class="ptmr8t-x-x-60">48</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-159r49"></a><span 
+class="ptmr8t-x-x-60">49</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-160r50"></a><span 
+class="ptmr8t-x-x-60">50</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-161r51"></a><span 
+class="ptmr8t-x-x-60">51</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-162r52"></a><span 
+class="ptmr8t-x-x-60">52</span></span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-163r53"></a><span 
+class="ptmr8t-x-x-60">53</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">%</span>
+   
+  </div>
+<!--l. 774--><p class="indent" >
+<a 
+ id="x1-164r5"></a>
+<!--l. 774--><p class="noindent" ><span 
+class="ptmri8t-x-x-120">E.  Exemplo de utiliza</span><span 
+class="ptmri8t-x-x-120">ç</span><span 
+class="ptmri8t-x-x-120">ão do Perceptron</span>
+<a 
+ id="Q1-1-29"></a>
+<!--l. 776--><p class="indent" >  Abaixo é possível visualizar o código implementado em Matlab para executar e avaliar o treinamento do
+perceptron. <!--l. 779--><div class="lstinputlisting">
+<a 
+ id="x1-165"></a>
+   <span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-166r1"></a><span 
+class="ptmr8t-x-x-60">1</span></span><span 
+class="pcrr8t-x-x-90">clc</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">clear</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">all</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">close</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">all</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-167r2"></a><span 
+class="ptmr8t-x-x-60">2</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-168r3"></a><span 
+class="ptmr8t-x-x-60">3</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Parmetros</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-169r4"></a><span 
+class="ptmr8t-x-x-60">4</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Nmero</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">de</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">amostras</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">geradas</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-170r5"></a><span 
+class="ptmr8t-x-x-60">5</span></span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">100;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-171r6"></a><span 
+class="ptmr8t-x-x-60">6</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Nmero</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">de</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">repetioes</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-172r7"></a><span 
+class="ptmr8t-x-x-60">7</span></span><span 
+class="pcrr8t-x-x-90">nRepeticoes</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">10;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-173r8"></a><span 
+class="ptmr8t-x-x-60">8</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Opera</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-174r9"></a><span 
+class="ptmr8t-x-x-60">9</span></span><span 
+class="pcrr8t-x-x-90">op</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">AND</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-175r10"></a><span 
+class="ptmr8t-x-x-60">10</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-176r11"></a><span 
+class="ptmr8t-x-x-60">11</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-177r12"></a><span 
+class="ptmr8t-x-x-60">12</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-178r13"></a><span 
+class="ptmr8t-x-x-60">13</span></span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">]</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">geraBD</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">op</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-179r14"></a><span 
+class="ptmr8t-x-x-60">14</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-180r15"></a><span 
+class="ptmr8t-x-x-60">15</span></span><span 
+class="pcrr8t-x-x-90">%</span><span 
+class="pcrr8t-x-x-90">Adicionando</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">bias</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-181r16"></a><span 
+class="ptmr8t-x-x-60">16</span></span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">ones</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">n</span><span 
+class="pcrr8t-x-x-90">,1)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">];</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-182r17"></a><span 
+class="ptmr8t-x-x-60">17</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-183r18"></a><span 
+class="ptmr8t-x-x-60">18</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-184r19"></a><span 
+class="ptmr8t-x-x-60">19</span></span><span 
+class="pcrr8t-x-x-90">for</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">i</span><span 
+class="pcrr8t-x-x-90">=1:</span><span 
+class="pcrr8t-x-x-90">nRepeticoes</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-185r20"></a><span 
+class="ptmr8t-x-x-60">20</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">[</span><span 
+class="pcrr8t-x-x-90">W</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">]</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">perceptron</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">,0</span><span 
+class="pcrr8t-x-x-90">.01</span><span 
+class="pcrr8t-x-x-90">,100)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-186r21"></a><span 
+class="ptmr8t-x-x-60">21</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">ce</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">i</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">=</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">(end)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-187r22"></a><span 
+class="ptmr8t-x-x-60">22</span></span><span 
+class="pcrr8t-x-x-90">end</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-188r23"></a><span 
+class="ptmr8t-x-x-60">23</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-189r24"></a><span 
+class="ptmr8t-x-x-60">24</span></span><span 
+class="pcrr8t-x-x-90">sprintf</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">Mdia</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">e</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">desvio</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">padro</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">do</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">erro</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">quadrtico</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%0</span><span 
+class="pcrr8t-x-x-90">.3f</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">%0</span><span 
+class="pcrr8t-x-x-90">.3f</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">mean</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">ce</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">std</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">ce</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-190r25"></a><span 
+class="ptmr8t-x-x-60">25</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-191r26"></a><span 
+class="ptmr8t-x-x-60">26</span></span><span 
+class="pcrr8t-x-x-90">figure</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">name</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">Anlise</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">do</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">erro</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-192r27"></a><span 
+class="ptmr8t-x-x-60">27</span></span><span 
+class="pcrr8t-x-x-90">plot</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">(:,1)</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">-*</span><span 
+class="pcrr8t-x-x-90">r</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">linewidth</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,2)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">hold</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-193r28"></a><span 
+class="ptmr8t-x-x-60">28</span></span><span 
+class="pcrr8t-x-x-90">plot</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">err</span><span 
+class="pcrr8t-x-x-90">(:,2)</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">-*</span><span 
+class="pcrr8t-x-x-90">b</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">linewidth</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,2)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-194r29"></a><span 
+class="ptmr8t-x-x-60">29</span></span><span 
+class="pcrr8t-x-x-90">legend</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">Erro</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">global</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">Erro</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Mdio</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Quadrtico</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-195r30"></a><span 
+class="ptmr8t-x-x-60">30</span></span><span 
+class="pcrr8t-x-x-90">set</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">gca</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">FontSize</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,15,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">fontWeight</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">bold</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-196r31"></a><span 
+class="ptmr8t-x-x-60">31</span></span><span 
+class="pcrr8t-x-x-90">set</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">findall</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">gcf</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">type</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">text</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">FontSize</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,15,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">fontWeight</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">bold</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-197r32"></a><span 
+class="ptmr8t-x-x-60">32</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-198r33"></a><span 
+class="ptmr8t-x-x-60">33</span></span><span 
+class="pcrr8t-x-x-90">figure</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">name</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">Dados</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">de</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">treinamento</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-199r34"></a><span 
+class="ptmr8t-x-x-60">34</span></span><span 
+class="pcrr8t-x-x-90">mostraResultado</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">,[</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">bias</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">X1</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">X2</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">],50)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-200r35"></a><span 
+class="ptmr8t-x-x-60">35</span></span><span 
+class="pcrr8t-x-x-90">set</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">gca</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">FontSize</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,15,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">fontWeight</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">bold</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-201r36"></a><span 
+class="ptmr8t-x-x-60">36</span></span><span 
+class="pcrr8t-x-x-90">set</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">findall</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">gcf</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">type</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">text</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">FontSize</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,15,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">fontWeight</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">bold</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-202r37"></a><span 
+class="ptmr8t-x-x-60">37</span></span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-203r38"></a><span 
+class="ptmr8t-x-x-60">38</span></span><span 
+class="pcrr8t-x-x-90">figure</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">name</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">Regio</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">de</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">Deciso</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-204r39"></a><span 
+class="ptmr8t-x-x-60">39</span></span><span 
+class="pcrr8t-x-x-90">mostraRegiaoDecisao</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">W</span><span 
+class="pcrr8t-x-x-90">,1,15,</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">-0</span><span 
+class="pcrr8t-x-x-90">.5</span><span 
+class="pcrr8t-x-x-90">:0</span><span 
+class="pcrr8t-x-x-90">.05</span><span 
+class="pcrr8t-x-x-90">:1</span><span 
+class="pcrr8t-x-x-90">.5</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-205r40"></a><span 
+class="ptmr8t-x-x-60">40</span></span><span 
+class="pcrr8t-x-x-90">mostraResultado</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">x</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8t-x-x-90">y</span><span 
+class="pcrr8t-x-x-90">,[</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">bias</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">X1</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8t-x-x-90">X2</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">],60)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-206r41"></a><span 
+class="ptmr8t-x-x-60">41</span></span><span 
+class="pcrr8t-x-x-90">set</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">gca</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">FontSize</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,15,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">fontWeight</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">bold</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span><span 
+class="pcrr8t-x-x-90">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-207r42"></a><span 
+class="ptmr8t-x-x-60">42</span></span><span 
+class="pcrr8t-x-x-90">set</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">findall</span><span 
+class="pcrr8t-x-x-90">(</span><span 
+class="pcrr8t-x-x-90">gcf</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">type</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">text</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">FontSize</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,15,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">fontWeight</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">,</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">bold</span><span 
+class="pcrr8c-x-x-90">&#8217;</span><span 
+class="pcrr8t-x-x-90">)</span><span 
+class="pcrr8t-x-x-90">;</span>
+   
+  </div>
+<!--l. 810--><p class="indent" >
+<!--l. 810--><p class="noindent" ><span 
+class="ptmrc8t-x-x-120">R<span 
+class="small-caps">E</span><span 
+class="small-caps">F</span><span 
+class="small-caps">E</span><span 
+class="small-caps">R</span></span><span 
+class="ptmrc8t-x-x-120">ê<span 
+class="small-caps">N</span><span 
+class="small-caps">C</span><span 
+class="small-caps">I</span><span 
+class="small-caps">A</span><span 
+class="small-caps">S</span></span>
+<a 
+ id="Q1-1-30"></a>
+<!--l. 810--><p class="indent" >
+   <div class="thebibliography">
+   <p class="bibitem" ><span class="biblabel">
+<span 
+class="ptmr8t-x-x-90">[1]</span> <span class="bibsp"><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span></span></span><a 
+ id="XIEEEhowto:kopka"></a><span 
+class="ptmr8t-x-x-90">CS 4793: Introduction to Artificial Neural Networks. Department of Computer Science, University of Texas at San Antonio.</span>
+   </p>
+   <p class="bibitem" ><span class="biblabel">
+<span 
+class="ptmr8t-x-x-90">[2]</span> <span class="bibsp"><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span></span></span><a 
+ id="XIEEEhowto:kopka"></a><span 
+class="ptmr8t-x-x-90">Braga,  Ant</span><span 
+class="ptmr8t-x-x-90">ônio  de  P</span><span 
+class="ptmr8t-x-x-90">ádua;  Carvalho,  Andr</span><span 
+class="ptmr8t-x-x-90">é  P.  L.  Ferreira;  Ludermir,  Teresa  Bernarda,  "Redes  Neurais  Artificiais:  Teoria  e</span>
+   <span 
+class="ptmr8t-x-x-90">Aplica</span><span 
+class="ptmr8t-x-x-90">ç</span><span 
+class="ptmr8t-x-x-90">ões"(2000), Rio de Janeiro: LTC.</span>
+   </p>
+   <p class="bibitem" ><span class="biblabel">
+<span 
+class="ptmr8t-x-x-90">[3]</span> <span class="bibsp"><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span></span></span><a 
+ id="XIEEEhowto:kopka"></a><span 
+class="ptmr8t-x-x-90">HAYKIN, Simon. Redes neurais: princ</span><span 
+class="ptmr8t-x-x-90">ípios e pr</span><span 
+class="ptmr8t-x-x-90">ática. trad. Paulo Martins Engel. -2.ed. - Porto Alegre: Bookman, 2001.</span>
+   </p>
+   <p class="bibitem" ><span class="biblabel">
+<span 
+class="ptmr8t-x-x-90">[4]</span> <span class="bibsp"><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span></span></span><a 
+ id="XIEEEhowto:kopka"></a><span 
+class="ptmr8t-x-x-90">http://users.ics.aalto.fi/ahonkela/dippa/node41.html</span>
+   </p>
+   <p class="bibitem" ><span class="biblabel">
+<span 
+class="ptmr8t-x-x-90">[5]</span> <span class="bibsp"><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span></span></span><a 
+ id="XIEEEhowto:kopka"></a><span 
+class="ptmr8t-x-x-90">http://reference.wolfram.com/applications/neuralnetworks/NeuralNetworkTheory/2.4.0.html</span>
+   </p>
+   <p class="bibitem" ><span class="biblabel">
+<span 
+class="ptmr8t-x-x-90">[6]</span> <span class="bibsp"><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span><span 
+class="ptmr8t-x-x-90">&#x00A0;</span></span></span><a 
+ id="XIEEEhowto:kopka"></a><span 
+class="ptmr8t-x-x-90">http://www.gsigma.ufsc.br/</span><span 
+class="ptmr8t-x-x-90">&#x00A0;popov/aulas/rna/neuronio_artificial/index.html</span>
+</p>
+   </div>
+   
+</body></html> 
+
+                                                                                                  
+
+

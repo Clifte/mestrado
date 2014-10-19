@@ -1,0 +1,64 @@
+
+function mostraRegiaoDecisao(W,bias,s )
+%scatter3(x1,x2,y,'b','fill');
+
+%Criando X
+[x,y] = meshgrid(-3:0.5:3);
+
+n = size(x);
+n = n(1)*n(2);
+
+x1 = reshape(x,1,n);
+x2 = reshape(y,1,n);
+
+x = [ ones(1,n) *bias ;  x1;  x2]';
+
+
+
+%Verificando número de caracteristicas
+
+[Wsm Wsn] = size(W);
+nCh = Wsn;
+rnCh = ceil(sqrt( (1+nCh)*nCh/2));
+
+
+%plotando pontos
+plIndex=1;
+for ch1=1:nCh
+          for ch2 = ch1  +1: nCh
+              
+              
+             Wl = [W(1)   W(ch1+1)  W(ch2+1)]';
+             y =   x * Wl;
+            
+             [ym yn] = size(y);
+             map = jet( yn*2 +1  );
+            
+             y = y > 0;
+             
+             %Mapeando cores
+             for i=1:ym
+                 if( sum(y(i,:)) ~=1 )
+                     cMap(i,:) = map(end,:);
+                 else
+                     [v l] = max(y(i,:));
+                     cMap(i,:) = map(l,:);
+                 end        
+             end
+
+             
+             
+             
+             
+             
+            subplot(rnCh,rnCh,plIndex)
+            hold;
+            
+            scatter(x(:,2),x(:,3),s, cMap, 'fill');
+            
+            hold;
+            plIndex = plIndex + 1;  
+          end
+end
+end
+

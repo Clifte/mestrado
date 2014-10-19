@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Fri Sep 19 12:22:10 GMT-03:00 2014
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=RNA.tex
+outputFile=RNA.pdf
+langSpell=pt
+markDer=true
+srcDir=

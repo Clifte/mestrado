@@ -1,0 +1,38 @@
+
+%%
+function  [W err] = mlp1(x,d,n,maxEpoca)
+
+    nAmostras = length(x(:,1));
+    nEnt = length(x(1,:));
+    Ws = rand(length(d(:,1)) ,nEnt + 1);
+
+    err = 0;
+    
+    for epc=0:maxEpoca   
+        cont = 0;
+        
+        for i=1:nAmostras
+            xi = [1 x(i,:)];
+            y = W * xi';
+
+            e = d(i) - y;
+            
+            if(abs(e) >= 0.0001) 
+                cont = cont + 1;
+            end
+
+            dW = xi*e*n;      
+            W = W + dW;
+        end
+        
+        cont = (cont/nAmostras)*100;
+        err = [err cont];
+        
+        if cont==0
+            break
+        end
+        
+    end
+
+end    
+ %%
