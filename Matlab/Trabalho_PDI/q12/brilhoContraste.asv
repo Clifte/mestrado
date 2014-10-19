@@ -1,0 +1,35 @@
+close all;clear;
+%Carregando e exibindo Imagem Original
+image = imread('../bd/pirate.tif');
+subplot(1,2,2);
+imshow(image)
+
+
+
+res = ajustaContraste(image,2);
+subplot(1,2,2);
+imshow(res);
+title='Alto contraste: 2'
+imwrite(res,'altoContraste.png');
+
+
+res = ajustaContraste(image,0.5);
+subplot(2,2,2);
+imshow(res);
+title='Baixo contraste: 0.5'
+imwrite(res,'baixoContraste.png');
+
+
+
+res = ajustaBrilho(image,100);
+subplot(3,2,2);
+imshow(res);
+title='Alto Brilho: 100'
+imwrite(res,'altoBrilho.png');
+
+
+res = ajustaBrilho(image,-100);
+subplot(4,2,3);
+imshow(res);
+title='Baixo Brilho: -100'
+imwrite(res,'baixoBrilho.png');
