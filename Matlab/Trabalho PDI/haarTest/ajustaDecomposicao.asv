@@ -1,0 +1,10 @@
+function res = ajustaDecomposicao(resH,N)
+
+
+while N ~= 1
+    N = N/2;
+    lS = (N/2):(N);
+    nIm = imresize(resH(lS , :), [);
+    figure
+    imshow(uint8(nIm))
+end

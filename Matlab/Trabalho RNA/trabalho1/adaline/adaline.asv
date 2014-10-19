@@ -1,0 +1,37 @@
+
+%%
+function  [W err] = adaline(x,d,n,maxEpoca)
+    nAmostras = length(x(:,1));
+    nEnt = length(x(1,:));
+    W = rand(1,nEnt + 1);
+
+    err = [];
+    
+    for epc=1:maxEpoca
+        em =[];
+        
+        for i=1:nAmostras
+            xi = [1 x(i,:)];
+            y = W * xi';
+
+            %Calculando erro
+            e = d(i) - y;
+            em(i,:) = e;
+            
+            
+            %Em caso de erro atualizar os pesos
+            if(abs(e) >= 1.5) 
+                dW = xi*e*n;      
+                W  = W + dW;
+            end
+
+        end
+        em = mean (em.^2);
+        err( epc, : ) = [ em ];
+        
+  
+        
+    end
+
+end    
+ %%
