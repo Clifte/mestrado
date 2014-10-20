@@ -115,7 +115,7 @@ class ColorSegmentFrame extends JFrame{
 			@Override
 			public void run() {
 				
-				File f = new File("arquivos/dance.avi");
+				File f = new File("arquivos/man.mp4");
 				
 				String  videoFile = f.getAbsolutePath();
 				System.out.println("Iniciando");
@@ -185,24 +185,38 @@ class ColorSegmentFrame extends JFrame{
 	    List<MatOfPoint> contours = new ArrayList<MatOfPoint>();  
 	    Imgproc.findContours(edges, contours, new Mat(), Imgproc.RETR_LIST,Imgproc.CHAIN_APPROX_SIMPLE);
 
+		for (int i = 0; i < contours.size(); i++) {
+			MatOfPoint pts = (MatOfPoint) contours.get(i);
+			
+			//Filtrando pontos pequenos
+			if (pts.rows() < 10)
+				continue;
+				
+			//Filtrando formas quadradas
+			Rect rect = Imgproc.boundingRect(contours.get(i));
+			float k = Math.abs(1 - rect.width/rect.height);
+			if(k>0.1 || rect.height < 30 ) continue;
+			
+			
+			
+			double area = Imgproc.contourArea(pts);
+			
+			System.out.println(k + "   " + rect);
+			// System.out.println(rect.x
+			// +","+rect.y+","+rect.height+","+rect.width);
+			Point pt1 = new Point(rect.x, rect.y);
+			Point pt2 = new Point(rect.x + rect.width, rect.y + rect.height);
+			Point center = new Point(rect.x + rect.width / 2, rect.y
+					+ rect.height / 2);
 
-	    
-	    for(int i=0; i< contours.size();i++){
-	        System.out.println(Imgproc.contourArea(contours.get(i)));
-	        if (Imgproc.contourArea(contours.get(i)) > 50 ){
-	            Rect rect = Imgproc.boundingRect(contours.get(i));
-	            System.out.println(rect.height);
-	           // if ( Math.abs(rect.height/rect.width - 1) < 0.2){
-	            if ( ( (MatOfPoint) contours.get(i)).rows() > 50){
-	            //System.out.println(rect.x +","+rect.y+","+rect.height+","+rect.width);
-	            	Core.rectangle(dstImage, 
-	            				   new Point(rect.x,rect.y), new Point(rect.x+rect.width,rect.y+rect.height),
-	            				   new Scalar(0,0,255),8);
-	            }
-	        }
-	    }
+			Scalar cor = new Scalar(0, 0, 255);
+
+			Core.rectangle(dstImage, pt1, pt2, cor, 3);
+
+			Core.putText(dstImage, "(" + center.toString() + ")", pt2,
+					Core.FONT_HERSHEY_TRIPLEX, 0.5, cor);
+		}
 	}
-	
 	
 	protected void atualizaH() {
 		colorSegment.setHueValue(Hslider.getValue());

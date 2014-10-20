@@ -1,31 +1,3 @@
-%% abtex2-modelo-artigo.tex, v-1.9.2 laurocesar
-%% Copyright 2012-2014 by abnTeX2 group at http://abntex2.googlecode.com/ 
-%%
-%% This work may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%   http://www.latex-project.org/lppl.txt
-%% and version 1.3 or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later.
-%%
-%% This work has the LPPL maintenance status `maintained'.
-%% 
-%% The Current Maintainer of this work is the abnTeX2 team, led
-%% by Lauro César Araujo. Further information are available on 
-%% http://abntex2.googlecode.com/
-%%
-%% This work consists of the files abntex2-modelo-artigo.tex and
-%% abntex2-modelo-references.bib
-%%
-
-% ------------------------------------------------------------------------
-% ------------------------------------------------------------------------
-% abnTeX2: Modelo de Artigo Acadêmico em conformidade com
-% ABNT NBR 6022:2003: Informação e documentação - Artigo em publicação 
-% periódica científica impressa - Apresentação
-% ------------------------------------------------------------------------
-% ------------------------------------------------------------------------
 
 \documentclass[
 	% -- opções da classe memoir --
@@ -44,7 +16,7 @@
 	sumario=tradicional
 	]{abntex2}
 
-
+\newcommand{\matlabCodePath}{/home/clifte/git/Mestrado/Matlab/}
 % ---
 % PACOTES
 % ---
@@ -66,7 +38,10 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{tikz}
- 
+\usepackage{listings}
+\usepackage[]{mcode}
+\usepackage{listingsutf8}
+\usepackage{epstopdf}
 % ---
 		
 % ---
@@ -80,6 +55,8 @@
 % ---
 \usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+
 % ---
 
 % ---
@@ -225,8 +202,9 @@ chamada de imagem.
 Os tipos de transformações que foram supracitados possuem uma característica
 entre si. Não importa a ordem de aplicação ou mesmo a intensidade dela, sempre
 será possível recuperar a forma original a partir da combinação das mesmas três
-transformações.
-
+transformações. Os códigos fonte utilizados nesta sessão encontram-se no
+Apendice \ref{apend:transRotRed}.
+ 
 \subsection{Translação}
 A operação de tranlação move cada ponto da forma em um fator constante em uma
 direção específica. A forma do objeto não sofre qualquer alteração com essa
@@ -234,7 +212,7 @@ transformação, apenas o posicionamento no espaço. A translação pode ser vis
 interpretada como a adição de vetores constantes a cada ponto da forma ou como o
 deslocamento do centro de coordenadas.
 A ideia de se transladar um ponto de coordenadas $(x,y)$ é calcular a nova
-posição $(x_0,y_0)$ onde $(x',y')=(x+x_0,y+y_0)$ onde $x_0$ e $y_0$ é a
+posição $(x',y')$ onde $(x',y')=(x+x_0,y+y_0)$ onde $x_0$ e $y_0$ é a
 quantidade transladada em cada eixo da coordenada ou simplesmente a nova coordenada da
 origem.
 Apesar de ser exibido a translação apenas para duas coordenadas esta operação
@@ -358,7 +336,7 @@ podemos ver o resultado da rotação.
         \ref{fig:rot1}. Imagem com rotação de 30º
         \ref{fig:rot2}. Imagem com rotação de 60º
         \ref{fig:rot3}. Imagem com rotação de 90º
-        pixels}
+        }
         \label{fig:rotacao}
 \end{figure}
 
@@ -425,7 +403,7 @@ $f_x,f_y,f_z$ são os fatores de redimensionamento para cada dimensão do vetor.
 As técnicas de modificação de histograma são conhecidas como técnicas ponto-a-ponto, uma
 vez que o valor de tom de cinza de um certo pixel após o processamento depende apenas de seu
 valor original. Dentre as principais técnicas temos o ajuste de brilho,
-contraste e gama.\cite{1}
+contraste e gama.
 
 \subsection{Brilho}
 O Brilho é um atributo de percepção visual no qual determina a intensidade de
@@ -440,9 +418,9 @@ onde b é o valor de ajuste do brilho.
 
 
 \subsection{Contraste}
-O contrates é um atributo que permite que objetos sejam discriminados dentro de
+O contrate é um atributo que permite que objetos sejam discriminados dentro de
 um mesmo campo visual. Dois objetos com intensidades semelhantes são
-dificilmentes distringuidos por sensores como o olho humano. O ajuste no
+dificilmentes distinguidos por sensores como o olho humano. O ajuste no
 contraste tem como princípio aumentar a diferença de intensidade entre os
 objetos.
 
@@ -480,7 +458,7 @@ onde c é o valor de ajuste do contraste.
 	\caption{Função de mapeamento com brilho=-50 e contraste=2.5}
 \end{figure}
 
-\subsubsection{Gama}
+\subsection{Gama}
 O gama, assim como o ajuste de contraste é utilizado para aumentar a diferença
 de intensidade entre os objetos porem de forma não linear. A regulação do gama
 pode ser feita com base na seguinte função.
@@ -507,7 +485,51 @@ muito altos.
 		0,5 e 2 valores de gama respectivamente}
 \end{figure}
 
-\subsection{Filtragem no domínio da frequência}
+\subsection{Resultado Obtidos}
+
+\begin{figure} 
+		\centering
+		\includegraphics[width=0.3\textwidth,scale=1]{\matlabCodePath
+		Trabalho_PDI/bd/pirate.png}
+		\caption{Imagem utilizada como teste para as operação de brilho, contraste e
+		gama}
+		\label{fig:BrilhoContGamaOriginal}
+\end{figure}
+
+\begin{figure} 
+		\centering 
+		\includegraphics[width=\textwidth,scale=1, trim =
+		4cm 0cm 0cm 1cm,clip]{\matlabCodePath
+		Trabalho_PDI/q12/brilhoContrasteGama.eps}
+		\caption{Resultado da aplicação das técnicas de ajuste de histograma.
+		a)Contraste aplicado 2
+		b)Contraste aplicado 0.5
+		c)Brilho aplicado 25
+		d)Brilho aplicado -25
+		e)Gama aplicado 2
+		f)Gama aplicado 0.5 
+		}
+		\label{fig:brilhContGamaRes}		
+\end{figure}
+
+Na figura \ref{fig:brilhContGamaRes} temos os resultados obtidos após a
+realização de uma série de ajustes na figura \ref{fig:BrilhoContGamaOriginal}.
+Podemos perceber através dos histogramas que a alteração do contraste
+\ref{fig:brilhContGamaRes} a,b,  faz com que o hisograma seja alongado ou
+comprimido ao longo dos possíveis valores da imagem. Diferentemente do ajuste
+de contraste, o brilho apenas desloca o histograma,
+figura \ref{fig:brilhContGamaRes} c,d. Caso o valor do brilho seja positivo o
+histograma é deslocado para a região mas clara, caso negativo para a região mais
+escura. O ajuste de gama,figura \ref{fig:brilhContGamaRes} e,f, é um pouco mais
+peculiar que os dois anteriores. Por ser uma operação exponencial, caso o valor seja maior que 1 a imagem como um
+todo terá a intensidade de seus pixels reduzidas, porém os pixels com valores de
+intensidade menor serão ainda mais afetados pelo operador. caso o valor seja
+menor que 1 a intensidade da imagem aumentará e da mesma forma os pixels com
+valores de intensidade menor sofrerão maiores mudanças. O código fonte deste
+exemplo pode ser visualizado no Apendice \ref{apend:contBriGama}
+
+
+\section{Filtragem no domínio da frequência}
 A transformada de Fourier é uma transformação matemática que permite que funções
 possam ser expressas em componentes senoidais. O somatório destas componentes
 tem como resultado a função orignal. A informação de frequencia destas
@@ -537,10 +559,11 @@ altas começam a corresponder a variações de intensidade cada vez mais rápida
 como bordas de objetos e outros elementos, figura
 \ref{fig:lenaOriginalEspectro}.
 De acordo com as características citadas anteriormente podemos contruir as
-máscaras para a filtragem  no dominio da frequencia, figura
+matrizes para a filtragem  no dominio da frequencia, figura
 \ref{fig:filtrosFrequencia}. Uma das características do domínio da frequência é
 que a filtragem espacial pode ser realizada utilizando apenas um produto de
-matrizes. O resultado da filtragem pode ser visualizado na figura.
+matrizes. O resultado da filtragem pode ser visualizado na figura. O código
+fonte utilizado encontra-se no Apêndice \ref{apend:filtragemCod}.
 
 
 \begin{figure}
@@ -553,7 +576,7 @@ matrizes. O resultado da filtragem pode ser visualizado na figura.
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth,scale=1]{imagens/ex2/espectroOriginal.png}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath Trabalho_PDI/q13-q14/espectroOriginal.png}
                 \caption{}
                 \label{fig:especOriginal}
         \end{subfigure}
@@ -568,61 +591,54 @@ matrizes. O resultado da filtragem pode ser visualizado na figura.
 \begin{figure}
 		\centering
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth,scale=1]{imagens/ex2/passaBaixa.png}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath Trabalho_PDI/q13-q14/passaBaixa.png}
                 \caption{}
                 \label{fig:passaBaixa}
         \end{subfigure}%
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth,scale=1]{imagens/ex2/passaAlta.png}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath Trabalho_PDI/q13-q14/passaAlta.png}
                 \caption{}
                 \label{fig:passaAlta}
         \end{subfigure}
        
         \caption{ 
         \ref{fig:passaBaixa}. Filtro passa baixa.
-        \ref{fig:passaAlta}. Filtro passa alta.
+        \ref{fig:passaAlta}. Filtro passa alta. 
         }
 	\label{fig:filtrosFrequencia}
 \end{figure}
 
-
-
-
-
-
 \begin{figure}
 		\centering
-        \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth,scale=1]{imagens/ex2/filtradaPBSpec.png}
+        \begin{subfigure}[b]{0.3\textwidth} 
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath Trabalho_PDI/q13-q14/filtradaPBSpec.png}
                 \caption{}
                 \label{fig:passaBaixa}
         \end{subfigure}%
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth,scale=1]{imagens/ex2/filtradaPASpec.png}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath Trabalho_PDI/q13-q14/filtradaPASpec.png}
                 \caption{}
                 \label{fig:passaAlta}
         \end{subfigure}
  		~      
 		\centering
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth,scale=1]{imagens/ex2/filtradaPB.png}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath Trabalho_PDI/q13-q14/filtradaPB.png}
                 \caption{}
                 \label{fig:passaBaixa} 
         \end{subfigure}%
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth,scale=1]{imagens/ex2/filtradaPA.png}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath Trabalho_PDI/q13-q14/filtradaPA.png}
                 \caption{}
                 \label{fig:passaAlta}
         \end{subfigure}      
-       
-       
-       
+      
         \caption{ 
         \ref{fig:passaBaixa}. Filtro passa baixa.
         \ref{fig:passaAlta}. Filtro passa alta.
@@ -633,68 +649,120 @@ matrizes. O resultado da filtragem pode ser visualizado na figura.
 \section{Segmentação Baseada em cores}
 
 \subsection{Espaço de cores RGB}
-An RGB color space can be easily understood by thinking of it as "all possible
-colors" that can be made from three colourants for red, green and blue. If only
-the red light is on, the wall will look red. If only the green light is on, the
-wall will look green. If the red and green lights are on together, the wall will
-look yellow. Dim the red light and the wall will become more of a yellow-green.
-Dim the green light instead, and the wall will become more orange. Bringing up
-the blue light a bit will cause the orange to become less saturated and more
-whitish. In all, each setting of the three dimmer switches will produce a
-different result, either in color or in brightness or both.
-
-\subsection{Espaço de cores HSV}
-
-The two representations rearrange the geometry of RGB in an attempt to be more
-intuitive and perceptually relevant than the cartesian (cube) representation, by
-mapping the values into a cylinder loosely inspired by a traditional color
-wheel. The angle around the central vertical axis corresponds to "hue" and the
-distance from the axis corresponds to "saturation". These first two values give
-the two schemes the 'H' and 'S' in their names. The height corresponds to a
-third value, the system's representation of the perceived luminance in relation
-to the saturation.
+O espaço de cores RGB é formado por todas as combinações possíveis das cores
+R(Red), G(Green) e B(Blue), vermelho, verde e azul respectivamente. Esse espaço
+de cores é normalmente representado por um cubo onde cada eixo representa uma
+das componetes,ou canais, de cor, a intensidade de cada componente
+indica a cor resultante, figura \ref{subfig:cuboRGB}.
+Em imagens coloridas baseadas nesta representação o valor máximo de cada
+componente é 255. Na figura \ref{fig:rgbComb} temos o resultado de algumas
+combinações deste espaço de cores. Neste espaço de cores, vale ressaltar que a
+cor branca é formada pela combinação da máxima intensidade de todas as três componentes, a cor preta
+pela combinação da intensidade mínima das três componentes.
 
 
-Hue describes the shade of color and where that color it is found in the color
-spectrum. Red, yellow, and purple are words that describe hue.
-The next most significant aspect of color is typically the saturation,   S. The
-saturation describes how pure the hue is with respect to a white reference. For
-example, a color that is all red and no white is fully saturated. If we add some
-white to the red, the result becomes more pastel, and the color shifts from red
-to pink. The hue is still red but it has become less saturated.
-Finally, a color also has a brightness.   This is a relative description of how
-much light is coming from the color. If the color reflects a lot of light, we
-would say that it is bright. Imagine seeing a red sportscar during the day. Its
-color looks bright. Compare this with the perception of the car as night is
-falling. We can see that the car is red but it looks duller because ambient  
-illumination is reflecting less light into the eye.
+\begin{figure} 
+		\centering
+		\includegraphics[width=0.3\textwidth,scale=1]{imagens/ex4/RGB_combinacao.png}
+        \caption{Algumas combinações possíves do espaço de cores RGB. Perceba
+        que na interseção das cores são produzidas cores diferentes.}
+        \label{fig:rgbComb}
+\end{figure}
+        
+        
+\subsection{Espaço de cores HSV} 
+O espaço de cores HSV também conhecido como HSB, assim como o RGB possue 3
+componentes para representar as cores. As três componentes estão organizadas de forma que suas componentes
+armazenem informação da matiz, saturação e brilho separadamente. O lugar
+geométrico deste espaço de cores é um cilindro, as vezes também representado por
+um cone, onde a altura é o nível de brilho, o raio a intensidade da cor e o
+ângulo a cor no espectro luminoso, matiz.
+A matiz, componente H, descreve a cor encontrada no espectro eletromagnético, é
+dessa componente que descrevemos as cores eg. vermelho, verde, laranja. A
+saturação, componente S, descreve a puresa da cor em relação a cor branca. Uma
+cor totalmente impura, valor mínimo desta componente, tem como cor resultante a cor branca.
+A última componente V ou B, o brilho, descreve quanta luz é emitida do objeto.
+A conversão entre os espaços de cores HSV e RGB pode ser feita facilmente com os
+seguintes comandos no Matlab. 
 
+
+\begin{lstlisting}[frame=single, numbers=left]
+	% Converter RGB para HSV 
+	hsv_image = rgb2hsv(rgb_image)
+	% Converter HSV para RGB
+	rgb_image = hsv2rgb(hsv_image)
+\end{lstlisting}
+
+No Matlab, por padrão as imagens coloridas são alocadas em matrizes onde cada
+canal representa uma das componentes do RGB. Cada elemento da matriz representa
+uma componente de um pixel da imagem com valores variando entre [0, 255]. Após a
+conversão da imagem para o formato HSV as matrizes de cada componente têm seus
+valores variando entre [0, 1].
 
 \begin{figure}
 		\centering
         \begin{subfigure}[b]{0.3\textwidth}
                 \includegraphics[width=\textwidth,scale=1]{imagens/ex4/rgbColorspace.png}
                 \caption{}
-                \label{fig:passaBaixa}
+                \label{subfig:cuboRGB}
+                
         \end{subfigure}%
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.3\textwidth}
                 \includegraphics[width=\textwidth,scale=1]{imagens/ex4/HSVColorSpace.png}
                 \caption{}
-                \label{fig:passaAlta}
+                \label{subfig:cilindoHSV}
         \end{subfigure}
-       
+        
         \caption{ 
-        \ref{fig:passaBaixa}. Filtro passa baixa.
-        \ref{fig:passaAlta}. Filtro passa alta.
-        }
+        \ref{subfig:cuboRGB}. Representação do espaço de cores RGB
+        \ref{subfig:cilindoHSV}. Representação do espaço de cores HSV.
+        } 
 	\label{fig:filtrosFrequencia}
 \end{figure}
 
-\subsection{Definição do limiar de segmentação}
-
 \subsection{Segmentação baseada na cor da pele}
+A definição do limiar de segmentação baseado em cores é feita utilizando o
+espaço de cores HSV. Como dito anteriormente este espaço de cores possui como
+característica a separação da informação de cor de outras informações como
+luminosidade e pureza. A figura \ref{fig:skinSegment}a foi utilizada para a
+definição dos limiares. Foi verificado que os valores H que melhores descrevem
+os tons da pele estão no intervalo [0 , 0.1], intervalo este que representa
+10\% da faixa de valores possíveis do canal H. Foi verificado também que para o
+canal S os valores que melhor representam o tom da pele estão na faixa de [0.4
+1 0.8]. O resultado da combinação dos dois limiares em S e H com a imagem de
+entrada pode ser visualizado na imagem \ref{fig:skinSegment}d.  O código
+fonte utilizado encontra-se no Apêndice \ref{apend:skinSegment}.
+
+
+\begin{figure} 
+		\centering 
+		\includegraphics[width=\textwidth,scale=1, trim =
+		4cm 0cm 0cm 1cm,clip]{\matlabCodePath
+		Trabalho_PDI/skin/skinResult.eps}
+		\caption{Resultado da aplicação das técnicas de segmentação.
+		a)Imagem Original
+		b)Filtro aplicado ao canal H.
+		c)Filtro aplicado ao canal H e S
+		d)Imagem resultante após os filtros.
+		}
+		\label{fig:skinSegment}		
+\end{figure}
+
+\subsection{Rastreamento baseado em cor}
+\begin{figure} 
+		\centering 
+		\includegraphics[width=\textwidth,scale=1, trim =
+		4cm 0cm 0cm 1cm,clip]{imagens/track/redBall.png}
+		\caption{Resultado da aplicação das técnicas de segmentação.
+		a)Imagem Original
+		b)Filtro aplicado ao canal H.
+		c)Filtro aplicado ao canal H e S
+		d)Imagem resultante após os filtros.
+		}
+		\label{fig:skinSegment}		
+\end{figure}
 % ---
 % Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
 % ---
@@ -707,13 +775,13 @@ illumination is reflecting less light into the eye.
 \section*{Considerações finais}
 \addcontentsline{toc}{section}{Considerações finais}
 
-\lipsum[1]
+
 
 \begin{citacao}
-\lipsum[2]
+
 \end{citacao}
 
-\lipsum[3]
+
 % ]  				% FIM DE ARTIGO EM DUAS COLUNAS
 % ---
 
@@ -721,7 +789,7 @@ illumination is reflecting less light into the eye.
 % Referências bibliográficas
 % ----------------------------------------------------------
 \bibliography{pdi}
-
+ 
 % ----------------------------------------------------------
 % Glossário
 % ----------------------------------------------------------
@@ -738,13 +806,48 @@ illumination is reflecting less light into the eye.
 % ---
 % Inicia os apêndices
 % ---
-\begin{apendicesenv}
+\begin{apendicesenv} 
 
 % ----------------------------------------------------------
-\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
-ac pretium ante justo a nulla curabitur tristique arcu eu metus}
-% ----------------------------------------------------------
-\lipsum[55-57]
+\chapter{Código fonte: Translação, Rotação e Redimensionamento}
+\label{apend:transRotRed}
+
+	
+ 	\lstset{extendedchars=true,inputencoding=utf8/latin1}
+ 	\lstinputlisting[frame=single,
+ 					 numbers=left]{\matlabCodePath
+ 	Trabalho_PDI/q11/topico11.m}
+
+
+
+\chapter{Código fonte: Ajuste de Brilho, Contraste e Gama}
+\label{apend:contBriGama}
+
+\lstset{extendedchars=true,inputencoding=utf8/latin1}
+
+\lstinputlisting[frame=single, numbers=left]{\matlabCodePath
+Trabalho_PDI/q12/ajustaBrilho.m}
+\lstinputlisting[frame=single, numbers=left]{\matlabCodePath
+Trabalho_PDI/q12/ajustaContraste.m}
+\lstinputlisting[frame=single, numbers=left]{\matlabCodePath
+Trabalho_PDI/q12/ajustaGama.m}
+\lstinputlisting[frame=single, numbers=left]{\matlabCodePath
+Trabalho_PDI/q12/brilhoContraste.m}
+
+
+
+\chapter{Código fonte: Filtragem no domínio da frequência}
+\label{apend:filtragemCod}
+\lstset{extendedchars=true,inputencoding=utf8/latin1}
+\lstinputlisting[frame=single, numbers=left]{\matlabCodePath
+Trabalho_PDI/q13-q14/filtragem.m}
+
+\chapter{Código fonte: Segmentação de Pele}
+\label{apend:skinSegment}
+\lstset{extendedchars=true,inputencoding=utf8/latin1}
+\lstinputlisting[frame=single, numbers=left]{\matlabCodePath
+Trabalho_PDI/skin/skin.m}
+
 
 \end{apendicesenv}
 % ---
@@ -753,18 +856,14 @@ ac pretium ante justo a nulla curabitur tristique arcu eu metus}
 % Anexos
 % ----------------------------------------------------------
 \cftinserthook{toc}{AAA}
+
+
 % ---
 % Inicia os anexos
 % ---
 %\anexos
-\begin{anexosenv}
-
-% ---
-\chapter{}
-% ---
-
-\lipsum[31]
-
-\end{anexosenv}
+%\begin{anexosenv}
+%\chapter{}
+%\end{anexosenv}
 
 \end{document}

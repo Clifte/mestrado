@@ -5,11 +5,4 @@
 \providecommand{\abntbstabout}[1]{}
 \abntbstabout{v-1.9.2 }
 
-\bibitem[Image Processing: Brightness, Contrast, Gamma, and
-  Exponential/Logarithmic Settings in ProAnalyst®]{1}
-\abntrefinfo{Image\ldots}{IMAGE\ldots}{}
-{IMAGE Processing: Brightness, Contrast, Gamma, and Exponential/Logarithmic
-  Settings in ProAnalyst®.
-[S.l.].}
-
 \end{thebibliography}

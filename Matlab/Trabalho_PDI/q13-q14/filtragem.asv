@@ -3,6 +3,7 @@ close all;clear
 %Carregando imagem
 image = imread('../bd/walkbridge.tif');
 image = image(:,:,1);
+
 imshow(image);
 title('Original');
 
@@ -21,7 +22,7 @@ title('Espectro');
 var = 3;
 d = 20/length(spec(1,:));
 
-%Calculando filtro gaussino
+%Calculando filtro gaussiano
 filtro = gaussmf(-10:d:10,[var 0])'  *  gaussmf(-10:d:10,[var 0]);
 filtro = filtro(   1:length(spec(1,:)), 1:length(spec(1,:)));
 imwrite(mat2gray(filtro),'passaBaixa.png');
@@ -36,7 +37,7 @@ filtrada = filtro .* fftshift(spec);
 
 figure;
 surf(log(abs(filtrada)),'EdgeColor','None')
-imwrite(mat2gray(log(abs(filtrada))),'filtradaPB.png');
+imwrite(mat2gray(log(abs(filtrada))),'filtradaPBSpec.png');
 title('Filtrada Baixa');
 
 %Exibindo imagem resultante
@@ -56,7 +57,7 @@ title('Resultado Passa Baixa');
 var = 3;
 d = 20/length(spec(1,:));
 
-%Calculando filtro
+%Calculando filtro gaussiano invertido
 filtro = gaussmf(-10:d:10,[var 0])'  *  gaussmf(-10:d:10,[var 0]);
 filtro = filtro(   1:length(spec(1,:)), 1:length(spec(1,:)));
 filtro = 1 - filtro;
@@ -72,7 +73,7 @@ title('Filtro Passa Alta');
 filtrada = filtro .* fftshift(spec);
 
 figure;
-imwrite(mat2gray(log(abs(filtrada))),'filtradaPA.png');
+imwrite(mat2gray(log(abs(filtrada+1))),'filtradaPASpec.png');
 surf(log(abs(filtrada)),'EdgeColor','None')
 title('Filtrada Passa Alta');
 
