@@ -1,0 +1,14 @@
+function [dh dv dD da] = haarDecomposition(image)
+    N = length(image(1,:));
+    %Primeira decomposição
+    mask = haar2(N);
+    %Calculando imagem Horizontal  dwt2(f,wname);
+    resH = mask * double(image) * (mask');
+    
+    h = floor(N/2);
+    
+    dD = resH(h:N,h:N);
+    da = resH(1:h,1:h);
+    dh = resH(1:h,h:N);
+    dv = resH(h:N,1:h);
+end

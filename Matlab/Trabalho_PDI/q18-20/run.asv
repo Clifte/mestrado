@@ -1,0 +1,21 @@
+clear all;
+close all;
+clc;
+%Carregando imagem
+A = imread('../bd/lena_gray_256.tif');
+A2 = imread('../bd/pirate.png');
+B = [ 0 1 0
+        1 1 1
+        0 1 0
+     ]
+%Calculando gradiente morfologico
+G = imdilate(A,B) - imerode(A,B);
+subplot(2,2,1, 'Spacing', 0.08, 'Padding', 0, 'MB', 0.1, 'MT', 0.01);
+imshow(A)
+subplot(2,2,2);
+imshow(G) 
+ 
+%Calculando gradiente morfologico
+G2 = imdilate(A2,B) - imerode(A2,B);
+subplot(2,2,3);imshow(A2)
+subplot(2,2,4);imshow(G2)

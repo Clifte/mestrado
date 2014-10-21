@@ -763,18 +763,211 @@ fonte utilizado encontra-se no Apêndice \ref{apend:skinSegment}.
 		}
 		\label{fig:skinSegment}		
 \end{figure}
+
+
+
+\section{Transformada Haar}
+
+A maneira mais facil dentre as transformadas Wavelets disponível temos a
+transformada Haar(HWT).
+A transformada Haar é uma matrz ortogonal, logo $H^{-1}=H^{T}$, utilizada para
+calcular cada uma das componentes Wavelets, a saber: Vertical, horizonta,
+diagonal e aproximação. Abaixo temos a definição matemática da matriz de Haar.
+
+\begin{align}
+H_{N} = 
+\begin{bmatrix} 
+	\sqrt{2}/2 & \sqrt{2}/2 & 0 & 0 & 0 & 0 &...\\
+	 0 & 0 & \sqrt{2}/2 & \sqrt{2}/2 & 0 & 0 &...\\
+	 0 & 0 0 & 0 & 0 & \sqrt{2}/2 & \sqrt{2}/2 &... \\
+         ...&...&...&...&...&...&...\\
+	-\sqrt{2}/2 & \sqrt{2}/2 & 0 & 0 & 0 & 0 &...\\
+	 0 & 0 & -\sqrt{2}/2 & \sqrt{2}/2 & 0 & 0 &...\\
+	 0 & 0 0 & 0 & 0 & -\sqrt{2}/2 & \sqrt{2}/2 &... \\
+         ...&...&...&...&...&...&...\\
+\end{bmatrix}
+\label{eq:haarMask}
+\end{align}
+
+Como podemos observar as primeiras $N/2$ linhas resultam em uma média ponderada
+com fator $\sqrt{2}$ da entrada. As últimas $N/2$ linhas resultam em uma diferença
+ponderada da entrada também com fator $\sqrt{2}$.
+
+Na equação \ref{eq:haarMask} temos a definição dos filtros passa baixa na
+primeira linha da matriz. $h=(h_0,h_1)=(\sqrt{2}/2,\sqrt{2}/2)$. É importante
+que além de realizar a média, esse filtro passa baixa amplia a sua intensidade
+em $\sqrt{2}$.
+
+Na equação \ref{eq:haarMask} temos também a definição do filtro passa alta na
+linha central da matriz. $g=(g_0,g_1)=(-\sqrt{2}/2,\sqrt{2}/2)$. Fazendo
+exatamente o contrário do filtro anterior, esse filtro amplia a intesidade do
+sinal apenas se houver valores distintos.
+
+Se a imagem é uma matriz $Im$, com dimensões mxn, temos que garantir que a
+imagem possuirá dimensões iguais e de potência de base 2, isso pode ser feito
+cortando ou adicionando elementos à matriz.
+Então após realizar estes ajustes, a HWT pode ser computada como.
+\begin{align}
+W_H=H_N*Im*H_M^{T} =
+\begin{bmatrix} H \\ G \end{bmatrix}
+A
+\begin{bmatrix} H^T \\ G^T \end{bmatrix}
+=
+\begin{bmatrix} HA \\ GA \end{bmatrix}
+\begin{bmatrix} H^T \\ G^T \end{bmatrix}
+\end{align}
+\begin{align}
+W_H=
+\begin{bmatrix} HAH^T \\ HAG^T \end{bmatrix}
+\begin{bmatrix} GAH^T \\ GAG^T \end{bmatrix}
+\label{eq:blockHaar}
+\end{align}
+É importante notar o significa de cada bloco na equação \ref{eq:blockHaar}.
+O bloco superior esquerdo calcula a média da imagem pois a matriz H é um filtro
+passa baixa, por esse motivo este bloco recebe o nome de componente de
+aproximação.
+O bloco superior direito é também uma média, porém combinado com um filtro passa
+baixa atuando na direção vertical, daí o nome componente vertical.
+O bloco inferio esquerdo, assim como o superior direito é uma combinação de
+filtros passa baixa e passa alta, desta vez com um filtro passa alta atuando na
+direção horizontal.
+O bloco inferior direito é uma combinação dos filtros passa alta nas duas
+direções, vertical e horizontal, sendo chamado por essa característica de
+componente diagonal.
+O resultado desta operação e a imagem obtida de cada bloco é exibido na Figura
+\ref{fig:haarDec1}.
+O código fonte utilizado pode ser visualizado no apêndice \ref{apend:HaarCode}
+
+\begin{figure} 
+		\centering 
+		\includegraphics[width=\textwidth,scale=1, trim =
+		4cm 0cm 0cm 1cm,clip]{\matlabCodePath
+		Trabalho_PDI/haarComp/level1.eps}
+		\caption{Resultado da transformada de Haar na imagem Original, Nível 1.
+		a)Componente de aproximação.
+		b)Componente de detalhes verticais
+		c)Componente de detalhes horizontais
+		d)Componente de detalhes diagonais.
+		}
+		\label{fig:haarDec1}		
+\end{figure}
+Uma prática comum, principalmente em atividades de compressão de imagem e
+reconhecimento de padrões é a reaplicação desta transformada na componente de
+aproximação da transformada. Nas figura
+\ref{fig:haarDec1}, \ref{fig:haarDec2} e \ref{fig:haarDec3} temos o resultado
+destas aplicações sucessivas. perceba que ao longo destas aplicações a imagem de
+aproximação tem suas informações distribuidas nas componentes verticais,
+horizontais e diagonais. As técnicas de compressão se valem dessa característica
+e valores nas componentes que tendem a zero são simplesmente zerados
+encaminhados para o codificador. Já em reconhecimento de padrões as informações
+presentes nestas componentes podem descrever características específicas dos
+objetos.
+
+\begin{figure} 
+		\centering 
+		\includegraphics[width=\textwidth,scale=1, trim =
+		4cm 0cm 0cm 1cm,clip]{\matlabCodePath
+		Trabalho_PDI/haarComp/level2.eps}
+		\caption{Resultado da transformada de Haar aplicada na componente de
+		aproximação, figura \ref{fig:haarDec1}a, Nível 2.
+		a)Componente de aproximação.
+		b)Componente de detalhes verticais
+		c)Componente de detalhes horizontais
+		d)Componente de detalhes diagonais.
+		}
+		\label{fig:haarDec2}		
+\end{figure}
+
+
+\begin{figure} 
+		\centering 
+		\includegraphics[width=\textwidth,scale=1, trim =
+		4cm 0cm 0cm 1cm,clip]{\matlabCodePath
+		Trabalho_PDI/haarComp/level3.eps}
+		\caption{Resultado da transformada de Haar aplicada na componente de
+		aproximação, figura \ref{fig:haarDec2}a, Nível 3.
+		a)Componente de aproximação.
+		b)Componente de detalhes verticais
+		c)Componente de detalhes horizontais
+		d)Componente de detalhes diagonais.
+		}
+		\label{fig:haarDec3}		
+\end{figure}
+
+
+\section{Morfologia Matemática}
+A palavra Morfologia é originalmente um ramo da biologia que estuda as
+formas e estruturas dos animais e plantas. Usamos esta palavra no contexto de
+Morforlogia Matemática como um instrumento para extração de componentes
+da imagem que sejam úteis para representação e descrição da forma de uma
+região, como fronteiras, esqueletos e fecho convexo.
+
+A morfologia matemática é o estudo quantificado da forma e estrutura de
+conjuntos de pontos (no caso de imagens, conjunto de pixels), cujo principal
+objetivo é revelar a estrutura dos objetos formados pelos pontos através da
+transformação dos conjuntos que os modelam. Isto é realizado através de OMs. A
+partir desta estreita relação da morfologia matemática com a forma, torna-se
+natural aplicá-la como técnica de processamento de imagens (Cardoso, 1999).
+
+   Um elemento estruturante é um conjunto de coordenadas de pixel. Por exemplo,
+o elemento cruz é definido por $E=\{(0,0),(-1,0),(1,0),(0,-1),(0,1)\}$.
+Uma transformação morfológica requer uma operação não-linear entre a imagem e o
+elemento estruturante, o qual desliza sobre a imagem de forma similar a uma
+convolução.
+
+Os operadores utilizados no processamento morfológico de imagem formam uma ampla
+classe de operadores não-lineares. Porém, todos estes são construídos pela
+interação de duas operações básicas: a erosão e a dilatação.
+
+A erosão($\ominus$) de uma imagem $F$ para um dado pixel $x$ é definida como o
+valor mínimo da imagem em uma janela definida pelo elemento estruturante, estando a origem do
+elmento estruturante na posição de x (Soille, 1999). Por outro lado, a
+dilatação($\oplus$) é definida como o valor máximo da imagem em uma janela
+definida também por um elemento estruturante.
+
+
+\begin{align}
+A \ominus B = \{x | ( B )_x \cap A \subseteq  A\}
+\end{align}
+
+\begin{align}
+A \oplus B = \{x | (  B^{-1} )_x \cap A \neq  \emptyset\}
+\end{align}
+Aplicações alternadas da dilatação e da erosão levam à formação de duas novas
+operações denominadas abertura e fechamento (Soille, 1999).
+
+\section{Gradiente Morfologico}
+Esta operação e composta de três outras operações básicas da morfologia: a
+dilação, erosão e a subtração e é definida da seguinte forma:
+
+\begin{align}
+\beta(A) = (A \oplus B) - (A \ominus B)
+\end{align}
+
+O processo destaca as transições entre os níveis de cinza (contornos).O
+resultado da operação depende do elemento estruturante utilizado,um elemento
+pequeno privilegia contornos delgados.
+É interessante notar que a simetria do elemento vai fazer com que o
+resultado da operação tenda a depender menos dos aspectos direcionais das
+bordas. Na figura \ref{fig:gradMorf} temos o resultado da aplicação do gradiente
+morfológico em 2 imagens tons de cinza. O código utilizado nesta implementação
+pode ser visualizado no Apêndice \ref{apend:gradMorfCode}
+
+\begin{figure} 
+		\centering 
+		\includegraphics[width=\textwidth,scale=1, trim =
+		4cm 0cm 0cm 1cm,clip]{\matlabCodePath
+		Trabalho_PDI/q18-20/gradMorf2.eps}
+		\caption{Resultado da aplicação do gradiente morfológico.}
+		\label{fig:gradMorf}		
+\end{figure}
+
+
 % ---
 % Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
 % ---
 \bookmarksetup{startatroot}% 
 % ---
-
-% ---
-% Conclusão
-% ---
-\section*{Considerações finais}
-\addcontentsline{toc}{section}{Considerações finais}
-
 
 
 \begin{citacao}
@@ -789,6 +982,20 @@ fonte utilizado encontra-se no Apêndice \ref{apend:skinSegment}.
 % Referências bibliográficas
 % ----------------------------------------------------------
 \bibliography{pdi}
+Cardoso, E.S.J. (1999), Compressão de Imagens Utilizando
+   Decomposições em Multi-resolução Morfológicas, Tese de
+   Mestrado, Programa de Engenharia Elétrica, COPPE,
+   Universidade Federal do Rio de Janeiro, Rio de Janei-
+   ro, 114 p.
+   
+   Soille, P. (1999): Morphological Image Analysis, Heidelberg:
+    Springer-Verlag.
+   
+Alvarenga, A.V. , Application of morphological operators on the
+segmentation and contour detection of ultrasound breast images, Revista
+Brasileira de Engenharia Biomédica, v. 19, n. 2, p. 91-101, agosto 2003
+
+
  
 % ----------------------------------------------------------
 % Glossário
@@ -847,6 +1054,18 @@ Trabalho_PDI/q13-q14/filtragem.m}
 \lstset{extendedchars=true,inputencoding=utf8/latin1}
 \lstinputlisting[frame=single, numbers=left]{\matlabCodePath
 Trabalho_PDI/skin/skin.m}
+
+\chapter{Código fonte: Transformada de Haar}
+\label{apend:HaarCode}
+\lstset{extendedchars=true,inputencoding=utf8/latin1}
+\lstinputlisting[frame=single, numbers=left]{\matlabCodePath
+Trabalho_PDI/haarComp/teste.m}
+
+\chapter{Código fonte: Gradiente Morfológico}
+\label{apend:gradMorfCode}
+\lstset{extendedchars=true,inputencoding=utf8/latin1}
+\lstinputlisting[frame=single, numbers=left]{\matlabCodePath
+Trabalho_PDI/q18-20/run.m}
 
 
 \end{apendicesenv}
