@@ -79,12 +79,10 @@
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{Relatório de Trabalho 2 \abnTeX}
-\autor{Equipe \abnTeX\thanks{\url{http://abntex2.googlecode.com/}} \and Lauro
-César
-Araujo\thanks{laurocesar@laurocesar.com}}
+\titulo{Relatório de Trabalho 2}
+\autor{David Clifte da Silva Vieira}
 \local{Brasil}
-\data{2014, v-1.9.2}
+\data{2014, 21 de outubro}
 % ---
 
 % ---
@@ -160,21 +158,7 @@ Araujo\thanks{laurocesar@laurocesar.com}}
 % página de titulo
 \maketitle
 \frenchspacing 
-% resumo em português
-\begin{resumoumacoluna}
- Conforme a ABNT NBR 6022:2003, o resumo é elemento obrigatório, constituído de
- uma sequência de frases concisas e objetivas e não de uma simples enumeração
- de tópicos, não ultrapassando 250 palavras, seguido, logo abaixo, das palavras
- representativas do conteúdo do trabalho, isto é, palavras-chave e/ou
- descritores, conforme a NBR 6028. (\ldots) As palavras-chave devem figurar logo
- abaixo do resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
- ponto e finalizadas também por ponto.
- 
- \vspace{\onelineskip}
- 
- \noindent
- \textbf{Palavras-chaves}: latex. abntex. editoração de texto.
-\end{resumoumacoluna}
+
 
 % ]  				% FIM DE ARTIGO EM DUAS COLUNAS
 % ---
@@ -189,11 +173,15 @@ Araujo\thanks{laurocesar@laurocesar.com}}
 % ----------------------------------------------------------
 \section*{Introdução}
 \addcontentsline{toc}{section}{Introdução}
-
+Este trabalho apresenta o resultados obtidos durante o desenvolvimento da
+segunda lista de exercícios propostos pelo professor Pedro Pedrosa no curso de
+mestrado em Ciências da Computação do IFCE. Parte do código fonte é exibido na
+forma de Apêndice ao fim do trabalho. O código fonte detalhado será enviado
+junto ao trabalho. 
 
 % ---------------------------------------------------------- Seção de
 % explicações ----------------------------------------------------------
-\section{Translação, Rotação e Redimensionamento}
+\section{Translação, Rotação e Redimensionamento: Tópico 11}
 Transção, Rotação e Redimensionamento são transformações lineares que podem ser
 aplicadas a um ponto, linha ou qualquer forma representável por um hiperplano.
 A forma original do objeto é comumente chamada de pré imagem e após as
@@ -399,7 +387,7 @@ $f_x,f_y,f_z$ são os fatores de redimensionamento para cada dimensão do vetor.
         \label{fig:redimensionamento}
 \end{figure}
 
-\section{Contrate, Brilho e Gama}
+\section{Contrate, Brilho e Gama: Tópico 12}
 As técnicas de modificação de histograma são conhecidas como técnicas ponto-a-ponto, uma
 vez que o valor de tom de cinza de um certo pixel após o processamento depende apenas de seu
 valor original. Dentre as principais técnicas temos o ajuste de brilho,
@@ -529,7 +517,7 @@ valores de intensidade menor sofrerão maiores mudanças. O código fonte deste
 exemplo pode ser visualizado no Apendice \ref{apend:contBriGama}
 
 
-\section{Filtragem no domínio da frequência}
+\section{Filtragem no domínio da frequência: Tópico 13 e 14}
 A transformada de Fourier é uma transformação matemática que permite que funções
 possam ser expressas em componentes senoidais. O somatório destas componentes
 tem como resultado a função orignal. A informação de frequencia destas
@@ -722,7 +710,7 @@ valores variando entre [0, 1].
 	\label{fig:filtrosFrequencia}
 \end{figure}
 
-\subsection{Segmentação baseada na cor da pele}
+\subsection{Segmentação baseada na cor da pele: Tópico 16}
 A definição do limiar de segmentação baseado em cores é feita utilizando o
 espaço de cores HSV. Como dito anteriormente este espaço de cores possui como
 característica a separação da informação de cor de outras informações como
@@ -750,23 +738,28 @@ fonte utilizado encontra-se no Apêndice \ref{apend:skinSegment}.
 		\label{fig:skinSegment}		
 \end{figure}
 
-\subsection{Rastreamento baseado em cor}
+\subsection{Rastreamento baseado em cor: Tópico 17 e 19}
+Da mesma forma que a sessão anterior foi feito a segmentação dos objetos baseada
+nas cores dos mesmos. Na figura \ref{fig:redBall} temos os objetos encontrados,
+três bolas vermelhas. Cada objeto tem como identificador o centróide do objeto.
+A identificação foi feita através da cobinação de métodos de multi-limiarização,
+segmentação e contorno. Para esta atividade foi utilizado o Opencv. O código
+fonte encontra-se no Apendice \ref{apend:rast}.
+
+
+
 \begin{figure} 
 		\centering 
 		\includegraphics[width=\textwidth,scale=1, trim =
 		4cm 0cm 0cm 1cm,clip]{imagens/track/redBall.png}
-		\caption{Resultado da aplicação das técnicas de segmentação.
-		a)Imagem Original
-		b)Filtro aplicado ao canal H.
-		c)Filtro aplicado ao canal H e S
-		d)Imagem resultante após os filtros.
+		\caption{Rastreamento de objetos conectados baseado na cor.
 		}
-		\label{fig:skinSegment}		
+		\label{fig:redBall}		
 \end{figure}
 
 
 
-\section{Transformada Haar}
+\section{Transformada Haar: Tópico 15}
 
 A maneira mais facil dentre as transformadas Wavelets disponível temos a
 transformada Haar(HWT).
@@ -895,7 +888,7 @@ objetos.
 \end{figure}
 
 
-\section{Morfologia Matemática}
+\section{Morfologia Matemática: Tópico 18}
 A palavra Morfologia é originalmente um ramo da biologia que estuda as
 formas e estruturas dos animais e plantas. Usamos esta palavra no contexto de
 Morforlogia Matemática como um instrumento para extração de componentes
@@ -923,7 +916,83 @@ A erosão($\ominus$) de uma imagem $F$ para um dado pixel $x$ é definida como o
 valor mínimo da imagem em uma janela definida pelo elemento estruturante, estando a origem do
 elmento estruturante na posição de x (Soille, 1999). Por outro lado, a
 dilatação($\oplus$) é definida como o valor máximo da imagem em uma janela
-definida também por um elemento estruturante.
+definida também por um elemento estruturante. Na figura \ref{subfig:ResCruz},\ref{subfig:RdDireita}
+e \ref{subfig:RdDireita} temos o resultado da aplicação para três elementos estruturantes
+diferentes \ref{fig:elemEst}. Podemos perceber nos resultados que a mudança do
+elemento estruturante provoca uma modificação significante na imagem. O primeiro
+elemento estruturante permite que a imagem seja dilatada ou erodida em todos os
+sentidos enquanto os dois ultimos atuam somente nas diagonais, uma em cada
+direção.
+
+\begin{figure}
+		\centering 
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth,scale=1,interpolate]{\matlabCodePath
+                Trabalho_PDI/q18-20/cruz.png}
+                \caption{}
+                \label{subfig:esCruz}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+ 		\begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath
+		Trabalho_PDI/q18-20/dDireita.png}
+                \caption{}
+                \label{subfig:dDireita}
+        \end{subfigure}
+        ~%
+		\begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath
+		Trabalho_PDI/q18-20/dEsquerda.png}
+                \caption{}
+                \label{subfig:dEsquerda}
+        \end{subfigure}%        
+        
+        \caption{ 
+        \ref{subfig:esCruz}. Elemento estruturante em forma de cruz
+        \ref{subfig:dDireita}. Elemento estruturante 135º
+        \ref{subfig:dEsquerda}. Elemento estruturante 45º
+        }
+	\label{fig:elemEst}
+\end{figure}
+
+
+
+
+
+
+\begin{figure}
+		\centering 
+        \begin{subfigure}[b]{0.8\textwidth}
+                \includegraphics[width=\textwidth,scale=1,interpolate]{\matlabCodePath  Trabalho_PDI/q18-20/cruz.eps}
+                \caption{Resultado com elemento estruturante em forma de cruz}
+                \label{subfig:ResCruz}
+        \end{subfigure}%
+        \\
+         %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+ 		\begin{subfigure}[b]{0.8\textwidth}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath Trabalho_PDI/q18-20/2quad.eps}
+                \caption{ Resultado com elemento estruturante 135º}
+                \label{subfig:RdDireita}
+        \end{subfigure}
+        \\
+        %
+		\begin{subfigure}[b]{0.8\textwidth}
+                \includegraphics[width=\textwidth,scale=1]{\matlabCodePath
+		Trabalho_PDI/q18-20/1quad.eps}
+                \caption{Resultado com elemento struturante 45º}
+                \label{subfig:RdEsquerda}
+        \end{subfigure}%        
+        
+        \caption{
+        Na primeira coluna das figuras \ref{subfig:ResCruz},
+        \ref{subfig:RdDireita} e
+        \ref{subfig:RdEsquerda} temos a imagem orinal, ao centro temos o
+        resultado da dilatação e na útima coluna o resultado da erosão.
+        
+        }
+	\label{fig:elemEst}
+\end{figure}
+
 
 
 \begin{align}
@@ -933,10 +1002,9 @@ A \ominus B = \{x | ( B )_x \cap A \subseteq  A\}
 \begin{align}
 A \oplus B = \{x | (  B^{-1} )_x \cap A \neq  \emptyset\}
 \end{align}
-Aplicações alternadas da dilatação e da erosão levam à formação de duas novas
-operações denominadas abertura e fechamento (Soille, 1999).
 
-\section{Gradiente Morfologico}
+
+\section{Gradiente Morfologico: Tópico 20}
 Esta operação e composta de três outras operações básicas da morfologia: a
 dilação, erosão e a subtração e é definida da seguinte forma:
 
@@ -1067,6 +1135,112 @@ Trabalho_PDI/haarComp/teste.m}
 \lstinputlisting[frame=single, numbers=left]{\matlabCodePath
 Trabalho_PDI/q18-20/run.m}
 
+\chapter{Código fonte: Rastreamento baseado em cor}
+\label{apend:rast}
+\lstset{extendedchars=true,inputencoding=utf8/latin1,language=java,frame=single,
+numbers=left}
+
+\begin{lstlisting}
+	public static void detectObjects(Mat srcImage,Mat dstImage){
+		Mat edges = new Mat(srcImage.size(),CvType.CV_8U);
+		
+		Imgproc.Canny(srcImage, edges, 128, 255);
+		
+		//Encontra objetos conectados na imagem segmentada por Canny
+	    List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+	    Imgproc.findContours(edges, contours, new Mat(),
+	    			 Imgproc.RETR_LIST,Imgproc.CHAIN_APPROX_SIMPLE);
+
+		for (int i = 0; i < contours.size(); i++) {
+			MatOfPoint pts = (MatOfPoint) contours.get(i);
+			
+			//Filtrando pontos pequenos
+			if (pts.rows() < 10)
+				continue;
+				
+			//Filtrando formas quadradas
+			Rect rect = Imgproc.boundingRect(contours.get(i));
+			float k = Math.abs(1 - rect.width/rect.height);
+			if(k>0.1 || rect.height < 30 ) continue;
+			
+			
+			double area = Imgproc.contourArea(pts);
+			
+			System.out.println(k + "   " + rect);
+			// System.out.println(rect.x
+			// +","+rect.y+","+rect.height+","+rect.width);
+			Point pt1 = new Point(rect.x, rect.y);
+			Point pt2 = new Point(rect.x + rect.width, rect.y + rect.height);
+			Point center = new Point(rect.x + rect.width / 2, rect.y
+					+ rect.height / 2);
+
+			Scalar cor = new Scalar(0, 0, 255);
+
+			Core.rectangle(dstImage, pt1, pt2, cor, 3);
+
+			Core.putText(dstImage, "(" + center.toString() + ")", pt2,
+					Core.FONT_HERSHEY_TRIPLEX, 0.5, cor);
+		}
+	}
+\end{lstlisting}
+
+\begin{lstlisting}
+	//Realiza a filtragem baseada em cores de acordo com as variáveis globais
+	//sValue,Limiar de saturação
+	// hueValue e hueWidth, valores do tamanho da janela e do centro 
+	//da cor utilizada na filtragem
+	 
+	public void getFilteredImage(Mat frame,Mat dst) {
+		
+		if(hsv == null){
+			Size d = new Size(frame.cols(), frame.height());
+			hsv = new Mat(d, CvType.CV_8UC3);
+			
+			h = new Mat(d, CvType.CV_8U);
+			s = new Mat(d, CvType.CV_8U);
+			v = new Mat(d, CvType.CV_8U);
+			
+			h1 = new Mat(d, CvType.CV_8U);
+			h2 = new Mat(d, CvType.CV_8U);
+		
+		}
+		
+		
+		Imgproc.cvtColor(frame, hsv, Imgproc.COLOR_BGR2HSV);
+	    Core.split(hsv, lst);
+		
+	    h = lst.get(0);
+	    s = lst.get(1);
+	    v = lst.get(2);
+	    
+		Imgproc.threshold(v, v, 20, 255, Imgproc.THRESH_BINARY);
+		Imgproc.threshold(s, s, sValue, 255, Imgproc.THRESH_BINARY);
+		
+		
+		int ls = hueValue+hueWidth;
+		int li = hueValue-hueWidth;
+		
+		if( li>=0 && ls<=180){
+			Core.inRange(h, new Scalar(li),new Scalar(ls), dst);
+			System.out.println("^L1 = " + (li) + "     L2=" + (ls));
+		}else{
+			if( ls > 180){
+				Core.inRange(h, new Scalar(ls-180),new Scalar(li), dst);
+				Core.bitwise_not(dst, dst);
+				System.out.println("^L1 = " + (ls-180) + "     L2=" + (li));
+			}else{
+				Core.inRange(h, new Scalar(ls),new Scalar(180+li), dst);
+				Core.bitwise_not(dst, dst);
+				System.out.println("^L1 = " + (ls) + "     L2=" + (180+li));
+			}
+		}
+			
+		
+		Core.bitwise_and(dst, v, dst);
+		Core.bitwise_and(dst, s, dst);
+
+}
+\end{lstlisting}
 
 \end{apendicesenv}
 % ---
