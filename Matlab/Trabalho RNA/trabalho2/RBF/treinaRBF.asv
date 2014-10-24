@@ -1,4 +1,4 @@
-function [W Mc,Sigma]=treinaRBF( xd,yd,nRBFs)
+function [W Mc, Sigma]=treinaRBF( xd,yd,nRBFs)
     [ nAmostras nCaract] = size(xd);
 
     Sigma = cov(xd);
@@ -8,6 +8,7 @@ function [W Mc,Sigma]=treinaRBF( xd,yd,nRBFs)
         Mc = xd;
         nRBFs = nAmostras;
     else
+        [idx Mc] = kmeans(xd,nRBFs);
         %Gera Mc
     end
 

@@ -1,4 +1,12 @@
  clear all; clear;clc
+ warning('off','all')
+%%
+%Grid search para o valor do sigma
+grid = (0.0001:0.1:10);
+grid = 8.7
+%Número de iterações para o cálculo da acurácia
+nIt = 500;
+ %%
  
 %Carregando dados
 [ x , y ] = carregaDados( 4 , '../database/iris/bezdekIris.data' );
@@ -10,29 +18,44 @@ mx = mean(x);
 sx = std(x);
 nx = (x - repmat(mx,m,1)) ./ repmat(sx,m,1);
 
-
-acMedia = 0;
+%Matriz confusão
 cm =  zeros(3,3);
-for i=1:50
+
+ss=1;
+medias = zeros(1,length(grid));
+for s=grid
+    s 
+    acMedia = 0;
+    for i=1:nIt
+        %Embaralhando DataSet
+        [nx , y ] = permutaDadosIris(nx,y);
+
+        %Particionando dados
+        [xt yt xd yd] = particionaDadosIris(nx,y,0.25);
+
+        %Treina uma rede RBF com 10 neurônios Ocultos
+        [W Mc,Sigma] = treinaRBF(xd,yd,s,10);
+
+        %Avalia resultado do treinamento com amostras de teste
+        yc = avaliaRBF(xt,Mc,Sigma,W);
+
+        [v yci] = max(yc');
+        [v ydi] = max(yt');
+       % cm = cm + confusionmat(int32(yci),int32(ydi));
+
+        acuracia = sum( yci == ydi)/length(ydi);
+        acMedia = acMedia + acuracia;
+    end
     
-    %Embaralhando DataSet
-    [nx , y ] = permutaDadosIris(nx,y);
+    acMedia = acMedia/nIt;
+    medias(ss) = acMedia;
 
-    %Particionando dados
-    [xt yt xd yd] = particionaDadosIris(nx,y,0.1);
-
-    [W Mc,Sigma] = treinaRBF(xd,yd);
-
-    %Avalia resultado do treinamento com amostras de teste
-    yc = avaliaRBF(xt,Mc,Sigma,W);
-
-    [v yci] = max(yc');
-    [v ydi] = max(yt');
-    cm = cm + confusionmat(yci,ydi);
-    
-    acuracia = sum( yci == ydi)/length(ydi);
-    acMedia = acMedia + acuracia;
+    ss = ss + 1;
+    plot(grid,medias);
+    drawnow;
 end
-acuracia
-cm
+
+[v l] = max(medias);
+bestAc = v
+bestS = grid(l)
 

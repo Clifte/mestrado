@@ -1,13 +1,14 @@
-function [W Mc,Sigma]=treinaRBF( xd,yd,nRBFs)
+function [W Mc, Sigma]=treinaRBF( xd,yd,s,nRBFs)
     [ nAmostras nCaract] = size(xd);
 
-    Sigma = cov(xd);
-    %Sigma = eye(4);
+    %Sigma = cov(xd);
+    Sigma = eye(4)*s;
     
     if nargin<3
         Mc = xd;
         nRBFs = nAmostras;
     else
+        [idx Mc] = kmeans(xd,nRBFs,'EmptyAction','singleton');
         %Gera Mc
     end
 
