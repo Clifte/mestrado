@@ -2,7 +2,7 @@ function [W Mc, Sigma]=treinaRBF( xd,yd,s,nRBFs)
     [ nAmostras nCaract] = size(xd);
 
     %Sigma = cov(xd);
-    Sigma = eye(4)*s;
+    Sigma = eye(nCaract)*s;
     
     if nargin<3
         Mc = xd;

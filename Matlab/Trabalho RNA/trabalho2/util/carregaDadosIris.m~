@@ -12,7 +12,7 @@
 
 
 %%
-function [ x , y ] = carregaDados(modo,path)
+function [ x , y ] = carregaDadosIris(modo,path)
 
     %Carregando dados
     x = csvread(path);

@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Sun Oct 26 16:33:19 BRT 2014
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=trabalho2.tex
+outputFile=trabalho2.pdf
+langSpell=en
+markDer=true
+srcDir=

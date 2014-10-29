@@ -1,0 +1,346 @@
+
+\documentclass[
+	% -- opções da classe memoir --
+	article,			% indica que é um artigo acadêmico
+	11pt,				% tamanho da fonte
+	oneside,			% para impressão apenas no verso. Oposto a twoside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE % títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	sumario=tradicional
+	]{abntex2}
+
+\newcommand{\matlabCodePath}{/home/clifte/git/Mestrado/Matlab/} 
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{nomencl} 			% Lista de simbolos
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+
+\usepackage{amsmath} 			% Equações
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage[]{mcode}
+\usepackage{listingsutf8}
+\usepackage{epstopdf}
+% ---
+		
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+		
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+
+% ---
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Relatório de Trabalho 2}
+\autor{David Clifte da Silva Vieira}
+\local{Brasil}
+\data{2014, 21 de outubro}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={Modelo de artigo científico com abnTeX2},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{atigo científico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ---
+% Altera as margens padrões
+% ---
+\setlrmarginsandblock{3cm}{3cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\checkandfixthelayout
+% ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% Espaçamento simples
+\SingleSpacing
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+% Retira espaço extra obsoleto entre as frases.
+
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+
+%---
+%
+% Se desejar escrever o artigo em duas colunas, descomente a linha abaixo
+% e a linha com o texto ``FIM DE ARTIGO EM DUAS COLUNAS''.
+% \twocolumn[    		% INICIO DE ARTIGO EM DUAS COLUNAS
+%
+%---
+% página de titulo
+\maketitle
+\frenchspacing 
+
+
+% ]  				% FIM DE ARTIGO EM DUAS COLUNAS
+% ---
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+% ----------------------------------------------------------
+% Introdução
+% ----------------------------------------------------------
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+Este trabalho apresenta o resultados obtidos durante o desenvolvimento da
+segunda lista de exercícios propostos pelo professor Ajalmar Roccha no curso de
+mestrado em Ciências da Computação do IFCE. Parte do código fonte é exibido na
+forma de Apêndice ao fim do trabalho.
+
+\section*{RBF - Radial Basis Function}
+
+\subsection{Teorema de Cover} As redes RBF tem como princípio a transformação
+não linear das entradas para um espaço de alta dimensionalidade. Segundo o
+teorema de Cover sobre a separabilidade de padrões, nesse novo espaço de alta
+dimensionalidade a probabilidade de existir um hiperplano que posso separar
+linearmente os dados é maior.
+
+\begin{citacao}
+Um problema complexo de classificação de padrões disposto não linearmente em um
+espaço de alta dimensão tem maior probabilidade de ser linearmente separável do
+que em um espaço de baixa dimensionalidade.(Cover, 1965) 
+\end{citacao}
+
+\begin{align}
+P(N,m_1) = \left(\frac{1}{2}\right)^{N-1}   
+\sum_{m=0}^{m_1-1}   
+\binom{N-1}{m}
+\label{eq:teoSepCover}
+\end{align}
+
+Na equação \ref{eq:teoSepCover}, citada no trabalho de Cover temos a
+probabilidade de um padrão $x$ ser separado linearmente de $\chi=\{x_i\}_{i=1}^{N}$ após passar por uma
+transformação através de uma função oculta $\phi(x)$ que mapeia o padrão $x$ em
+um espaço de maior dimensionalidade.
+Podemos perceber que a medida que o número de dimensões $m_1$ aumentam para uma
+determinado número $N$ padrões a probabilidade resultante tende a 1.
+Do teorema de cover podemos deduzir também que:
+\begin{citacao}
+O número máximo de padrões que são linearmente separáveis em um espaço de
+dimensão $m_1$ é igual a $2m_1$. (Cover, 1965).
+\end{citacao}
+
+\subsection{Mapeamento da função oculta}
+Um mapeamento não linear é utilizado para realizar uma tranfomação nos dados de
+classificação de forma que ele possa ser resolvido linearmente. Como visto na
+sessão anterior, Cover resolveu este problema ao aumentar o número de dimensões
+dos padrões.
+
+O mapeamento é feito através do vetor $\phi(x)$.
+\begin{align}
+\phi(x) = [ \phi_1(x), \phi_2(x), \ldots, \phi_{m1}(x) ]^t 
+\label{eq:phiVec}
+\end{align}
+Dado um vetor $x$ oriundo do espaço de entrada de dimensão $m_0$. O vetor
+$\phi(x)$ realiza o mapeamento de $x$ em novo espaço de dimensão $m_1$. Como
+representado na equação \ref{eq:phiVec}, $\phi(x)$ é um conjunto de funções
+ocultas $\{\phi_i(x)\}^{m_1}_{i=1}$ que mapeiam o vetor $x$ no novo espaço
+denominado espaço oculto ou espaço de caracaterísticas. É esperado que no espaço
+de características seja possível realizar a classificação dos dados de forma
+linear. O hiperplano que separa as classes é definido por
+\begin{align}
+W^T\varphi(x)=0
+\end{align} 
+
+Desta forma temos que para $x \in \chi_1 $, $W^T\varphi(x)>0$, onde $W$ é um
+vetor com os termos da combinação das funções de base radial.
+
+\subsection{A Rede RBF}
+Uma rede RBF(Radial Basis function), da mesma forma que rede MLP e ELM é
+composta por três camadas.
+Uma camada de entrada, camada oculta e camada de saída. A principal diferença entre
+este modelo e os outros está na camda oculta que apresenta como função de
+ativação uma função de base radial.
+
+Uma função de base radial é caracterizada pelo valor aumentar ou
+diminuir de acordo com a distancia ao ponto central da função. A função
+gaussiana geralmente é utilizadas em redes RBFs, ela se caracteriza por valores
+próximos da média apresentarem valores próximos a 1 e valores distantes da média
+apresentam valores próximos a 0. Finalmente a rede RBF pode ser representada
+da seguinte maneira.
+
+A resposta a uma entrada $x$ em uma rede RBF pode ser representada como:
+\begin{align}
+F(X)=\sum^{N}_{i=1}W_i\phi(\|x-x_i\|)
+\end{align}
+
+\subsection{Treinamento da rede}
+O treinamento de uma rede RBF possui duas fases. A princípio é necessário
+definir os parâmetros das funções de base radial e posteriormente os pesos
+utilizados nos neurônios de saída. Uma técnica geralmente utilizada para a
+definição dos parâmetros das funções de base radial é o K-means, nele K
+vetores médios pertecentes aos dados de treinamentos são escolhidos como centro
+das funções de base radial(Bishop, 1995). Uma outra abordagem possível para a
+definição dos centros das funções é realizar a subamostragem dos vetores de
+entrada. Após a definição das funções de base radial resta apenas o calculo dos
+pesos da camada de saída. Como dito anteriormente este problema se resume a
+otimização de um classificador linear e pode ser obtido com a tecnica simples
+da pseudo inversa (Haykin, 2008).
+
+\subsection{Exemplo de aplicação de uma rede RBF}
+
+
+% --- 
+% Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
+% ---
+\bookmarksetup{startatroot}% 
+% ---
+
+
+\begin{citacao}
+
+\end{citacao}
+
+
+% ]  				% FIM DE ARTIGO EM DUAS COLUNAS
+% ---
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{pdi}
+Bishop, C.M., 1995, "Neural Networks for Pattern Recognition" (first ed.),
+Oxford University Press Inc., New York, USA, 482 p.
+ 
+
+
+ 
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Há diversas soluções prontas para glossário em LaTeX. 
+% Consulte o manual do abnTeX2 para obter sugestões.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices 
+% ---
+\begin{apendicesenv} 
+
+% ----------------------------------------------------------
+\chapter{Código fonte: Translação, Rotação e Redimensionamento}
+\label{apend:transRotRed}
+
+	
+ 	\lstset{extendedchars=true,inputencoding=utf8/latin1}
+ 	\lstinputlisting[frame=single,
+ 					 numbers=left]{\matlabCodePath
+ 	Trabalho_PDI/q11/topico11.m}
+
+
+
+\end{apendicesenv}
+% ---
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+\cftinserthook{toc}{AAA}
+
+
+% ---
+% Inicia os anexos
+% ---
+%\anexos
+%\begin{anexosenv}
+%\chapter{}
+%\end{anexosenv}
+
+\end{document}

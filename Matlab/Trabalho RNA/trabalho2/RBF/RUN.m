@@ -1,16 +1,23 @@
- clear all; clear;clc
+addpath(genpath('../util/'))
+clear all; clear;clc
  warning('off','all')
+
 %%
-%Grid search para o valor do sigma
-grid = (0.0001:0.1:10);
-grid = 8.7
+%Grid search para o valor do sigma e o número de NH
+gridS = (0.0001:0.5:10);
+gridnH = 5:2:20;
+%grid = 8.7;
 %Número de iterações para o cálculo da acurácia
-nIt = 500;
+nIt = 50;
+%Percentual de amostras para teste
+pTeste = 0.2;
+
  %%
  
 %Carregando dados
-[ x , y ] = carregaDados( 4 , '../database/iris/bezdekIris.data' );
-xLabelNames = [ 'sLen'; 'sWid'; 'pLen'; 'pWid'];
+[ x , y ] = carregaDatabase('derme');
+
+
 
 %Normalizando X.
 [m n] =size(x);
@@ -22,40 +29,57 @@ nx = (x - repmat(mx,m,1)) ./ repmat(sx,m,1);
 cm =  zeros(3,3);
 
 ss=1;
-medias = zeros(1,length(grid));
-for s=grid
-    s 
-    acMedia = 0;
-    for i=1:nIt
-        %Embaralhando DataSet
-        [nx , y ] = permutaDadosIris(nx,y);
+medias = zeros(1,length(gridS) + length(gridnH));
 
-        %Particionando dados
-        [xt yt xd yd] = particionaDadosIris(nx,y,0.25);
+for nh=gridnH
+    for s=gridS
+        acMedia = 0;
+        for i=1:nIt
 
-        %Treina uma rede RBF com 10 neurônios Ocultos
-        [W Mc,Sigma] = treinaRBF(xd,yd,s,10);
+            %Embaralhando DataSet
+            indicePermut = randperm(m);
+            xp = nx(indicePermut , :);
+            yp = y(indicePermut , :);
 
-        %Avalia resultado do treinamento com amostras de teste
-        yc = avaliaRBF(xt,Mc,Sigma,W);
+            %Particionando dados
+            %Dados de teste
+            tp = m*pTeste;
+            xt = xp(1:tp,:);
+            yt = yp(1:tp,:);
+            %Dados de treinamento
+            xd = xp((tp+1):end,:);
+            yd = yp((tp+1):end,:);
 
-        [v yci] = max(yc');
-        [v ydi] = max(yt');
-       % cm = cm + confusionmat(int32(yci),int32(ydi));
 
-        acuracia = sum( yci == ydi)/length(ydi);
-        acMedia = acMedia + acuracia;
+             %Treina uma rede RBF com 10 neurônios Ocultos
+            [W Mc,Sigma] = treinaRBF(xd,yd,s,nh);
+
+            %Avalia resultado do treinamento com amostras de teste
+            yc = avaliaRBF(xt,Mc,Sigma,W);
+
+            [v yci] = max(yc');
+            [v ydi] = max(yt');
+           % cm = cm + confusionmat(int32(yci),int32(ydi));
+
+            acuracia = sum( yci == ydi)/length(ydi);
+            acMedia = acMedia + acuracia;
+        end
+
+        acMedia = acMedia/nIt;
+        medias(ss) = acMedia;
+
+        ss = ss + 1;
+        plot(medias);
+        drawnow;
+        fprintf('grid search s x nH(%d , %d) = %f\n', s,nh,acMedia);
     end
-    
-    acMedia = acMedia/nIt;
-    medias(ss) = acMedia;
-
-    ss = ss + 1;
-    plot(grid,medias);
-    drawnow;
 end
-
 [v l] = max(medias);
-bestAc = v
-bestS = grid(l)
+
+
+fprintf('grid search s x nH(%d , %d) = %f\n',...
+                        gridS(1+ mod(l,length(gridS)) ) ,...
+                        gridnH(1 + floor(l/length(gridS))), ...
+                        v);
+
 
