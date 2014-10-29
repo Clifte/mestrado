@@ -2,11 +2,9 @@ addpath(genpath('../util/'))
 clear all; clear;clc
 warning('off','all')
 
-%%
-pTeste = 0.25;
-%%
+
 %Carregando dados
-[ x , y ] = carregaDatabase('iris');
+[ x , y ] = carregaDatabase('derme');
 
 %Normalizando X.
 [m n] =size(x);

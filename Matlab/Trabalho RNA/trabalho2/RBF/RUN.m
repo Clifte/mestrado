@@ -1,6 +1,6 @@
 addpath(genpath('../util/'))
 clear all; clear;clc
- warning('off','all')
+warning('off','all')
 
 %%
 %Grid search para o valor do sigma e o número de NH
