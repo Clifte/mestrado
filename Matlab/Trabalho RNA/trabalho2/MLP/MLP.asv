@@ -2,15 +2,20 @@ addpath(genpath('../util/'))
 clear all; clear;clc
 warning('off','all')
 
-
+%%
+pTeste = 0.25;
+%%
 %Carregando dados
-[ x , y ] = carregaDatabase('derme');
+[ x , y ] = carregaDatabase('iris');
 
 %Normalizando X.
 [m n] =size(x);
 mx = mean(x);
 sx = std(x);
 nx = (x - repmat(mx,m,1)) ./ repmat(sx,m,1);
+
+
+
 
 
 %Embaralhando DataSet
@@ -29,4 +34,15 @@ xd = xp((tp+1):end,:);
 yd = yp((tp+1):end,:);
 
 
-[Wo Wh] = treinaMLP(xd,yd,10,0.05)
+[Wo Wh] = treinaMLP(xd,yd,-1,20,0.05,0.01,2000)
+
+yc = mlpAvalia(xt , -1 , Wo , Wh) ;
+
+[v yci] = max(yc');
+[v ydi] = max(yt');
+% cm = cm + confusionmat(int32(yci),int32(ydi));
+
+acuracia = sum( yci == ydi)/length(ydi)
+
+
+

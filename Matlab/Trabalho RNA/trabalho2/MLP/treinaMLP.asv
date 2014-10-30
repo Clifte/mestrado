@@ -2,44 +2,69 @@
 %Número de de neurônios da camada de entrada é definida pela quantidade de
 %elementos da primeira hidenLayer
 %%
-function treinaMLP(x,y,n,eta)
+function [Wo Wh] =treinaMLP(x,y,bias,nh,eta,erro,maxEpoca)
 
 %Xm = Número de amostras
 %Xn = Número de características
 [xm xn] = size(x);
 [ym yn] = size(y);
 
+%Adicionando mais um para o bias
+Wo = rand(nh+1,yn);
+Wh = rand(xn+1, nh);
 
-Wo = rand(n,yn);
-Wh = rand(xn,n);
 
 
+for me=1:maxEpoca
+    
+    for i=1:xm
+        xii = [bias  x(i,:)] ;
+        yii = y(i,:);
 
-for i=1:xm
-    xii = x(i,:);
-    yii = y(i,:);
 
+        %Calculando saída da camada oculta
+        yhc = xii*Wh;
+        yhc = 1./(1+exp(-yhc));
+
+        %Adicionando Bias
+        yhc = [bias  yhc];
+
+        %Calculando total saída da rede
+        yc = yhc * Wo;
+        yc = 1./(1+exp(-yc));
+
+        %Calculando o erro
+        e = yii - yc;
+
+
+        errM = mean(e.^2);
+
+        %atualizando pesos da saída
+        dYc = yc.*(1-yc);
+        gYc = dYc .* e;
+
+        dWo = eta * (gYc)' * yhc;
+        Wo = Wo + dWo';
+
+
+        %atualizando pesos da camada oculta
+        dYhc = yhc.*(1-yhc);
+
+        gYhc = dYhc' .* (Wo *gYc');
+        gYhc = gYhc(2:end);
+
+        dWh = eta * gYhc * xii;
+        Wh = Wh + dWh';
+    end
     
-    %Calculando saída da camada oculta
-    yhc = tanh(xii*Wh);
+    errMarr(i,:) = errM;
     
-    %Calculando total saída da rede
-    yc = tanh(yj * Wo);
-    
-    %Calculando o erro
-    e = yii - yc;
-    
-    
-    dY = sech(yc)  .* sech(yc);
-    dWo = eta * dY * e * yhc;
-    
-    Wo = Wo + dWo;
-    
-    
-    dYh = sech(yhc)  .* sech(yhc);
-    eh = e*dYh*Wo;
-    dWh = Wh + eta * dYh
-    
+    if(errM<erro)
+        break
+    else
+        plot(errMarr);
+        drawnow;
+    end
 end
 
 end
