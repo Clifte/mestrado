@@ -270,6 +270,172 @@ da pseudo inversa (Haykin, 2008).
 
 \subsection{Exemplo de aplicação de uma rede RBF}
 
+\newpage
+
+\section*{MLP - Multilayer Perceptron}
+
+Uma rede MLP é uma rede multicamada constituída por perceptrons conectados
+entre si por pesos. Os perceptrons pertencentes a rede estão conectados formando
+pelo menos três camadas. A primeira é a camada de entrada, responsável por
+receber os sinais de entrada, processá-lo e encaminhá-los para a camada oculta.
+A segunda camada, chamada de camada oculta realiza o processamento dos dados
+vindos da camada de entrada e encaminha o resultado para a camada seguinte esta
+podendo ser outra camada oculta ou a camada de saída. Finalmente a camada de
+saída que representa o resultado da rede. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=6cm]{imagens/mlp.png}
+	\caption{Rede MLP.}
+	\label{fig:digraph}
+\end{figure}
+
+Na figura \ref{fig:digraph} cada neurônio na rede é calculado de forma
+vetorial de acordo com a equação \ref{eq:neuroActivation}. 
+\begin{align}
+	net_i=s_j*w_j
+\label{eq:neuroActivation}
+\end{align}
+
+onde $s_i$ é a camada calculada, $s_j$ é a camada anterior, $w_j$ são os pesos
+da conexão e $f$ é a função de ativação do neurônio. A função de ativação
+costuma ser uma sigmoíde como a tangente hiperbólica ou a logística, porém o
+mais importante desta função é que ela seja diferenciável. Isso será uma
+característica importante para o algoritmo Backpropagation Na equação
+\ref{eq:logistica} e \ref{eq:logisticaDer} temos a função sigmóide logística e
+sua derivada aplicada a um perceptron.
+\begin{align}
+	s_i=f(s_j*w_j)=f(net_i)=\frac{1}{1+e^{-net_i}}
+\label{eq:logistica}
+\end{align}
+
+\begin{align}
+	f'(s_i)=s_i*(1-s_i)
+\label{eq:logisticaDer}
+\end{align} 
+
+\subsection{Backpropagation}
+Durante a fase de treinamento a atualização dos pesos de forma geral é feita de
+acordo com a equação \ref{eq:atualPeso}
+\begin{align}
+	\Delta w(t)= \eta*\frac{\delta E}{\delta w} \\
+	w(t+1)=w(t)+\Delta w(t)
+\label{eq:atualPeso}
+\end{align}
+A ideia principal do backpropagation é calcular as derivadas parcias
+$\frac{\delta E}{\delta w}$ para cada peso da rede. Isso é feito através da
+aplicação sucessiva da regra da cadeia.
+\begin{align}
+\frac{\delta E}{\delta w_{ij}}=
+\frac{\delta E}{\delta s_i}
+\frac{\delta s_i}{\delta w_{ij}}
+\\ onde \\
+\frac{\delta s_i}{\delta w_{ij}}=
+\frac{\delta s_i}{\delta net_i}
+\frac{\delta net_i}{\delta w_{ij}}=
+f'(net_i)s_j
+\end{align}
+
+O cáculo de $\frac{\delta E}{\delta s_i}$, ou seja, a influencia da saída
+$s_i$ no erro $E$ é diferente para a camada oculta e camada de saída.
+Na camada de saída o cálculo de $\frac{\delta E}{\delta s_i}$ é feita da
+seguinte forma.
+
+\begin{align}
+\frac{\delta E}{\delta s_i}=
+\frac{1}{2}\frac{\delta (t_i-s_i)^2}{\delta s_i}=-(t_i-s_i)
+\end{align}
+
+Já para o cáculo da camada oculta deve-se reaplicar a regra da cadeia, desta
+forma temos:
+
+\begin{align}
+\frac{\delta E}{\delta s_i}=
+\sum_{k \in L_i} \frac{\delta E}{\delta s_k} \frac{\delta s_k}{\delta s_i}=
+\sum_{k \in L_i} \frac{\delta E}{\delta s_k} \frac{\delta s_k}{\delta net_k}
+\frac{\delta net_k}{\delta s_i}=
+\sum_{k \in L_i} \frac{\delta E}{\delta s_k} f'(net_k)w_{ki}
+\end{align}
+
+Após o cálculo da derivadas parciais pode-se realizar a atualização dos pesos. A
+atualização dos pesos é feita corrigindo seus valores somando ao gradiente
+cálculado na direção oposta. Está técnica é chamada de Gradiente descendente.
+\begin{align}
+\Delta w(t)=-\eta * \bigtriangledown E(t)
+\end{align}
+
+\subsection{RProp - Resilient backpropagation}
+O algoritmo RProp tem como finalidade eliminar a influência da amplitude das
+derivadas parciais na atualização do peso. O RProp faz isso ao considerar que os
+pesos devem ser atualizados utilizando um valor fixo, $\Delta_{ij}$ em função
+apenas da direção das derivadas parciais.
+
+\begin{align}
+\Delta w_{ij}(t) = 
+\begin{cases} 
+		-\Delta_{ij}(t), & \mbox{se } \frac{\delta E}{\delta w_{ij}}(t)>0 \\ 
+		+\Delta_{ij}(t), & \mbox{se } \frac{\delta E}{\delta w_{ij}}(t)<0 \\
+		0
+\end{cases}
+\end{align}
+
+Caso o valor $\Delta$ seja constante durante todo o treinamento essa regra é
+chamada de Regra Manhattan.
+Caso seja variável é comum seguir a seguinte regra.
+
+\begin{align}
+\Delta^{(t)}_{ij} = 
+\begin{cases} 
+		\eta^+*\Delta_{ij}^{(t-1)}, & \mbox{se } 
+		\frac{\delta E}{\delta w_{ij}}^{(t-1)}*
+		\frac{\delta E}{\delta w_{ij}}^{(t)} >0
+		\\
+		\eta^-*\Delta_{ij}^{(t-1)}, & \mbox{se } 
+		\frac{\delta E}{\delta w_{ij}}^{(t-1)}*
+		\frac{\delta E}{\delta w_{ij}}^{(t)} <0 \\
+		\Delta_{ij}^{(t-1)}
+\end{cases}
+\end{align}
+onde
+$0<\eta^-<1<\eta^+$.
+No inicio do treinamento todos os valores são ajustados para $\Delta_0$. Como o
+valor de $\Delta$ determina o tamanho do primeiro passo de atualizaçõ este
+valor deve ser escolhido de acordo com os valores iniciais dos pesos.
+Para evitar que o valor dos pesos fique muito grande, é determinado um valor
+máximo para $\Delta$, $\Delta_{max}$. Os valores de $\Delta_0$ e $\Delta_{max}$
+geralmente são parâmetros do treinamento.
+\newline
+\\
+    Os valores de $\Delta$ são atualizados de acordo com os valores dos
+fatores $\eta^+$ e $\eta^-$. Ambos os valores são obtidos de forma empírica. Isso impôe
+uma resistência a variações grandes do gradiente.Pode ser verificado
+nos trabalhos de (Martin Riedmiller,1994) que o algoritmo RProp converge mais
+rápido para 5 diferentes benchmarks, cada um deles. Na tabela \ref{tab:bench}
+temos o quadro comparativo dos algoritmos e benchmarks. Perceba que para o
+problema das 2 espirais a solução não foi obtida
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l}
+\cline{1-4}
+               & Backpropagation   & RProp & Speedup &  \\ \cline{1-4}
+10-5-10        & 121               & 19    &    6,36     &  \\ \cline{1-4}
+12-2-12        & \textgreater15000 & 322   &   46,58      &  \\ \cline{1-4}
+Jogo da Trilha & 98                & 23    &    4,2     &  \\ \cline{1-4}
+2 Espirais     & ...               & 4987  &    -     &  \\ \cline{1-4}
+\end{tabular}
+\caption{Quadro comparativo de benchmarks}
+\label{tab:bench}
+\end{table}
+
+
+
+\newpage
+
+
+
+
+
 
 % --- 
 % Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
@@ -292,8 +458,13 @@ da pseudo inversa (Haykin, 2008).
 \bibliography{pdi}
 Bishop, C.M., 1995, "Neural Networks for Pattern Recognition" (first ed.),
 Oxford University Press Inc., New York, USA, 482 p.
- 
-
+ @MISC{Riedmiller94advancedsupervised,
+    author = {Martin Riedmiller},
+    title = {Advanced Supervised Learning in Multi-layer Perceptrons - From Backpropagation to Adaptive Learning Algorithms},
+    year = {1994}
+}
+%"http://galaxy.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html"
+%http://jeremykun.com/2012/12/09/neural-networks-and-backpropagation/
 
  
 % ----------------------------------------------------------
