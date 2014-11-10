@@ -16,34 +16,66 @@ using namespace alglib;
 
 int main(int arg, char **argv)
 {
-
-	clock_t start, end;
-	double elapsed;
-
 	int m = 1000;
 	int n = 1000;
+
+	clock_t t1, t2, t3;
+	double elapsed;
+	ae_int_t info;
+	matinvreport rep;
+
 
 	//Inicializando matriz
 	double *_r2 = new double[ m * n ];
 	for(int i=0;i<m;i++){
 		for(int j=0;j<n;j++){
-			_r2[ i * m + j ] = (i==j) ? 4:0;
+			_r2[ i * m + j ] = (i + j) * (i - j) * (i*j);
 		}
 	}
 
 
-	alglib::real_2d_array a;
-    a.setcontent(m,n,_r2);
-    ae_int_t info;
-    matinvreport rep;
+	alglib::real_2d_array mat;
+    mat.setcontent(m,n,_r2);
+
+
 
 
     //Calculando inversa
-    start = clock();
-    rmatrixinverse(a, info, rep);
-    end = clock();
-    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    t1 = clock();
+    alglib::real_2d_array inv(mat);
+    rmatrixinverse(inv, info, rep);
+    t2 = clock();
+    elapsed = ((double) (t2 - t1)) / CLOCKS_PER_SEC;
+    printf("Time rmatrixinverse: %.4f\n", double(elapsed));
 
-    printf("Time%.4f\n", double(elapsed)); // EXPECTED: 0.5
+
     return 0;
 }
+
+
+static alglib::real_2d_array calculaRBF(alglib::real_2d_array data, alglib::real_2d_array mc, double sigma){
+
+	double a = 0;
+
+	real_2d_array res;
+	double *_res = new double[data.rows()];
+	res.setcontent(data.rows(),1,_res);
+
+	for(int i=0;i< data.rows();i++){
+
+		for (int j = 0; j < mc.rows(); ++j) {
+			double e = 0;
+			for(int k=0;k<mc.cols();k++){
+				e += ((data(i,k) - mc(j,k) ) *  (data(i,k) - mc(j,k)));
+			}
+			e = e / (2 * sigma);
+			a = 1 / (sigma * sqr(2 * pow(  2*pi()  ,  mc.cols()  )));
+			res(i,1) = a * exp(-e);
+		}
+
+	}
+
+	return res;
+}
+
+
