@@ -23,7 +23,7 @@ for i=1:nIt
 
     [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
     
-    [Wo Wh] = treinaMLP(xd,yd,-1,20,0.05,0.01,1000);
+    [Wo Wh] = treinaMLP(xd,yd,-1,20,0.1,0.01,1000);
 
     yc = mlpAvalia(xt , -1 , Wo , Wh) ;
 

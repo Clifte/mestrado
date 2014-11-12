@@ -12,7 +12,7 @@ erro = 0.001;
 %%
 %Carregando dados
 x = (0:0.01:2 * pi)';
-y = (sin(x) + sin(2*x));
+y = sin(exp((sin(x) + sin(2*x))) .* sin(x));
 
 
 %Normalizando X.
@@ -28,9 +28,11 @@ for i=1:nIt
 
     [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
     
-    [Wo Wh] = treinaMLP(xd,yd,-1,5,0.1,erro,10000,'tangh','linear');
+    [Wo Wh] = treinaMLP(xd,yd,-1,15,0.1,erro,10000);
 
     yc = mlpAvalia(xt , -1 , Wo , Wh) ;
+
+    % cm = cm + confusionmat(int32(yci),int32(ydi));
 
     acuracia = sum(abs(yc - yt))/length(yt)
     acMedia = acMedia + acuracia;

@@ -8,10 +8,10 @@ pTeste = 0.1;
 global mlpRegressao;
 mlpRegressao = true;
 nIt = 1;
-erro = 0.001;
+
 %%
 %Carregando dados
-x = (0:0.01:2 * pi)';
+x = (0:0.001:2 * pi)';
 y = (sin(x) + sin(2*x));
 
 
@@ -28,10 +28,14 @@ for i=1:nIt
 
     [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
     
-    [Wo Wh] = treinaMLP(xd,yd,-1,5,0.1,erro,10000,'tangh','linear');
+    [Wh Wm] = treinaELM(xd,yd,40);
 
-    yc = mlpAvalia(xt , -1 , Wo , Wh) ;
+    subplot(1,2,1);
+    plot(xd,yd,'.r');hold on;
+    plot(xd,avaliaElm(xd,Wh,Wm),'.b');
 
+    yc = avaliaElm(xt,Wh,Wm);
+    plot(xt,yc,'.y');   
     acuracia = sum(abs(yc - yt))/length(yt)
     acMedia = acMedia + acuracia;
 end

@@ -3,7 +3,7 @@
 %elementos da primeira hidenLayer
 %%
 function [Wo Wh] =treinaMLP(x,y,bias,nh,eta,erro,maxEpoca)
-
+global mlpRegressao;
 %Xm = Número de amostras
 %Xn = Número de características
 [xm xn] = size(x);
@@ -21,20 +21,16 @@ for epc=1:maxEpoca
         xii = [bias  x(i,:)] ;
         yii = y(i,:);
 
-
         %Calculando saída da camada oculta
         yhc = xii*Wh;
-        yhc = 1./(1+exp(-yhc));
-        dYhc = yhc.*(1-yhc);
-        
+        [ yhc , dYhc] = function_ativ(yhc,'tangh');
+       
         %Adicionando Bias
         yhc = [bias  yhc];
                 
         %Calculando total saída da rede
         yc = yhc * Wo;
-
-        yc = 1./(1+exp(-yc));
-        dYc = yc.*(1 - yc);
+        [ yc , dYc] = function_ativ(yc,'linear');
 
         
         %Calculando o erro
@@ -49,27 +45,28 @@ for epc=1:maxEpoca
 
 
         %atualizando pesos da camada oculta
-
-
-        gYhc = dYhc' .* (Wo * gYc');
+        gYhc = dYhc' .* (Wo(2:end,:) * gYc');
 
         dWh = eta * gYhc * xii;
         Wh = Wh + dWh';
     end
     
     
-%     plot(x,y,'.r');
-%     hold
-%     plot(x, mlpAvalia(x , -1 , Wo , Wh),'.b');
-%     drawnow;
-%     hold
-    
+    if(mlpRegressao == true)
+         figure(2)
+         plot(x,y,'.r');
+         hold on;
+         plot(x, mlpAvalia(x , -1 , Wo , Wh),'.b');
+         drawnow;
+         hold off;
+    end
     errM = errM / xm;
     errMarr(epc,:) = errM;
     
     if(errM<erro)
         break
     else
+        figure(1)
         plot(errMarr);
         drawnow;
     end

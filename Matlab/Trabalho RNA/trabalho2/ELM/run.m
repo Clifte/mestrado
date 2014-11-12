@@ -4,7 +4,7 @@ clear all; clear;clc
 
  %%
 %Grid search para o número de neurônios ocultos
-grid = (10:10:250);
+grid = (2:2:100);
 
 pTeste = 0.25;
 %Número de iterações para o cálculo da acurácia
@@ -12,7 +12,7 @@ nIt = 50;
  %%
  
 %Carregando dados
-[ x , y ] = carregaDatabase('derme');
+[ x , y ] = carregaDatabase('iris');
 
 %Normalizando X.
 [m n] =size(x);
