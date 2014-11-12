@@ -12,7 +12,7 @@ nIt = 50;
  %%
  
 %Carregando dados
-[ x , y ] = carregaDatabase('iris');
+[ x , y ] = carregaDatabase('derme');
 
 %Normalizando X.
 [m n] =size(x);
@@ -37,7 +37,6 @@ for s=grid
 
         [v yci] = max(yc');
         [v ydi] = max(yt');
-        cm = cm + confusionmat(int32(yci),int32(ydi));
 
         acuracia = sum( yci == ydi)/length(ydi);
         acMedia = acMedia + acuracia;

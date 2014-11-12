@@ -24,38 +24,40 @@ for epc=1:maxEpoca
 
         %Calculando saída da camada oculta
         yhc = xii*Wh;
-        yhc = 1./(1+exp(-yhc));
-
+        [ yhc , dYhc] = function_ativ(yhc,'logistica');
+       
         %Adicionando Bias
         yhc = [bias  yhc];
-
+                
         %Calculando total saída da rede
         yc = yhc * Wo;
-        yc = 1./(1+exp(-yc));
+        [ yc , dYc] = function_ativ(yc,'linear');
 
+        
         %Calculando o erro
         e = yii - yc;
-
 
         errM = errM + mean(e.^2);
 
         %atualizando pesos da saída
-        dYc = yc.*(1-yc);
         gYc = dYc .* e;
-
         dWo = eta * (gYc)' * yhc;
         Wo = Wo + dWo';
 
 
         %atualizando pesos da camada oculta
-        dYhc = yhc.*(1-yhc);
-
-        gYhc = dYhc' .* (Wo *gYc');
-        gYhc = gYhc(2:end);
+        gYhc = dYhc' .* (Wo(2:end,:) * gYc');
 
         dWh = eta * gYhc * xii;
         Wh = Wh + dWh';
     end
+    
+    
+%     plot(x,y,'.r');
+%     hold
+%     plot(x, mlpAvalia(x , -1 , Wo , Wh),'.b');
+%     drawnow;
+%     hold
     
     errM = errM / xm;
     errMarr(epc,:) = errM;

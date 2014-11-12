@@ -1,0 +1,82 @@
+
+% IFPB Campus Joao Pessoa
+% PROJETO DE REDES NEURAIS SEM REALIMENTACÄO 
+% ARQUITETURA: REDE MLP - Multilayer Perceptrons
+% CONFIGURACÄO: UMA CAMADA OCULTA - UM NEURÔNIO DE SAÍDA LINEAR
+% ALGORITMO: RESILIENTE BACKPROPAGATION
+% APLICACAO: Aproximaçäo de Funçöes
+% AUTOR: Emannuel Diego Gonçalves de Freitas
+clear all, close all, clc,
+
+%PARAMETROS DE TREINAMENTO
+to=clock; epochmax=10000; epochexb=50; Ni=2; Nh=15; Ns=1; WMED=.1; 
+DELTA0=.1; TA1=1.2; TA2=0.5; TAMIN=1E-6; TAMAX=50; 
+
+%CONJUNTO DE TREINAMENTO
+load fun_dataset;  % N xmax xtreino dtreino xteste dteste   
+
+%INICIALIZAÇÃO DOS PESOS E TAXAS DE APRENDIZADO
+Wji=randn(Nh,Ni).*WMED; Wkj=randn(Ns,Nh+1).*WMED;
+[m p]=size(Wji); [q r]=size(Wkj);
+
+TAWji=ones(Nh,Ni).*DELTA0;       TAWkj=ones(Ns,Nh+1).*DELTA0;
+
+% RPROP ALGORITMO
+for epoca=1:epochmax
+    E=[]; grWkj=0; grWji=0; deltaWji=zeros(size(Wji)); deltaWkj=zeros(size(Wkj));
+    for n=1:N
+      xi=[-1 xtreino(n)]; d=dtreino(n); netj=Wji*xi';  yj=(1)./(1+exp(-netj'));  
+      z(n)=Wkj*[-1 yj]';
+      e=d-z(n);
+      grWkj=grWkj-e.*[-1 yj]; 
+      grWji=grWji-((yj.*(1-yj)).*(e.*Wkj(:,2:Nh+1)))'*xi;  
+      E(n)=0.5*e^2;
+    end
+    SSE(epoca)=sum(E)/N;    
+    if rem(epoca,epochexb)==0,
+      grafico_treino(xtreino,xmax,dtreino,z,epoca,epochexb,SSE(epoca));
+      drawnow;
+    end
+    gWji=sign(grWji); 
+    gWkj=sign(grWkj);
+   if epoca==1
+    deltaWji=-DELTA0.*grWji; 
+    deltaWkj=-DELTA0.*grWkj;
+    Wkj=Wkj+deltaWkj;              
+    Wji=Wji+deltaWji;  
+    grafico_treino(xtreino,xmax,dtreino,z,epoca,epochexb,SSE(epoca));
+    pause(2)
+   elseif epoca>1
+    DW=gWji.*gWji0;     
+    DV=gWkj.*gWkj0;
+   
+    [m p]=size(Wji); [q r]=size(Wkj);
+
+    for i=1:m,  for j=1:p,
+      if DW(i,j)>0,       TAWji(i,j)=min([TAWji(i,j)*TA1 TAMAX]); 
+      elseif DW(i,j)<0,   TAWji(i,j)=max([TAWji(i,j)*TA2 TAMIN]);       end
+      if DW(i,j)>=0,      deltaWji(i,j)=-TAWji(i,j)*(gWji(i,j));
+      else, gWji(i,j)=0;  deltaWji(i,j)=-deltaWji0(i,j); end
+    end,end
+    
+    for i=1:q,  for j=1:r,
+      if DV(i,j)>0,       TAWkj(i,j)=min([TAWkj(i,j)*TA1  TAMAX]); 
+      elseif DV(i,j)<0,   TAWkj(i,j)=max([TAWkj(i,j)*TA2 TAMIN]);       end
+      if DV(i,j)>=0,      deltaWkj(i,j)=-TAWkj(i,j)*(gWkj(i,j));
+      else, gWkj(i,j)=0;  deltaWkj(i,j)=-deltaWkj0(i,j); end
+    end,end
+    Wkj=Wkj+deltaWkj;
+    Wji=Wji+deltaWji;
+end
+gWji0=gWji; gWkj0=gWkj;  deltaWji0=deltaWji; deltaWkj0=deltaWkj;  
+end
+
+% EVOLUÇÃO TREINAMENTO
+figure(2)
+semilogy(1:epochmax,SSE)
+xlabel('épocas')
+ylabel('MSE')
+title('Treinamento RPROP')
+
+
+

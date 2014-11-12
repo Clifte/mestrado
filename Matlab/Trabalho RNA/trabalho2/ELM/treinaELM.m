@@ -2,13 +2,16 @@ function [Wh Wm]=treinaELM(xd,yd,n)
 [nSamples nChar] = size(xd);
 
 
-Wh = rand(nChar,n);
+Wh = rand(nChar + 1,n);
 
-oh = xd*Wh;
+%Adicionando bias
+xd = [ones(nSamples,1) xd];
 
+oh = xd * Wh;
+oh = tanh(oh);
+%oh = sigmf(oh,[1 0]);
 
-%oh = tanh(oh);
-oh = sigmf(oh,[1 0]);
-
-Wm = pinv(oh)*yd;
+%adicionando bias à camada de saída
+oh = [ones(nSamples,1) oh];
+Wm = pinv(oh) * yd;
 end

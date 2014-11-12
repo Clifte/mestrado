@@ -1,6 +1,8 @@
 function [xd yd xt yt] = preparaDados(X,Y,pTeste)
     [m n] = size(X);
     
+    
+
     %Embaralhando DataSet
     indicePermut = randperm(m);
     xp = X(indicePermut , :);

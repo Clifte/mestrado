@@ -5,10 +5,10 @@ warning('off','all')
 %%
 %Grid search para o valor do sigma e o número de NH
 gridS = (0.0001:0.5:10);
-gridnH = 5:2:20;
-%grid = 8.7;
+gridnH = 5:5:200;
+gridS = 8.7;
 %Número de iterações para o cálculo da acurácia
-nIt = 50;
+nIt = 10;
 %Percentual de amostras para teste
 pTeste = 0.2;
 
