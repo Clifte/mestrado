@@ -1,6 +1,6 @@
 addpath(genpath('../util/'))
 clear all; clear;clc
- warning('off','all')
+warning('off','all')
 
 %%
 %Grid search para o valor do sigma e o número de NH
@@ -13,11 +13,8 @@ nIt = 50;
 pTeste = 0.2;
 
  %%
- 
 %Carregando dados
 [ x , y ] = carregaDatabase('derme');
-
-
 
 %Normalizando X.
 [m n] =size(x);
@@ -78,7 +75,7 @@ end
 
 
 fprintf('grid search s x nH(%d , %d) = %f\n',...
-                        gridS(1(l,length(gridS)) ) ,...
+                        gridS(1+ mod(l,length(gridS)) ) ,...
                         gridnH(1 + floor(l/length(gridS))), ...
                         v);
 

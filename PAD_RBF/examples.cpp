@@ -17,7 +17,7 @@ static void calculaKmeans(alglib::real_2d_array data, int n, alglib::real_2d_arr
 static void calculaRBF(alglib::real_2d_array &data, alglib::real_2d_array &mc, double sigma, real_2d_array &res);
 
 
-int main(int arg, char **argv){
+int mainRBF(int arg, char **argv){
 	puts("Iniciando");
 	int n = 50;
 
@@ -36,9 +36,18 @@ int main(int arg, char **argv){
 	calculaKmeans(data,10,mcs);
 
 	puts("Chamando o RBF");
-	alglib::real_2d_array res;
-	calculaRBF(data,mcs, 100, res);
-	puts(res.tostring(3).c_str());
+	alglib::real_2d_array rbfOut;
+	calculaRBF(data,mcs, 100, rbfOut);
+	puts(rbfOut.tostring(3).c_str());
+
+
+	puts("Executando OLAN");
+	alglib::real_2d_array olanOut;
+	//x * W = y
+	//x / y = W;
+	//x * y" = W
+	//x * (y*y')" * y = W
+
 	puts("Fim");
 
 }
@@ -81,6 +90,58 @@ int testaInversa(int arg, char **argv)
 
 
     return 0;
+}
+static void calculaPIV(alglib::real_2d_array &data, alglib::real_2d_array &res){
+	//A' * inv(A * A')
+
+	int m = data.rows(),
+		n = data.rows();
+	int k = data.cols();
+
+	alglib::real_2d_array qM;
+	qM.setlength(m,n);
+
+	puts("A");
+	puts(data.tostring(2).c_str());
+	rmatrixgemm(m, n, k,
+				1, data, 0, 0, 0,
+				data, 0, 0, 1,
+				1, qM, 0, 0);
+
+	puts("A * A'");
+	puts(qM.tostring(2).c_str());
+
+
+	ae_int_t info;
+	matinvreport rep;
+    alglib::real_2d_array inv(qM);
+
+    rmatrixinverse(inv, info, rep);
+    puts("inverse");
+    puts(inv.tostring(2).c_str());
+
+
+
+    rmatrixinverse(inv, info, rep);
+    puts("inverse 2");
+    puts(inv.tostring(2).c_str());
+
+
+
+    puts("pseudoInverse");
+    res.setlength(m,n);
+    rmatrixgemm(m, n, k,
+    			1, data, 0, 0, 1,
+    			inv, 0, 0, 0,
+    			1, res, 0, 0);
+    puts(res.tostring(2).c_str());
+}
+
+int main(int argc, char **argv) {
+	alglib::real_2d_array data("[[1 , 2],[3 , 4],[5 , 6]]");
+	//alglib::real_2d_array data("[[1 , 0, 0],[0 , 1, 0],[0 , 0, 1]]");
+	alglib::real_2d_array res;
+	calculaPIV(data,res);
 }
 
 
@@ -186,7 +247,6 @@ static void calculaKmeans(alglib::real_2d_array data, int n, real_2d_array &mc){
 			}
 		}
 	}
-
 }
 
 

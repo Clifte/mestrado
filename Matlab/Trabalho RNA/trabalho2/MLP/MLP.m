@@ -21,22 +21,8 @@ acMedia = 0;
 
 for i=1:nIt
 
-    %Embaralhando DataSet
-    indicePermut = randperm(m);
-    xp = nx(indicePermut , :);
-    yp = y(indicePermut , :);
-
-    %Particionando dados
-    %Dados de teste
-    tp = m*pTeste;
-    xt = xp(1:tp,:);
-    yt = yp(1:tp,:);
-
-    %Dados de treinamento
-    xd = xp((tp+1):end,:);
-    yd = yp((tp+1):end,:);
-
-
+    [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
+    
     [Wo Wh] = treinaMLP(xd,yd,-1,20,0.05,0.01,1000);
 
     yc = mlpAvalia(xt , -1 , Wo , Wh) ;

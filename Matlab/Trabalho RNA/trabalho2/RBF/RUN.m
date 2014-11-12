@@ -13,11 +13,8 @@ nIt = 50;
 pTeste = 0.2;
 
  %%
- 
 %Carregando dados
 [ x , y ] = carregaDatabase('derme');
-
-
 
 %Normalizando X.
 [m n] =size(x);

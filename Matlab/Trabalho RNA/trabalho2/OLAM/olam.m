@@ -1,8 +1,14 @@
- clear all; clear;clc
- 
+addpath(genpath('../util/'))
+clear all; clear;clc
+warning('off','all')
+
+%%
+pTeste = 0.25;
+%Número de iterações para o cálculo da acurácia
+nIt = 50;
+%%
 %Carregando dados
-[ x , y ] = carregaDados( 4 , '../database/iris/bezdekIris.data' );
-xLabelNames = [ 'sLen'; 'sWid'; 'pLen'; 'pWid'];
+[ x , y ] = carregaDatabase('iris');
 
 %Normalizando X.
 [m n] =size(x);
@@ -10,23 +16,23 @@ mx = mean(x);
 sx = std(x);
 nx = (x - repmat(mx,m,1)) ./ repmat(sx,m,1);
 
-%Embaralhando DataSet
-[nx , y ] = permutaDadosIris(nx,y);
+acMedia = 0;
+%%
 
-%Particionando dados
- [xt yt xd yd] = particionaDadosIris(nx,y,0.2);
+for i=1:nIt
 
-%Calculando Pesos  W = Y * X^-1
-in = pinv(xd);
-W = in * yd;
+    [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
+    %Calculando Pesos  W = Y * X^-1
+    in = pinv(xd);
+    W = in * yd;
 
-%%Calculando Acuracia
-yc =  xt* W;
-[v sc] = max(yc');
-[v l] = max(yt');
-acuracia = sum( l == sc)/length(l)
+    %%Calculando Acuracia
+    yc =  xt* W;
+    [v sc] = max(yc');
+    [v l] = max(yt');
+    acuracia = sum( l == sc)/length(l);
+    acMedia = acMedia + acuracia;
+end
 
-
-%Mostrando resultados
-mostraRegiaoDecisao(W,15,-3:0.1:3);
-mostraResultado( xt, yt, xLabelNames,50,'Resultado');
+acMedia = acMedia/nIt;
+acMedia

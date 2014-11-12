@@ -6,12 +6,13 @@ clear all; clear;clc
 %Grid search para o número de neurônios ocultos
 grid = (10:10:250);
 
+pTeste = 0.25;
 %Número de iterações para o cálculo da acurácia
-nIt = 1;
+nIt = 50;
  %%
  
 %Carregando dados
-[ x , y ] = carregaDadosIris( 4 , '../database/iris/bezdekIris.data' );
+[ x , y ] = carregaDatabase('iris');
 
 %Normalizando X.
 [m n] =size(x);
@@ -28,11 +29,7 @@ for s=grid
     s 
     acMedia = 0;
     for i=1:nIt
-        %Embaralhando DataSet
-        [nx , y ] = permutaDadosIris(nx,y);
-
-        %Particionando dados
-        [xt yt xd yd] = particionaDadosIris(nx,y,0.25);
+        [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
 
         [Wh Wm]=treinaELM(xd,yd,s);
  

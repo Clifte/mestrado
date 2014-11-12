@@ -177,6 +177,10 @@ Este trabalho apresenta o resultados obtidos durante o desenvolvimento da
 segunda lista de exercícios propostos pelo professor Ajalmar Roccha no curso de
 mestrado em Ciências da Computação do IFCE. Parte do código fonte é exibido na
 forma de Apêndice ao fim do trabalho.
+   Neural Networks have been extensively used in many fields due to their ability
+to approximate complex nonlinear mappings directly from the input sample; and
+to provide models for a large class of natural and artificial phenomena that are
+difficult to handle using classical parametric techniques. There are many algorithm
 
 \section*{RBF - Radial Basis Function}
 
@@ -432,10 +436,61 @@ Jogo da Trilha & 98                & 23    &    4,2     &  \\ \cline{1-4}
 
 \newpage
 
+\section*{SON - Self Organize Networks} The Self-Organizing Map (SOM), commonly
+also known as Kohonen network (Kohonen 1982, Kohonen 2001) is a computational
+method for the visualization and analysis of high-dimensional data.
+ The
+objective of a Kohonen network is to map input vectors (patterns) of arbitrary
+dimension N onto a discrete map The most significant difference between the
+Kohonen neural network and the feed forward back propagation neural network is
+that the Kohonen network trained in an unsupervised mode.
+This means that the Kohonen network is presented with data, but the correct
+output that corresponds to that data is not specified. Using the Kohonen network
+this data can be classified into groups. We will begin our review of the Kohonen
+network by examining the training process.
+\subsection{Estrutura}
+The Kohonen neural network works differently than the feed forward neural
+network that we learned about in Chapter 5. The Kohonen neural network contains
+only an input and output layer of neurons. There is no hidden layer in a Kohonen
+neural network.In a Kohonen neural network only one of the output neurons
+actually produces a value. Additionally, this single value is either true or
+false. When the pattern is presented to the Kohonen neural network, one single
+output neuron is chosen as the output neuron. Therefore, the output from the
+Kohonen neural network is usually the index of the neuron (i.e. Neuron #5) that
+fired.
 
+\section*{ELM}
+   Recently, Huang et al [25], [67]proposed a new learning algorithm for Single
+Layer Feedforward Neural Network architecture called Extreme Learning Ma-
+chine (ELM) which overcomes the problems caused by gradient descent based
+algorithms such as Back propagation applied in ANNs. ELM can significantly
+reduce the amount of time needed to train a Neural Network.
+  Extreme Learning Machine proposes by Huang at el [25], [29] uses Single Layer
+Feedforward Neural Network (SLFN) Architecture [1]. It randomly chooses the
+input weights and analytically determines the output weights of SLFN. It has much
+better generalization performance with much faster learning speed.
+  ELM [25], [29] designed as a SLFN with L hidden neurons can learn L distinct
+samples with zero error. Even if the number of hidden neurons (L) the number
+of distinct samples (N), ELM can still assign random parameters to the hidden
+nodes and calculate the output weights using pseudoinverse of H giving only a
+small error $\in > 0 $.
 
-
-
+   Theorem 1: (Liang et.al.[49]) Let an SLFN with Ä additive or RBF hidden
+nodes and an activation function ´Üµ which is infinitely differentiable in any
+interval of R be given. Then, for arbitrary Ä distinct input vectors Ü Ü ¾
+ÊÒ        ½ ¡¡¡ Ä      and ´       µ Ä ½ randomly generated with any continuous
+probability distribution, respectively, the hidden layer output matrix is invertible
+with probability one, the hidden layer output matrix H of the SLFN is invertible
+and À¬   Ì          ¼
+   Theorem 2: (Liang et.al.[49])Given any small positive value               ¼ and
+activation function ´Üµ        Ê      Ê which is infinitely differentiable in any
+interval, there exists Ä      Æ such that for Æ arbitrary distinct input vectors
+ Ü Ü ¾ ÊÒ         ½ ¡ ¡ ¡ Ä , for any ´      µ Ä ½ randomly generated according to
+any continuous probability distribution À Æ ¢Ä ¬Ä¢Ñ  ÌÆ ¢Ñ         with probability
+one.
+   Since the hidden node paremeters of ELM need not be tuned during training
+and since they are simply assigned with random values, eqn (5) becomes a linear
+system and the output weights can be estimated as follows.
 
 % --- 
 % Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
