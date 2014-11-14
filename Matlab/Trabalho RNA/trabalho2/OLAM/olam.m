@@ -27,7 +27,7 @@ for i=1:nIt
     W = in * yd;
 
     %%Calculando Acuracia
-    yc =  xt* W;
+    yc =  xt * W;
     [v sc] = max(yc');
     [v l] = max(yt');
     acuracia = sum( l == sc)/length(l);
@@ -36,3 +36,6 @@ end
 
 acMedia = acMedia/nIt;
 acMedia
+
+
+

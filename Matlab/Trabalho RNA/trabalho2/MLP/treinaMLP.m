@@ -2,8 +2,17 @@
 %Número de de neurônios da camada de entrada é definida pela quantidade de
 %elementos da primeira hidenLayer
 %%
-function [Wo Wh] =treinaMLP(x,y,bias,nh,eta,erro,maxEpoca)
+function [Wo Wh] =treinaMLP(x,y,bias,nh,eta,erro,maxEpoca,f1,f2)
 
+if nargin < 8
+    f1 = 'tangh';
+end
+
+if nargin < 9
+   f2 = f1;
+end
+
+global mlpRegressao;
 %Xm = Número de amostras
 %Xn = Número de características
 [xm xn] = size(x);
@@ -24,45 +33,50 @@ for epc=1:maxEpoca
 
         %Calculando saída da camada oculta
         yhc = xii*Wh;
-        yhc = 1./(1+exp(-yhc));
-
+        [ yhc , dYhc] = function_ativ(yhc,f1);
+       
         %Adicionando Bias
         yhc = [bias  yhc];
-
+                
         %Calculando total saída da rede
         yc = yhc * Wo;
-        yc = 1./(1+exp(-yc));
+        [ yc , dYc] = function_ativ(yc,f2);
 
+        
         %Calculando o erro
         e = yii - yc;
-
 
         errM = errM + mean(e.^2);
 
         %atualizando pesos da saída
-        dYc = yc.*(1-yc);
         gYc = dYc .* e;
-
         dWo = eta * (gYc)' * yhc;
         Wo = Wo + dWo';
 
 
         %atualizando pesos da camada oculta
-        dYhc = yhc.*(1-yhc);
-
-        gYhc = dYhc' .* (Wo *gYc');
-        gYhc = gYhc(2:end);
+        gYhc = dYhc' .* (Wo(2:end,:) * gYc');
 
         dWh = eta * gYhc * xii;
         Wh = Wh + dWh';
     end
     
+    
+    if(mlpRegressao == true)
+         subplot(1,2,1);
+         plot(x,y,'.r');
+         hold on;
+         plot(x, mlpAvalia(x , -1 , Wo , Wh,f1,f2),'.b');
+         drawnow;
+         hold off;
+    end
     errM = errM / xm;
     errMarr(epc,:) = errM;
     
     if(errM<erro)
         break
     else
+        subplot(1,2,2);
         plot(errMarr);
         drawnow;
     end

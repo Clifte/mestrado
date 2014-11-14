@@ -5,10 +5,10 @@ warning('off','all')
 %%
 %Grid search para o valor do sigma e o número de NH
 gridS = (0.0001:0.5:10);
-gridnH = 5:2:20;
-%grid = 8.7;
+gridnH = 5:5:200;
+gridS = 8.7;
 %Número de iterações para o cálculo da acurácia
-nIt = 50;
+nIt = 10;
 %Percentual de amostras para teste
 pTeste = 0.2;
 
@@ -33,20 +33,7 @@ for nh=gridnH
         acMedia = 0;
         for i=1:nIt
 
-            %Embaralhando DataSet
-            indicePermut = randperm(m);
-            xp = nx(indicePermut , :);
-            yp = y(indicePermut , :);
-
-            %Particionando dados
-            %Dados de teste
-            tp = m*pTeste;
-            xt = xp(1:tp,:);
-            yt = yp(1:tp,:);
-            %Dados de treinamento
-            xd = xp((tp+1):end,:);
-            yd = yp((tp+1):end,:);
-
+            [xd yd xt yt] = preparaDados(nx,y,pTeste);
 
              %Treina uma rede RBF com 10 neurônios Ocultos
             [W Mc,Sigma] = treinaRBF(xd,yd,s,nh);

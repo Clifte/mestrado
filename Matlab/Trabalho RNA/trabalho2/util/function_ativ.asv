@@ -1,0 +1,19 @@
+function [ y , dy] = function_ativ( str, var_ativ, out_bin, treino)
+
+    switch str
+        case 'step'
+            y = x > 0;
+            dy = 0;
+        case 'tang_hiper'
+            y = (1 - exp( - x )) ./ (1 + exp( - x ));
+            dy = 0.5 .* (1 - y.^2);           
+        case 'logistica'
+            y = 1 ./ (1 + exp( - x ));
+            dy = y .* (1 - y);
+        case 'set_max_var_ativ'
+            y = var_ativ == max(var_ativ);
+    end
+
+
+end
+

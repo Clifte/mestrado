@@ -4,7 +4,7 @@ clear all; clear;clc
 
  %%
 %Grid search para o número de neurônios ocultos
-grid = (10:10:250);
+grid = (2:2:100);
 
 pTeste = 0.25;
 %Número de iterações para o cálculo da acurácia
@@ -37,7 +37,6 @@ for s=grid
 
         [v yci] = max(yc');
         [v ydi] = max(yt');
-        cm = cm + confusionmat(int32(yci),int32(ydi));
 
         acuracia = sum( yci == ydi)/length(ydi);
         acMedia = acMedia + acuracia;
