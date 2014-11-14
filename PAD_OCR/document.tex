@@ -1,0 +1,344 @@
+% abtex2-modelo-artigo.tex, v-1.9.2 laurocesar
+% Copyright 2012-2014 by abnTeX2 group at http://abntex2.googlecode.com/ 
+%
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Artigo Acadêmico em conformidade com
+% ABNT NBR 6022:2003: Informação e documentação - Artigo em publicação 
+% periódica científica impressa - Apresentação
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	article,			% indica que é um artigo acadêmico
+	11pt,				% tamanho da fonte
+	oneside,			% para impressão apenas no verso. Oposto a twoside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE % títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	sumario=tradicional
+	]{abntex2}
+
+
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{nomencl} 			% Lista de simbolos
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+
+\usepackage{amsmath} 			% Equações
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage[]{mcode}
+\usepackage{listingsutf8}
+\usepackage{epstopdf}
+% ---
+		
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+		
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+% ---
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{GPGPU aplicada ao reconhecimento ótico de caracteres utilizando
+técnica de n vizinho mais próximos.}
+\autor{David Clifte\thanks{cliftedavid@gmail.com}
+\and Gustavo Siebra\thanks{gustavosiebra@gmail.com}} 
+\local{Brasil}
+\data{\today}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={Modelo de artigo científico com abnTeX2},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{atigo científico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ---
+% Altera as margens padrões
+% ---
+\setlrmarginsandblock{3cm}{3cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\checkandfixthelayout
+% ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% Espaçamento simples
+\SingleSpacing
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+
+%---
+%
+% Se desejar escrever o artigo em duas colunas, descomente a linha abaixo
+% e a linha com o texto ``FIM DE ARTIGO EM DUAS COLUNAS''.
+% \twocolumn[    		% INICIO DE ARTIGO EM DUAS COLUNAS
+%
+%---
+% página de titulo
+\maketitle
+
+% resumo em português
+\begin{resumoumacoluna}
+Este artigo descreve o uso d rede neural, visão computacional e  paralelismo
+para analisar o custo  das imagens recebidas de um scanner ou outra forma de
+digitalização para reconhecer o dígito manuscrito e classificá-lo de 0-9, ou
+indefinido, de acordo com o valor correspondente. As principais características
+do sistema são: Controlar o grau de acerto, um sistema de autoaprendizagem de
+fácil implementação e modularizado.
+ 
+ \vspace{\onelineskip}
+ 
+ \noindent
+ \textbf{Palavras-chave}: OCR, cuda, rede neural, visão computacional.
+\end{resumoumacoluna}
+
+
+% ----------------------------------------------------------
+% Introdução
+% ----------------------------------------------------------
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+O reconhecimento ótico de caracteres (OCR) permite que uma máquina possa
+reconhecer automaticamente um caractere através de um mecanismo óptico. As
+tentativas da engenharia em reconhecer caracteres impressos, ou manuscritos,
+iniciaram antes da Segunda Guerra Mundial, mas isso não foi possível até a
+década de 50, quando a associação dos Bancos e a Indústria dos serviços
+financeiros criaram fundos para a pesquisa e desenvolvimento da tecnologia
+[1].Diante da necessidade de uma abordagem mais simples aos temas de visão
+computacional e algoritmos de inteligência computacional, ambos tem custo
+computacional alto devido as rotinas necessárias para aplicações com OCR, foi
+desenvolvido um sistema para diminuir o custo com o suporte de placas gráficas
+GPU.
+
+
+
+Computadores podem executar muitas operações com um tempo consideravelmente
+menor que os humanos poderiam fazer. Contudo, nem sempre, essa rapidez é a
+melhor escolha para resolver um problema. Muitas tarefas com as quais os
+computadores falham consideravelmente os humanos fazem melhor. Muitas dessas
+tarefas, nas quais os computadores perdem estão relacionadas à natureza
+interpretativa e de multi-processamento do cérebro. Uma maneira simples de
+caracterizar bem a diferença entre o computador e o Homem seria comparar o
+computador, que é uma máquina serial, com o nosso cérebro, que é altamente
+paralelo e possui como característica principal a capacidade de aprender coisas
+[3].
+
+A expressão rede neural, como é normalmente usada, é empregada de forma
+incompleta. Computadores tentam simular redes neurais biológicas através da
+implementação de redes neurais artificiais. Contudo, grande parte das
+publicações usam o termo rede neural ao invés do termo rede neural artificial
+(RNA).
+
+Uma rede neural artificial é um paradigma baseado na forma biológica do sistema
+nervoso e de como ele processa a informação. O elemento mais importante desse
+paradigma é a forma como a informação é processada. A rede é composta por um
+grande número de elementos de processamento interconectados atuando juntos para
+resolver uma tarefa. RNAs, bem como pessoas, aprendem baseados em experiências
+passadas e ou exemplos. A rede normalmente é configurada para uma aplicação
+específica, como reconhecimento de padrões ou classificação de dados, através de
+um processo de treinamento. O sistema de aprendizagem biológico baseia-se em
+ajustar as conexões sinápticas que existem entre os neurônios.
+
+Nesse projeto foi utlizado a rede RBF que tem como princípio a transformação não
+linear das entradas para um espaço de alta dimensionalidade. Segundo o teorema
+de Cover sobre a separabilidade de padrões, nesse novo espaço de alta
+dimensionalidade a probabilidade de existir um hiperplano que posso separar
+linearmente os dados é maior.
+
+\section{Pré-processamento}
+
+\subsection{Limiarização}
+        A segmentação de imagens é um processo que tipicamente particiona o
+domínio espacial de uma imagem em subconjuntos mutuamente exclusivos,
+chamados regiões, onde cada região é uniforme e homogênea com respeito a algumas
+propriedades como tom ou textura e cujos valores diferem, em alguns aspectos e
+significados, das propriedades de cada região vizinha.
+       A limiarização de uma imagem digital é um método que se baseia no
+histograma da imagem, buscando encontrar regiões bem definidas, afim de poder
+efetuar a divisão da imagem em objetos ou regiões. A continuidade dos níveis de
+cinza é a primitiva de maior valor na segmentação por região. Assim, a limiarização
+efetua a subdivisão da imagem em função das regiões realmente significativas
+contidas no seu histograma [5].
+        A limiarização global usa um limiar fixo para todos os pixels na imagem e, por
+esta razão, resultados realmente satisfatórios serão obtidos quando o histograma de
+distribuição de níveis de cinza contém cumes distintos e separados que
+correspondem aos objetos e ao fundo. Isto conduz a conclusão que um limiar mais
+local deve ser usado. 
+• A imagem original é dividida em sub-imagens;\newline
+• Um limiar é determinado independentemente para cada sub-imagem;\newline
+• Se um limiar não puder ser determinado para alguma sub-imagem, ele
+  pode ser interpolado à partir dos limiares determinados nas sub-imagens
+  vizinhas;\newline
+• Cada sub-imagem é então processada utilizando seu limiar local.
+     Uma definição de um limiar para técnicas adaptativas pode ser denotada
+como sendo:
+
+\begin{align}
+T=T[x,y,p(x,y),f(x,y)]
+\end{align}
+\\Sendo f(x,y) é o nível de cinza do ponto (x,y) na imagem original, e p(x,y) é
+alguma propriedade local deste ponto. Percebe-se que o limiar T não depende
+apenas do nível de cinza do ponto. É necessário atenção especial ao fator p(x,y) que
+é descrito como uma propriedade do ponto e que é, um dos mais importantes
+componentes no cálculo do limiar para um certo ponto [MIL98]. Para que a influência
+de ruído ou iluminação possa ser levada em conta, o cálculo dessa propriedade é
+baseado no ambiente em que o ponto em questão está inserido. Um exemplo de
+propriedade é a média dos níveis de cinza em uma vizinhança pré-estabelecida, na
+qual o centro é o ponto em análise. Este método produzirá os resultados desejados
+
+
+
+\subsection{Detecção de componentes conexos}
+      O resultado obtido na localização de componentes normalmente apresenta
+um elevado número de elementos indesejáveis.
+      Portanto foram determinadas algumas regras para a filtragem dos
+componentes da imagem. Estas regras estão listadas a seguir:      \newline
+      1. componentes cuja a área não está nos limites desejáveis. \newline
+      2. componentes cujo o perimetro não está nos limites desejáveis.\newline
+
+
+
+\subsection{Extração de características}
+
+A base de dados é composta por dois arquivos. O arquivo de imagens, onde cada
+linha do arquivo é uma imagem que sofreu o pré-processamento, e o arquivo de
+identificadores, onde cada linha se refere ao valor do caractere inserido na
+linha de mesmo número do arquivo de imagens.
+
+
+\section{O algoritmo de vizinhos mais próximos}
+O algoritmo de vizinho mais próximo foi proposto por Cover e Hart em 1966. Essa
+técnica é um método de estimação de densidade bastante simples conceitualmente e de fácil
+implementação.
+
+\subsection{Seleção da base de treinamento}
+
+\subsection{Algoritmo proposto}
+
+
+\section{Resultados obtidos}
+\section{Conclusão}
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\begin{thebibliography}{1}
+
+\bibitem{IEEEhowto:kopka}
+[1]HERBERT SCHANTZ (1982), The History of OCR. Manchester Center, VT: Recognition Technologies Users Association.
+
+\bibitem{IEEEhowto:kopka}
+[2]THE MNIST DATABASE, http://yann.lecun.com/exdb/mnist/ An introduction to neural computing. Aleksander, I. and Morton, H. 2nd edition.
+
+\bibitem{IEEEhowto:kopka}
+[3] Deolinda M. P. Aguieiras de Lima, http://mesonpi.cat.cbpf.br/naj/redesneurais.pdf/
+
+\bibitem{IEEEhowto:kopka}
+[4]JEFF HEATON, Introduction to Neural Networks with Java, second edition.
+
+\bibitem{IEEEhowto:kopka}
+[5] Facon, Jacques; Morfologia Matemática: Teoria e Exemplos. Curitiba,
+ Brasil, 1996
+
+\bibitem{IEEEhowto:kopka}
+[6] Alessandra Bussador; Localização Automática de Placas de Veículos em Fotos
+Digitais Utilizando Abordagem Granulométrica. Curitiba,
+ Brasil, 1996
+\end{thebibliography}
+
+
+
+\end{document}

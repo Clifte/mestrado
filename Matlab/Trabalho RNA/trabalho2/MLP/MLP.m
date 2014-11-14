@@ -3,12 +3,12 @@ clear all; clear;clc
 warning('off','all')
 
 %%
-pTeste = 0.25;
+pTeste = 0.15;
 %Número de iterações para o cálculo da acurácia
 nIt = 10;
 %%
 %Carregando dados
-[ x , y ] = carregaDatabase('iris');
+[ x , y ] = carregaDatabase('ocr');
 
 %Normalizando X.
 [m n] =size(x);
@@ -23,7 +23,7 @@ for i=1:nIt
 
     [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
     
-    [Wo Wh] = treinaMLP(xd,yd,-1,20,0.05,0.01,1000);
+    [Wo Wh] = treinaMLP(xd,yd,-1,6,0.05,0.01,1000);
 
     yc = mlpAvalia(xt , -1 , Wo , Wh) ;
 

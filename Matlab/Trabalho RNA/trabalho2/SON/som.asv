@@ -1,0 +1,25 @@
+function som(X,N)
+[m n] = size(X);
+
+net = rand(N,n);
+T = m*n;
+c = 0;
+
+%Percorrendo todos os dados
+for i=1:m
+    xii = X(i,:);
+    
+    distance = repmat(xii,[n 1]);
+    distance = (distance - net) .* (distance - net);
+    distance = exp(-distance);
+    
+    %Percorrendo todos os neurônios
+     for j=1:n
+         c = c + 1;
+         alpha = exp(-c/T);
+         d = net(j,:) - xii;
+         dNet = d * alpha * distance;
+     end
+end
+
+end

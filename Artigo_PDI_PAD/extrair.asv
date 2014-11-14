@@ -1,0 +1,37 @@
+function features = extrair(chars,img)
+L = length(chars);
+for i=1:L
+    fi = chars(i);
+    bdbox = fi.BoundingBox;
+    H = bdbox(1):(bdbox(1)+bdbox(3));
+    W = bdbox(2):(bdbox(2)+bdbox(4));
+    ch = img(int32(W),int32(H));
+   % imshow(ch)
+    
+   %area relativa
+    features(i,1) = fi.Area / (bdbox(3) * bdbox(4));
+    %aspecto
+    features(i,2) = (bdbox(3) / bdbox(4));
+    
+    
+    %calculando maximos das projeções horizontais e verticais
+    ph = sum(ch);
+    pv = sum(ch');
+    %calculando picos e maximos das projecoes
+    [pvPk pvv] = max(pv)
+    [phPk phv] = max(ph)
+    
+    %normalizando
+    pvPk = pvPk / bdbox(4);
+    phPk = phPk / bdbox(3);
+    
+    pvv = pvv / bdbox(4);
+    phv = phv / bdbox(3);
+    
+    features(i,1) =pvPk;
+    features(i,1) =phPk;
+    features(i,1) =pvv;
+    features(i,1) ;
+end
+
+end

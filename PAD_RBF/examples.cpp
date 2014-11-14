@@ -92,6 +92,52 @@ int testaInversa(int arg, char **argv)
     return 0;
 }
 static void calculaPIV(alglib::real_2d_array &data, alglib::real_2d_array &res){
+	real_2d_array s,vt;
+	real_1d_array w;
+	real_2d_array W;
+
+	alglib::rmatrixsvd(
+		data,
+	    data.rows(),
+	    data.cols(),
+	    2,
+	    2,
+	    2,
+	    w,
+	    s,
+	    vt);
+
+	puts(w.tostring(2).c_str());
+	puts(s.tostring(2).c_str());
+	puts(vt.tostring(2).c_str());
+
+
+	ae_int_t info;
+	matinvreport rep;
+
+	rmatrixinverse(s, info, rep);
+	puts(s.tostring(2).c_str());
+
+	alglib::real_2d_array qM;
+	qM.setlength(vt.rows(),s.cols());
+
+
+	rmatrixgemm(vt.rows(), s.cols(), vt.cols(),
+				1,
+				vt, 0, 0, 0,
+				s, 0, 0, 0,
+				1, qM, 0, 0);
+
+	puts(qM.tostring(2).c_str());
+	W.setcontent(w.length(),1,w.getcontent());
+	rmatrixgemm(qM.rows(), W.cols(), qM.cols(),
+					1,
+					qM, 0, 0, 0,
+					W, 0, 0, 1,
+					1, qM, 0, 0);
+
+}
+static void calculaPIV2(alglib::real_2d_array &data, alglib::real_2d_array &res){
 	//A' * inv(A * A')
 
 	int m = data.rows(),
@@ -122,11 +168,6 @@ static void calculaPIV(alglib::real_2d_array &data, alglib::real_2d_array &res){
 
 
 
-    rmatrixinverse(inv, info, rep);
-    puts("inverse 2");
-    puts(inv.tostring(2).c_str());
-
-
 
     puts("pseudoInverse");
     res.setlength(m,n);
@@ -139,7 +180,8 @@ static void calculaPIV(alglib::real_2d_array &data, alglib::real_2d_array &res){
 
 int main(int argc, char **argv) {
 	alglib::real_2d_array data("[[1 , 2],[3 , 4],[5 , 6]]");
-	//alglib::real_2d_array data("[[1 , 0, 0],[0 , 1, 0],[0 , 0, 1]]");
+	//alglib::real_2d_array data("[[5 , 0, 0],[0 , 5, 0],[0 , 0, 5]]");
+	//alglib::real_2d_array data("[[1 , 0, 0],[0 , 1, 0]]");
 	alglib::real_2d_array res;
 	calculaPIV(data,res);
 }
