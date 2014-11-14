@@ -32,7 +32,7 @@ for epc=1:maxEpoca
 
 
         %Calculando saída da camada oculta
-        yhc = xii*Wh;
+        yhc = xii * Wh;
         [ yhc , dYhc] = function_ativ(yhc,f1);
        
         %Adicionando Bias
@@ -45,14 +45,12 @@ for epc=1:maxEpoca
         
         %Calculando o erro
         e = yii - yc;
-
         errM = errM + mean(e.^2);
 
         %atualizando pesos da saída
         gYc = dYc .* e;
         dWo = eta * (gYc)' * yhc;
         Wo = Wo + dWo';
-
 
         %atualizando pesos da camada oculta
         gYhc = dYhc' .* (Wo(2:end,:) * gYc');

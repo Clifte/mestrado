@@ -20,7 +20,6 @@ acMedia = 0;
 %%
 
 for i=1:nIt
-
     [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
     %Calculando Pesos  W = Y * X^-1
     in = pinv(xd);
