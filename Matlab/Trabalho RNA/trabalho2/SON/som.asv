@@ -1,25 +1,45 @@
-function som(X,N)
+function net = som(X,N)
 [m n] = size(X);
 
-net = rand(N,n);
+net = rand(N,n) ;
 T = m*n;
 c = 0;
+th = 0.5;
 
+
+for ep=1:3
 %Percorrendo todos os dados
 for i=1:m
     xii = X(i,:);
     
-    distance = repmat(xii,[n 1]);
+    distance = repmat(xii,[N 1]);
     distance = (distance - net) .* (distance - net);
-    distance = exp(-distance);
+    distance = exp(-sum(distance') );
     
+    [v l] = max(distance');
+    l
     %Percorrendo todos os neurônios
-     for j=1:n
+     for j=1:N
+         d =  xii - net(j,:);
+         v = sum(abs(d))
+         
+         
+         alpha = exp(-10*c/T);
+         
+         dNet = alpha * d;
+         net(j,:) = net(j,:) + dNet;
          c = c + 1;
-         alpha = exp(-c/T);
-         d = net(j,:) - xii;
-         dNet = d * alpha * distance;
-     end
-end
+         
+         
+        scatter(X(:,1),X(:,2),'r');
+        hold on;
+        scatter(net(:,1),net(:,2),'b');
+        hold off;
+        drawnow;
 
+     end
+     
+
+end
+end
 end
