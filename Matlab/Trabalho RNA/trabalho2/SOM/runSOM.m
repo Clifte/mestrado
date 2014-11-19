@@ -43,7 +43,6 @@ sigmas = linspace(1.2,0.001,epochs);
 eta = linspace(alpha, 0.01, m * q * epochs);
 
 
-% Impressão de cabeçalho.
 fprintf('--------------------------------------------------\n');
 fprintf('Modelo utilizado: SOM. \n');
 fprintf('Quantidade de padrões de treinamento: %d. \n', (1-pTeste) * m);

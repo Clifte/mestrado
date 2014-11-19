@@ -209,11 +209,7 @@ transformação através de uma função oculta $\phi(x)$ que mapeia o padrão $
 um espaço de maior dimensionalidade.
 Podemos perceber que a medida que o número de dimensões $m_1$ aumentam para uma
 determinado número $N$ padrões a probabilidade resultante tende a 1.
-Do teorema de cover podemos deduzir também que:
-\begin{citacao}
-O número máximo de padrões que são linearmente separáveis em um espaço de
-dimensão $m_1$ é igual a $2m_1$. (Cover, 1965).
-\end{citacao}
+
 
 \subsection{Mapeamento da função oculta}
 Um mapeamento não linear é utilizado para realizar uma tranfomação nos dados de
@@ -223,7 +219,7 @@ dos padrões.
 
 O mapeamento é feito através do vetor $\phi(x)$.
 \begin{align}
-\phi(x) = [ \phi_1(x), \phi_2(x), \ldots, \phi_{m1}(x) ]^t 
+\phi(x) = [ \phi_1(x), \phi_2(x), \ldots, \phi_{m1}(x) ] 
 \label{eq:phiVec}
 \end{align}
 Dado um vetor $x$ oriundo do espaço de entrada de dimensão $m_0$. O vetor
@@ -234,25 +230,27 @@ denominado espaço oculto ou espaço de caracaterísticas. É esperado que no es
 de características seja possível realizar a classificação dos dados de forma
 linear. O hiperplano que separa as classes é definido por
 \begin{align}
-W^T\varphi(x)=0
+\phi(x)W^t=0
 \end{align} 
 
-Desta forma temos que para $x \in \chi_1 $, $W^T\varphi(x)>0$, onde $W$ é um
-vetor com os termos da combinação das funções de base radial.
+Desta forma temos que para $x \in \chi_1 $, $\phi(x)W^t>0$, onde $W$ é um
+vetor com os termos da combinação das funções de base radial e $\chi_1$ é a
+classe na qual $x$ faz parte.
 
 \subsection{A Rede RBF}
 Uma rede RBF(Radial Basis function), da mesma forma que rede MLP e ELM é
 composta por três camadas.
 Uma camada de entrada, camada oculta e camada de saída. A principal diferença entre
-este modelo e os outros está na camda oculta que apresenta como função de
+este modelo e os outros está na camada oculta que apresenta como função de
 ativação uma função de base radial.
 
 Uma função de base radial é caracterizada pelo valor aumentar ou
 diminuir de acordo com a distancia ao ponto central da função. A função
 gaussiana geralmente é utilizadas em redes RBFs, ela se caracteriza por valores
 próximos da média apresentarem valores próximos a 1 e valores distantes da média
-apresentam valores próximos a 0. Finalmente a rede RBF pode ser representada
-da seguinte maneira.
+apresentam valores próximos a 0. Através do valor da variância é
+possível controlar o raio de atuação da gaussiana como função de base
+radial.
 
 A resposta a uma entrada $x$ em uma rede RBF pode ser representada como:
 \begin{align}
@@ -273,6 +271,31 @@ otimização de um classificador linear e pode ser obtido com a tecnica simples
 da pseudo inversa (Haykin, 2008).
 
 \subsection{Exemplo de aplicação de uma rede RBF}
+A Rede RBF será aplicada para problemas de classificação, são eles:
+Problemas da iris, doenças de pele e da coluna vertebral. Para todos os
+problemas a determinação dos parâmetros da rede foi feita através do algoritmo
+de otimização gridSearch. Foram variados os valores de sigma e da quantidade de
+neurônios afim de se obter o melhor resultado para cada problema.
+Foram obtidos os seguintes resultados para os três conjuntos de dados, tabela
+\ref{tab:rbfRes}.
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+DataSet          & Acurácia & nTreinamento & nTeste & nNeurônios & Sigma \\ \hline
+Íris             & 0,9533   & 120          & 30     & 8          & 4,85  \\ \hline
+Derme            & 0,9068   & 292          & 73     & 10         & 1,85  \\ \hline
+Coluna Vertebral & 0,8226   & 248          & 62     & 12         & 4,10   \\
+\hline
+\end{tabular}
+\caption{Resultados obtidos pelo classificador RBF.nTreinamento, nTeste e
+nNeurônios são as quantidades de de dados de treinamento, quantidade de dados
+de teste e quantidade de neurônios utilizados no treinamento. Sigma é o valor
+de sigma utilizado na gaussiana multivariada.}
+\label{tab:rbfRes}
+\end{table}
+
+Foi obtido também a matriz confusão para cada conjunto de dados.
 
 \newpage
 
