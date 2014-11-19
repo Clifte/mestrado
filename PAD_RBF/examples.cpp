@@ -288,6 +288,9 @@ static void calculaKmeans(alglib::real_2d_array data, int n, real_2d_array &mc){
 				mc(j,k) = mc(j,k) / counters[j];
 			}
 		}
+
+
+
 	}
 }
 

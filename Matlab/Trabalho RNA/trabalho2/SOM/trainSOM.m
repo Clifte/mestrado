@@ -1,0 +1,84 @@
+function [w, EQM] = trainSOM (data, q, nn, epochs, eta, sigmas)
+[m n] = size(data);
+att = n;
+
+
+% trainSOM Constrói uma rede SOM a partir da base de dados fornecida.
+%
+% Funcionalidade:
+%   1.  Seleção de protótipos através da clusterização do k-Médias.
+%   2.  Cálculo do coeficiente sigma (controla a largura da função do
+%       neurônio de ativação) para cada neurônio RBF.
+%   3.  Treinamento dos pesos de saída para cada classe utilizando o descendente gradiente.
+%
+% Parâmetros:
+%   data        - Base de dados para treinamento.
+%   att         - Número de atributos de cada classe.
+%   q           - Quantidade de neurônios.
+%   n           - Tamanho da vizinhança.
+%   epochs      - Número de épocas.
+%   eta         - Taxa de aprendizagem variável.
+%   sigmas      - Largura das funções de base.
+
+% Definição do vetor inicial de pesos.
+w = rand(q,n);
+
+iEta = 0;
+erro = 0;
+for ep = 1:epochs
+    sigmas(ep)
+    
+    %Embaralha os dados
+    [data] = preparaDados(data,data,0);
+    
+    
+    for i = 1:m
+        iEta = iEta+1;
+        
+        % Obter o primeiro padrão.
+        xii = data(i, :);
+        
+        % Calculando ativação da rede para o padrão xii
+        diffs = bsxfun(@minus, xii, w);
+        distXii = sqrt(sum(diffs.^2, 2));
+        
+        % Verificação do índice do neurônio vencedor.
+        [v vencedor] = min(distXii);
+        
+        % Verificando vizinhos do neurônio vencedor.
+        diffs = bsxfun(@minus, w(vencedor,:), w);
+        distVencedor = sqrt(sum(diffs.^2, 2));
+        
+        %Calculando o erro da rede
+        diffs = bsxfun(@minus, xii, w(vencedor,:)); 
+       	erro = [erro  sum(diffs.^2,2) ];
+       
+        
+        % Ordenação para seleção dos vizinhos do neurônio vencedor
+        [v, indices] = sort(distVencedor);              
+        
+        %atualizando os n vizinhos mais próximos do vencedor
+        for j = 1:nn
+            iN = indices(j);
+            y = exp(-  distXii(iN) /sigmas(ep) );                                        % Obtenção do valor de saída.
+            diff = xii - w(iN,:);
+            w(iN,:) =  w(iN,:) + eta(iEta) * y * diffs;    % Atualização dos pesos.
+        end
+        
+        subplot(1,2,1);
+        scatter(data(:,1),data(:,2),'.r');
+        hold on;
+        scatter(w(:,1),w(:,2),'.b');
+        hold off;
+        
+        subplot(1,2,2);
+        plot(erro);
+        drawnow;
+    end
+   
+end
+
+end
+
+
+

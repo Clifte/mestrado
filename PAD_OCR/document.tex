@@ -172,7 +172,7 @@ técnica de n vizinho mais próximos.}
 
 % resumo em português
 \begin{resumoumacoluna}
-Este artigo descreve o uso d rede neural, visão computacional e  paralelismo
+Este artigo descreve o uso da rede neural, visão computacional e  paralelismo
 para analisar o custo  das imagens recebidas de um scanner ou outra forma de
 digitalização para reconhecer o dígito manuscrito e classificá-lo de 0-9, ou
 indefinido, de acordo com o valor correspondente. As principais características
@@ -302,8 +302,65 @@ linha de mesmo número do arquivo de imagens.
 
 \section{O algoritmo de vizinhos mais próximos}
 O algoritmo de vizinho mais próximo foi proposto por Cover e Hart em 1966. Essa
-técnica é um método de estimação de densidade bastante simples conceitualmente e de fácil
-implementação.
+técnica é um método de estimação de densidade bastante simples conceitualmente e
+de fácil implementação.
+K nearest neighbors is a simple algorithm that stores all available cases and
+classifies new cases based on a similarity measure (e.g., distance functions).
+KNN has been used in statistical estimation and pattern recognition already in
+the beginning of 1970’s as a non-parametric technique.
+
+A case is classified by a majority vote of its neighbors, with the case being
+assigned to the class most common amongst its K nearest neighbors measured by a
+distance function. If K = 1, then the case is simply assigned to the class of
+its nearest neighbor.
+
+Pseudocode is defined as a listing of sequential steps for solving a
+computational problem. Pseudocode is used by computer programmers to mentally
+translate each computational step into a set of programming instructions
+involving various mathematical operations (addition, subtraction,
+multiplication, division, power and transcendental functions,
+differentiation/integration, etc.) and resources (vectors, arrays, graphics,
+input/output, etc.) in order to solve an analytic problem. Following is a
+listing of pseudocode for the k-nearest-neighbor classification method using
+cross-validation.
+
+
+
+initialize the $n \times n$ distance matrix $\textbf{D}$ \newline
+initialize the $\Omega \times \Omega$ confusion matrix $\textbf{C}$ \newline
+set $t \leftarrow 0$,
+$TotAcc \leftarrow 0$, and set $NumIterations$ equal to the desired number of
+ iterations (re-partitions). \newline
+calculate distances between all the input samples and store in $n \times n$
+matrix $\textbf{D} $. (For a large number of samples, use only the lower or
+upper triangular of $\textbf{D}$ for storage since it is a square symmetric
+matrix.)
+
+for $t \leftarrow 1$ to $NumIterations$ do
+
+set $\textbf{C} \leftarrow 0$, and $n_{total} \leftarrow 0$ .
+partition the input samples into $\kappa$ equally-sized groups.
+for $fold \leftarrow 1$ to $\kappa$\newline 
+do assign samples in the $foldth$ partition
+to testing, and use the remaining samples for training. Set the number of samples
+used for testing as $n_{test}$ .\newline
+set $n_{total} \leftarrow n_{total}+n_{test}$ .
+for $i \leftarrow 1$ to $n_{test}$\newline 
+do for test sample $\textbf{x}_i$ determine the
+$k$ closest training samples based on the calculated distances.
+determine $\hat{\omega}$ , the most frequent class label among the $k$ closest
+training samples.
+increment confusion matrix $\textbf{C}$ by 1 in element
+$c_{\omega,\hat{\omega}}$ , where $\omega$ is the true and $\hat{\omega}$ the
+predicted class label for test sample $\textbf{x}_i$ . If $\omega =\hat{\omega}$
+then the increment of +1 will occur on the diagonal of the confusion matrix, otherwise, the increment will
+occur in an off-diagonal.
+determine the classification accuracy using $Acc =
+\frac{\sum_j^{\Omega}c_{jj}}{n_{total}}$ where $c_{jj}$ is a diagonal element of
+the confusion matrix $\textbf{C}$ .
+calculate $TotAcc = TotAcc + Acc$ .
+calculate $AvgAcc = TotAcc/NumIterations$
+
 
 \subsection{Seleção da base de treinamento}
 

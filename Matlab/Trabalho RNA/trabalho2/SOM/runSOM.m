@@ -1,0 +1,85 @@
+% Limpeza da tela e variáveis da memória.
+addpath(genpath('../util/'))
+clear all; clear;clc
+warning('off','all')
+
+%%
+%Número de neurônios
+q = 60;
+%Taxa de aprendizagem
+alpha = 0.8;
+
+% Tamanho vizinhança
+nn = 10;
+%Número de épocas
+epochs = 10;
+%Particionamento para testes
+pTeste = 0.25;
+%%
+
+%Carregando dados
+[ x , y ] = carregaDatabase('iris');
+[m n] = size(x);
+[nsamples nClasses] = size(y);
+%%
+%Normalizando X.
+maxx = max(x);
+maxx = repmat(maxx,[m 1]);
+
+minx = min(x);
+minx = repmat(minx,[m 1]);
+
+nx = x - minx;
+d = maxx - minx;
+nx = nx ./d;
+
+%%
+
+
+% Definição dos raios
+sigmas = linspace(1.2,0.001,epochs);
+
+% Definição da taxa de aprendizado;
+eta = linspace(alpha, 0.01, m * q * epochs);
+
+
+% Impressão de cabeçalho.
+fprintf('--------------------------------------------------\n');
+fprintf('Modelo utilizado: SOM. \n');
+fprintf('Quantidade de padrões de treinamento: %d. \n', (1-pTeste) * m);
+fprintf('Quantidade de padrões de teste: %d. \n', pTeste * m);
+fprintf('Quantidade de classes: %d. \n', nClasses);
+fprintf('Quantidade de atributos: %d. \n', n);
+fprintf('--------------------------------------------------\n\n');
+
+%n repeticoes
+repet = 5;
+for r = 1:repet
+    
+    % Randomizar e particiona dados base de dados.
+    [xd yd xt yt] = preparaDados(nx,y,pTeste);
+    
+    %****************Treinando************************
+    [w] = trainSOM(xd(:,[1 2]), q, nn, epochs, eta, sigmas);
+    
+    %**************** Rotulação dos neurônios************************
+    [v yd] = max(yd');
+    [l] = labelNeuron(xd(:,[1 2]),yd, w,nn);
+    
+    % =============================================================================
+    %                           Validação da rede
+    % =============================================================================
+    
+    
+    %[accuracy(r), numRight(r)] = evaluateSOM(vt, att, m);
+    %fprintf('Acurácia: %d / %d, %.1f%%. \n\n', numRight, size(vt,1), accuracy);
+    return
+end
+
+fprintf('--------------------------------------------------\n');
+fprintf('Resultado após %d Realizações da taxa de acerto: \n', r);
+fprintf('Média:  %.2f%%. \n', mean(accuracy));
+fprintf('Máximo: %.2f%%. \n', max(accuracy));
+fprintf('Mínimo: %.2f%%. \n', min(accuracy));
+fprintf('Variância: %.2f. \n', var(accuracy));
+fprintf('--------------------------------------------------\n');
