@@ -4,7 +4,7 @@ warning('off','all')
 
 %%
 %Carregando dados
-base = 'derme';
+base = 'vertebra';
 
 [ x , y ] = carregaDatabase(base);
 [m nClasses] = size(y);
@@ -48,7 +48,7 @@ fprintf('Quantidade de padrões de teste: %d. \n', pTeste * m);
 fprintf('Quantidade de classes: %d. \n', nClasses);
 fprintf('Quantidade de atributos: %d. \n', n);
 fprintf('--------------------------------------------------\n\n');
-
+fprintf('Aguarde...\n\n');
 %% Realizando o Grid Search
 
 for sIndex=1:length(gridS)
@@ -89,13 +89,17 @@ for sIndex=1:length(gridS)
         imagesc(gSearchAcc);
         drawnow;
         
-        fprintf('grid search s x nH(%d , %d) = %f\n', s,nh,acMedia);
+        %fprintf('grid search s x nH(%d , %d) = %f\n', s,nh,acMedia);
     end
 end
 
-[nh, s] = find(ismember(gSearchAcc, max(gSearchAcc(:))));
-fprintf('Valores ótimos encontrados para sigma e quantidade de neurônios: %d , %d. \n', ...
-            gridS(s), gridnH(nh));
+[nhIndex, sIndex] = find(ismember(gSearchAcc, max(gSearchAcc(:))));
+nhIndex = nhIndex(1);
+sIndex = sIndex(1);
+nh = gridnH(nhIndex);
+s = gridS(sIndex);
+
+fprintf('Valores ótimos encontrados para sigma e quantidade de neurônios: %d , %d. \n', s, nh);
 
 
  
@@ -128,5 +132,7 @@ end
  cm
  acMedia
  
- %%Gravando 
- csvwrite('saida/RBF_confusion_derme.csv',cm)
+ %%Gravando CM
+ csvwrite(['saida/RBF_confusion_'    base   '.csv'],cm)
+ 
+ saveconfusionMat('teste.csv', cm, labels)

@@ -1,0 +1,10 @@
+function saveConfusionMat(name, m , labels)
+   fileID = fopen('myfile.txt','w');
+   fprintf('%s', labels);
+ 
+   
+   for i=1:length(labels)
+	   formatSpec = '%s is %4.2f meters or %8.3f mm\n';
+	   fprintf(fileID,formatSpec,labels(i),m(i,:))
+   end
+end

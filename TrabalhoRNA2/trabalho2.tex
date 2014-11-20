@@ -16,7 +16,8 @@
 	sumario=tradicional
 	]{abntex2}
 
-\newcommand{\matlabCodePath}{/home/clifte/git/Mestrado/Matlab/}  
+\newcommand{\matlabCodePath}{/home/clifte/git/Mestrado/Matlab/}
+\newcommand{\matlabRBFCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/RBF/}
 % ---
 % PACOTES
 % ---
@@ -42,6 +43,9 @@
 \usepackage[]{mcode}
 \usepackage{listingsutf8}
 \usepackage{epstopdf}
+\usepackage{csvsimple}
+
+
 % ---
 		
 % ---
@@ -254,7 +258,7 @@ radial.
 
 A resposta a uma entrada $x$ em uma rede RBF pode ser representada como:
 \begin{align}
-F(X)=\sum^{N}_{i=1}W_i\phi(\|x-x_i\|)
+Y(X)=\sum^{N}_{i=1}W_i\phi(\|x-x_i\|)
 \end{align}
 
 \subsection{Treinamento da rede}
@@ -269,6 +273,12 @@ entrada. Após a definição das funções de base radial resta apenas o calculo
 pesos da camada de saída. Como dito anteriormente este problema se resume a
 otimização de um classificador linear e pode ser obtido com a tecnica simples
 da pseudo inversa (Haykin, 2008).
+\begin{align}
+W\phi=Y \\
+W*\phi*\phi^{-1}=Y*\phi^{-1}\\
+W=Y*\phi^{-1},\ para\ \phi\ quadrado\ ou \\
+W=Y*\phi^{\dagger},\ para\ \phi\ não\ quadrado
+\end{align}
 
 \subsection{Exemplo de aplicação de uma rede RBF}
 A Rede RBF será aplicada para problemas de classificação, são eles:
@@ -288,16 +298,56 @@ Derme            & 0,9068   & 292          & 73     & 10         & 1,85  \\ \hli
 Coluna Vertebral & 0,8226   & 248          & 62     & 12         & 4,10   \\
 \hline
 \end{tabular}
+  
+   
+
+
 \caption{Resultados obtidos pelo classificador RBF.nTreinamento, nTeste e
 nNeurônios são as quantidades de de dados de treinamento, quantidade de dados
 de teste e quantidade de neurônios utilizados no treinamento. Sigma é o valor
 de sigma utilizado na gaussiana multivariada.}
 \label{tab:rbfRes}
 \end{table}
-
+ 
 Foi obtido também a matriz confusão para cada conjunto de dados.
+ 
+ 
+ 
+\begin{table}[h]
+\csvreader[tabular=|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabRBFCodePath saida/RBF_confusion_iris.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\caption{Matriz confusão obtida para a base da iris}
+\end{table} 
+     
+\begin{table}[h]
+\csvreader[tabular=|p{2cm}|c|c|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabRBFCodePath saida/RBF_confusion_derme.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
+\caption{Matriz confusão obtida para a base de dados de doenças da derme}
+\end{table}
 
-\newpage
+
+
+\begin{table}[h]
+\csvreader[tabular=|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabRBFCodePath saida/RBF_confusion_vertebra.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\caption{Matriz confusão obtida para a base de dados de doenças da coluna}
+\end{table}
+
 
 \section*{MLP - Multilayer Perceptron}
 
@@ -479,7 +529,7 @@ neural network.In a Kohonen neural network only one of the output neurons
 actually produces a value. Additionally, this single value is either true or
 false. When the pattern is presented to the Kohonen neural network, one single
 output neuron is chosen as the output neuron. Therefore, the output from the
-Kohonen neural network is usually the index of the neuron (i.e. Neuron #5) that
+Kohonen neural network is usually the index of the neuron (i.e. Neuron \#5) that
 fired.
 
 \section*{ELM}
@@ -504,12 +554,12 @@ interval of R be given. Then, for arbitrary Ä distinct input vectors Ü Ü ¾
 ÊÒ        ½ ¡¡¡ Ä      and ´       µ Ä ½ randomly generated with any continuous
 probability distribution, respectively, the hidden layer output matrix is invertible
 with probability one, the hidden layer output matrix H of the SLFN is invertible
-and À¬   Ì          ¼
+
    Theorem 2: (Liang et.al.[49])Given any small positive value               ¼ and
 activation function ´Üµ        Ê      Ê which is infinitely differentiable in any
 interval, there exists Ä      Æ such that for Æ arbitrary distinct input vectors
  Ü Ü ¾ ÊÒ         ½ ¡ ¡ ¡ Ä , for any ´      µ Ä ½ randomly generated according to
-any continuous probability distribution À Æ ¢Ä ¬Ä¢Ñ  ÌÆ ¢Ñ         with probability
+any continuous probability distribution    with probability
 one.
    Since the hidden node paremeters of ELM need not be tuned during training
 and since they are simply assigned with random values, eqn (5) becomes a linear

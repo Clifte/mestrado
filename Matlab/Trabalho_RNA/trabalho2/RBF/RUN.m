@@ -4,9 +4,9 @@ warning('off','all')
 
 %%
 %Carregando dados
-base = 'vertebra';
+base = 'derme';
 
-[ x , y ] = carregaDatabase(base);
+[ x , y , labels] = carregaDatabase(base);
 [m nClasses] = size(y);
 [m n] =size(x);
 
@@ -105,7 +105,7 @@ fprintf('Valores ótimos encontrados para sigma e quantidade de neurônios: %d , %
  
 %% Avaliando desempenho
  
- fprintf('Avaliando desempenho final.\n', s,nh,acMedia);
+ fprintf('Avaliando desempenho final.\n');
  acuracia = 0;
  acMedia = 0;
  cm = zeros(nClasses,nClasses);
@@ -133,4 +133,7 @@ end
  acMedia
  
  %%Gravando CM
- csvwrite(['saida/RBF_confusion_'    base   '.csv'],cm)
+ filename = ['saida/RBF_confusion_'    base   '.csv'];
+ saveconfusionMat(filename, cm, labels);
+  fprintf('Avaliação concluída.');
+ 
