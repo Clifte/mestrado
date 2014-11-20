@@ -1,0 +1,20 @@
+function exportEPS()
+figHandles = get(0,'Children');
+
+for figh=figHandles'
+    allAxes = findall(figh,'type','axes');
+    for axH=allAxes'
+        tmpH = figure;
+        
+        hax_new = copyobj( axH,figh);
+        set(hax_new, 'Position', get(0, 'DefaultAxesPosition'));
+        
+        
+        set(hax_new,'FontSize',15,'fontWeight','bold');
+        set(findall(figh,'type','text'),'FontSize',15,'fontWeight','bold');
+        print(tmpH, '-depsc', get(get(hax_new,'title'),'string'));
+        close;
+    end
+end
+       
+end

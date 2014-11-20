@@ -30,7 +30,6 @@ sx = std(x);
 nx = (x - repmat(mx,m,1)) ./ repmat(sx,m,1);
 
 %Matriz confusão
-cm =  zeros(3,3);
 ss=1;
 medias = zeros(1,length(gridS) + length(gridnH));
 gSearchAcc = zeros (length(gridnH),length(gridS));
@@ -135,5 +134,5 @@ end
  %%Gravando CM
  filename = ['saida/RBF_confusion_'    base   '.csv'];
  saveconfusionMat(filename, cm, labels);
-  fprintf('Avaliação concluída.');
+ fprintf('Avaliação concluída.');
  

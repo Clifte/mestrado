@@ -1,0 +1,31 @@
+--------------------------------------------------
+Aplicação: MLP
+Quantidade de padrões de treinamento: 127.50. 
+Quantidade de padrões de teste: 22.50. 
+Quantidade de classes: 3. 
+Quantidade de atributos: 4. 
+--------------------------------------------------
+
+Aguarde...
+
+Valores ótimos encontrados para  a quantidade de neurônios: 13. 
+Avaliando desempenho final.
+
+cm =
+
+    73     0     0
+     0    73     0
+     0     7    67
+
+
+acMedia =
+
+    0.9682
+
+Avaliação concluída.Avaliação concluída.>> o
+
+o =
+
+     1
+     2
+     3

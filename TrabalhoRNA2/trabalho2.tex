@@ -18,6 +18,9 @@
 
 \newcommand{\matlabCodePath}{/home/clifte/git/Mestrado/Matlab/}
 \newcommand{\matlabRBFCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/RBF/}
+\newcommand{\matlabMLPCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/MLP/}
+\newcommand{\matlabOLAMCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/OLAM/}
+\newcommand{\matlabELMCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/ELM/}
 % ---
 % PACOTES
 % ---
@@ -186,6 +189,98 @@ to approximate complex nonlinear mappings directly from the input sample; and
 to provide models for a large class of natural and artificial phenomena that are
 difficult to handle using classical parametric techniques. There are many algorithm
 
+
+\section*{OLAM – Optimal Linear Associative Memory} 
+O OLAM foi proposto por
+Kohonen and Ruohonen \cite{OLAM_1}. É um classificador linear muito utilizado
+seja sozinho para realizar classificações lineares como em conjunto com outras
+redes como ELM e RBF. A OLAM é um modelo que permite uma recuperação das
+informações assossiadas na memória $\{y_k,k=1,2,\ldots,n|y_k\in Y\}$ a partir de
+um $x_k$ desde que o conjunto $\{x_k,k=1,2,\ldots,m|x_k \in X\}$ seja
+linearmente independente, diferentemente de outras tecnicas de memória
+associativa que exigem que o conjunto seja ortogonal.\\
+Para que essa recuperação a partir de $x_k$ seja possível é necessário que a
+matriz $W$ satisfaça a seguinte equação:
+\begin{align}
+Y=WX
+\end{align}
+Para o caso de $m=n$ e os valores da matriz $X$ sejam linearmente independentes
+podemos computar o valor de $W$ da mesma forma que resolvemos um sistema de
+equações lineares:
+\begin{align}
+W*=YX^{-1}
+\end{align}
+O que obriga que a matriz $X$ possua uma inversa. Desta forma é possível
+recuperar qualquer valor de $y_k$ dado um $x_k$.
+\\
+Para $m \neq n$ o cálculo da inversa não pode ser realizado, tendo em vista que
+a matriz não é quadada. Para superar tal característica pode-se utilizar a
+pseudo-inversa de $X$, $X^{\dagger}$, desde que que $XX^T$ seja inversível. A
+pseudo-inversa está definidada no trabalho de \cite{penrose_1}.
+
+\begin{align}
+W*=Y(X^TX)^{-1}X^T
+\end{align}
+\subsection*{Resultados obtidos}
+Abaixo temos o resultado obtido ao utilizar o classificador linear, OLAM.
+A acurácia foi obtida após o teste com 50 iterações.
+
+\begin{table}[h]
+\centering
+	\begin{tabular}{|l|l|l|l|l|l|}
+	\hline
+	DataSet          & Acurácia & nTreinamento & nTeste \\ \hline
+	Íris             & 0.8324   & 112          & 38     \\\hline 
+	Derme     		 & 0.9642   & 274          & 92     \\ \hline
+	Coluna Vertebral & 0.7873   & 232          & 78     \\
+	\hline
+	\end{tabular}
+	\caption{Acurácia obtida para os três conjuntos de dados}
+\end{table}  
+   
+
+\begin{table}[h]
+\centering
+\csvreader[tabular=|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabOLAMCodePath saida/OLAM_confusion_iris.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\caption{Matriz confusão obtida para a base da iris}
+\end{table} 
+     
+  
+
+
+\begin{table}[h]
+\centering
+\csvreader[tabular=|p{2cm}|l|p{1.8cm}|p{1.5cm}|p{1.8cm}|p{1.8cm}|p{1.8cm}|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabOLAMCodePath saida/OLAM_confusion_derme.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
+\caption{Matriz confusão obtida para a base da derme}
+\end{table} 
+
+
+ 
+\begin{table}[h]
+\centering
+\csvreader[tabular=|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabOLAMCodePath saida/OLAM_confusion_vertebra.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\caption{Matriz confusão obtida para a base da vertebra}
+\end{table} 
+     
+
 \section*{RBF - Radial Basis Function}
 
 \subsection{Teorema de Cover} As redes RBF tem como princípio a transformação
@@ -290,6 +385,7 @@ Foram obtidos os seguintes resultados para os três conjuntos de dados, tabela
 \ref{tab:rbfRes}.
 
 \begin{table}[h]
+\centering
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
 DataSet          & Acurácia & nTreinamento & nTeste & nNeurônios & Sigma \\ \hline
@@ -307,13 +403,17 @@ nNeurônios são as quantidades de de dados de treinamento, quantidade de dados
 de teste e quantidade de neurônios utilizados no treinamento. Sigma é o valor
 de sigma utilizado na gaussiana multivariada.}
 \label{tab:rbfRes}
-\end{table}
+\end{table} 
  
-Foi obtido também a matriz confusão para cada conjunto de dados.
- 
- 
- 
+Foi obtido também a matriz confusão para cada conjunto de dados. Na tabela
+\ref{tab:confRBFIris} temos a matriz confusão resultante do teste do treinamento
+na base de dados da íris, podemos observar que há uma pequena confusão entre as
+classes versicolor e virgínica. Podemos verificar nas tabelas
+\ref{tab:confRBFDerme}, \ref{tab:confRBFVertebra} algo semelhante, pequenas
+confusões entre as classes mais próximas.
+
 \begin{table}[h]
+\centering
 \csvreader[tabular=|c|c|c|c|,
 		   separator=tab,
 		   late after line={\\\hline},
@@ -322,22 +422,27 @@ Foi obtido também a matriz confusão para cada conjunto de dados.
 {\matlabRBFCodePath saida/RBF_confusion_iris.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
 \caption{Matriz confusão obtida para a base da iris}
+\label{tab:confRBFIris}
 \end{table} 
      
-\begin{table}[h]
-\csvreader[tabular=|p{2cm}|c|c|c|c|c|c|,
+\begin{table}[h] 
+\centering
+\csvreader[tabular=|p{2cm}|l|p{1.8cm}|p{1.5cm}|p{1.8cm}|p{1.8cm}|p{1.8cm}|,
 		   separator=tab,
 		   late after line={\\\hline},
 		   no head, table head=\hline
-		   ]
+		   ] 
 {\matlabRBFCodePath saida/RBF_confusion_derme.csv} {}
-{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi &
+\csvcolvii}
 \caption{Matriz confusão obtida para a base de dados de doenças da derme}
+\label{tab:confRBFDerme}
 \end{table}
 
 
 
 \begin{table}[h]
+\centering
 \csvreader[tabular=|c|c|c|c|,
 		   separator=tab,
 		   late after line={\\\hline},
@@ -346,8 +451,109 @@ Foi obtido também a matriz confusão para cada conjunto de dados.
 {\matlabRBFCodePath saida/RBF_confusion_vertebra.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
 \caption{Matriz confusão obtida para a base de dados de doenças da coluna}
+\label{tab:confRBFVertebra}
 \end{table}
+ 
 
+
+ \section*{ELM - Extreme Learning
+Machines} As redes ELM são redes baseadas em apenas uma camada oculta, assim como a
+rede RBF e a MLP as entradas são propagadas progressivamente até a camada de
+saída.Proposta por Huang et al \cite{ELM_25}, \cite{ELM_67} tem como finalidade
+superar os problemas encontrados nas redes baseadas no gradiente descendente
+como o Backpropagation aplicado no MLP.
+O ELM reduz consideravelmente o tempo necessário para o treinamento da rede
+neural pois possui uma maneira única de determinação da memória da rede. A
+redução no tempo de treinamento é ocasionada pela não atualização dos pesos da
+camada oculta. Os pesos das sinapses desta camada são atribuídos aleatóriamente
+e não são alterados durante o treinamento, desta forma apenas a camada de saída
+tem seus pesos atualizados.
+\\
+Não há restrições quanto a função de ativação da camada oculta de uma rede ELM,
+contanto que a função não seja linear. A exemplo da utilização de funções de
+base radial, pode-se utilizar valores aleatórios para os parâmetros destas
+funções.
+Como todos os parâmetros da rede ELM são definidos de forma aleatória durante o
+treinamento restam para o treinamento apenas os ajustes dos parâmetros e pesos
+da camada oculta. Para tanto pode-se utilizar o OLAM para realizar estes
+ajustes. A saída da rede ELM pode ser computada da seguinte forma:
+\begin{align}
+	U_h=f(X  W_h) \\
+	Yc=U_h  W_o
+\label{eq:logistica}
+\end{align}
+Para o treinamento devemos apenas calcular a matriz $W_o$. Para isso levamos em
+consideração apenas a saída gerada pela camada oculta $U_h$ e as saídas
+desejadas $Y_d$.
+\begin{align}
+	Yc = U_h  W_o \\
+	W_o = U_h^\dagger Y_d
+\label{eq:logistica}
+\end{align}
+
+\subsection*{Resultados obtidos}
+Abaixo, figura \ref{tab:elm_iris},\ref{tab:elm_derme} e \ref{tab:elm_vertebra}
+temos o resultado obtido ao utilizar o classificador ELM.
+A acurácia foi obtida após o teste com 50 iterações.
+
+\begin{table}[h]
+\centering
+	\begin{tabular}{|l|l|l|l|l|l|}
+	\hline
+	DataSet          & Acurácia & nTreinamento & nTeste& nNeurônios \\ \hline
+	Íris             & 0.9409   & 127          & 22    & 27 \\\hline 
+	Derme     		 & 0.6725   & 275          & 91    & 51 \\ \hline
+	Coluna Vertebral & 0.8152   & 263          & 46    & 27 \\
+	\hline
+	\end{tabular}
+	\caption{Acurácia obtida para os três conjuntos de dados}
+\end{table}  
+   
+
+\begin{table}[h]
+\centering
+\csvreader[tabular=|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabELMCodePath saida/ELM_confusion_iris.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\caption{Matriz confusão obtida para a base da iris}
+\label{tab:elm_iris}
+\end{table} 
+     
+  
+
+
+\begin{table}[h]
+\centering
+\csvreader[tabular=|p{2cm}|l|p{1.8cm}|p{1.5cm}|p{1.8cm}|p{1.8cm}|p{1.8cm}|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabELMCodePath saida/ELM_confusion_derme.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
+\caption{Matriz confusão obtida para a base da derme}
+\label{tab:elm_derme}
+\end{table} 
+
+
+ 
+\begin{table}[h]
+\centering
+\csvreader[tabular=|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabELMCodePath saida/ELM_confusion_vertebra.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\caption{Matriz confusão obtida para a base da vertebra}
+\label{tab:elm_vertebra}
+\end{table} 
+     
 
 \section*{MLP - Multilayer Perceptron}
 
@@ -367,13 +573,7 @@ saída que representa o resultado da rede.
 	\label{fig:digraph}
 \end{figure}
 
-Na figura \ref{fig:digraph} cada neurônio na rede é calculado de forma
-vetorial de acordo com a equação \ref{eq:neuroActivation}. 
-\begin{align}
-	net_i=s_j*w_j
-\label{eq:neuroActivation}
-\end{align}
-
+Na figura \ref{fig:digraph} temos uma representação de uma rede MLP.
 onde $s_i$ é a camada calculada, $s_j$ é a camada anterior, $w_j$ são os pesos
 da conexão e $f$ é a função de ativação do neurônio. A função de ativação
 costuma ser uma sigmoíde como a tangente hiperbólica ou a logística, porém o
@@ -440,6 +640,134 @@ cálculado na direção oposta. Está técnica é chamada de Gradiente descenden
 \begin{align}
 \Delta w(t)=-\eta * \bigtriangledown E(t)
 \end{align}
+\subsection{Resultados obtidos com o MLP Backpropagation}
+Nesta sessão são exibidos os resultados obtidos pelo MLP utilizando o
+Backpropagation como técnica de treinamento.Para a obtenção da quantidade de
+neurônios da camada oculta foi realizado o grid search com valores variando de 2
+até 20. A taxa de aprendizagem foi fixada em 0.01 e a acurácia foi calculada com
+base em 10 iterações.
+
+\begin{figure} 
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]
+		{\matlabMLPCodePath1_Grid_Search_iris_iris.eps}
+		\caption{Resultado do grid search para o dataset da íris. Melhor resultado foi
+		obtido com 13 neuônios.}
+	\end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]
+		{\matlabMLPCodePath1_Erro_medio_quadratico_iris.eps}
+		\caption{Erro quadrático médio. Perceba que o erro está em escala
+		logaritimica}
+	\end{subfigure}     
+  \caption{Resultado do treinamento da íris}
+\end{figure}
+
+
+\begin{figure} 
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]
+		{\matlabMLPCodePath1_Grid_Search_derme_derme.eps}
+		\caption{Resultado do grid search para o dataset da derme. Melhor resultado
+		foi obtido com 17 neuônios.}
+	\end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]
+		{\matlabMLPCodePath1_Erro_medio_quadratico_derme.eps}
+		\caption{Erro quadrático médio. Perceba que o erro está em escala
+		logaritimica}
+	\end{subfigure}     
+  \caption{Resultado do treinamento da derme}
+\end{figure}
+
+
+\begin{figure} 
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]
+		{\matlabMLPCodePath1_Grid_Search_vertebra_vertebra.eps}
+		\caption{Resultado do grid search para o dataset da coluna vertebral. Melhor
+		resultado foi obtido com 5 neuônios.}
+	\end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]
+		{\matlabMLPCodePath1_Erro_medio_quadratico_vertebra.eps}
+		\caption{Erro quadrático médio. Perceba que o erro está em escala
+		logaritimica}
+	\end{subfigure}     
+  \caption{Resultado do treinamento da coluna vertebral}
+\end{figure}
+
+
+ 
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+DataSet          & Acurácia & nTreinamento & nTeste & nNeurônios \\ \hline
+Íris             & 0,9682	&	128	&	22	& 13  \\ \hline
+Derme            & 0,9630	&	311	&	54	& 17  \\ \hline
+Coluna Vertebral & 0,8798	&	264	&	46	& 5   \\
+\hline
+\end{tabular}
+\caption{Resultados obtidos pelo classificador RBF.nTreinamento, nTeste e
+nNeurônios são as quantidades de de dados de treinamento, quantidade de dados
+de teste e quantidade de neurônios utilizados no treinamento. Sigma é o valor
+de sigma utilizado na gaussiana multivariada.}
+\label{tab:rbfRes}
+\end{table}   
+
+Foi obtido também a matriz confusão para cada conjunto de dados.
+
+
+\begin{table}[h]
+\centering
+\csvreader[tabular=|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabMLPCodePath saida/MLP_confusion_iris.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\caption{Matriz confusão obtida para a base da iris}
+\label{tab:confMLPIris}
+\end{table} 
+     
+\begin{table}[h] 
+\centering
+\csvreader[tabular=|p{2cm}|l|p{1.8cm}|p{1.5cm}|p{1.8cm}|p{1.8cm}|p{1.8cm}|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ] 
+{\matlabMLPCodePath saida/MLP_confusion_derme.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi &
+\csvcolvii}
+\caption{Matriz confusão obtida para a base de dados de doenças da derme}
+\label{tab:confMLPDerme}
+\end{table}
+
+
+
+\begin{table}[h]
+\centering
+\csvreader[tabular=|c|c|c|c|,
+		   separator=tab,
+		   late after line={\\\hline},
+		   no head, table head=\hline
+		   ]
+{\matlabMLPCodePath saida/MLP_confusion_vertebra.csv} {}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\caption{Matriz confusão obtida para a base de dados de doenças da coluna}
+\label{tab:confMLPVertebra}
+\end{table}
+
+
 
 \subsection{RProp - Resilient backpropagation}
 O algoritmo RProp tem como finalidade eliminar a influência da amplitude das
@@ -532,38 +860,7 @@ output neuron is chosen as the output neuron. Therefore, the output from the
 Kohonen neural network is usually the index of the neuron (i.e. Neuron \#5) that
 fired.
 
-\section*{ELM}
-   Recently, Huang et al [25], [67]proposed a new learning algorithm for Single
-Layer Feedforward Neural Network architecture called Extreme Learning Ma-
-chine (ELM) which overcomes the problems caused by gradient descent based
-algorithms such as Back propagation applied in ANNs. ELM can significantly
-reduce the amount of time needed to train a Neural Network.
-  Extreme Learning Machine proposes by Huang at el [25], [29] uses Single Layer
-Feedforward Neural Network (SLFN) Architecture [1]. It randomly chooses the
-input weights and analytically determines the output weights of SLFN. It has much
-better generalization performance with much faster learning speed.
-  ELM [25], [29] designed as a SLFN with L hidden neurons can learn L distinct
-samples with zero error. Even if the number of hidden neurons (L) the number
-of distinct samples (N), ELM can still assign random parameters to the hidden
-nodes and calculate the output weights using pseudoinverse of H giving only a
-small error $\in > 0 $.
 
-   Theorem 1: (Liang et.al.[49]) Let an SLFN with Ä additive or RBF hidden
-nodes and an activation function ´Üµ which is infinitely differentiable in any
-interval of R be given. Then, for arbitrary Ä distinct input vectors Ü Ü ¾
-ÊÒ        ½ ¡¡¡ Ä      and ´       µ Ä ½ randomly generated with any continuous
-probability distribution, respectively, the hidden layer output matrix is invertible
-with probability one, the hidden layer output matrix H of the SLFN is invertible
-
-   Theorem 2: (Liang et.al.[49])Given any small positive value               ¼ and
-activation function ´Üµ        Ê      Ê which is infinitely differentiable in any
-interval, there exists Ä      Æ such that for Æ arbitrary distinct input vectors
- Ü Ü ¾ ÊÒ         ½ ¡ ¡ ¡ Ä , for any ´      µ Ä ½ randomly generated according to
-any continuous probability distribution    with probability
-one.
-   Since the hidden node paremeters of ELM need not be tuned during training
-and since they are simply assigned with random values, eqn (5) becomes a linear
-system and the output weights can be estimated as follows.
 
 % --- 
 % Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz

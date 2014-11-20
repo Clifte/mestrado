@@ -45,7 +45,7 @@ for epc=1:maxEpoca
         
         %Calculando o erro
         e = yii - yc;
-        errM = errM + mean(e.^2);
+        errM = errM + (e.^2);
 
         %atualizando pesos da saída
         gYc = dYc .* e;
@@ -75,7 +75,10 @@ for epc=1:maxEpoca
         break
     else
         subplot(1,2,2);
-        plot(errMarr);
+        semilogy(errMarr);
+        xlabel('Época');
+        ylabel('log(e)');
+        title('Erro médio quadrático');
         drawnow;
     end
 end

@@ -1,38 +1,46 @@
 addpath(genpath('../util/'))
 clear all; clear;clc
- warning('off','all')
+warning('off','all')
+close all;
 
- %%
-%Grid search para o número de neurônios ocultos
-grid = (2:2:100);
-
+%% Parâmetros da rede
 pTeste = 0.25;
 %Número de iterações para o cálculo da acurácia
-nIt = 50;
- %%
- 
-%Carregando dados
-[ x , y ] = carregaDatabase('iris');
+nIt = 20;
+%%
+gridnH = 3:3:100;
 
-%Normalizando X.
+%% Carregando dados
+base = 'derme';
+[ x , y , labels] = carregaDatabase(base);
+[m n] =size(x);
+[m nClasses] =size(y);
+%% Normalizando Dados
 [m n] =size(x);
 mx = mean(x);
 sx = std(x);
 nx = (x - repmat(mx,m,1)) ./ repmat(sx,m,1);
 
-%Matriz confusão
-cm =  zeros(3,3);
+%% Mensagens...
+fprintf('--------------------------------------------------\n');
+fprintf('Aplicação: ELM\n');
+fprintf('Quantidade de padrões de treinamento: %2.2f. \n', (1-pTeste) * m);
+fprintf('Quantidade de padrões de teste: %2.2f. \n', pTeste * m);
+fprintf('Quantidade de classes: %d. \n', nClasses);
+fprintf('Quantidade de atributos: %d. \n', n);
+fprintf('--------------------------------------------------\n\n');
+fprintf('Aguarde...\n\n');
 
-ss=1;
-medias = zeros(1,length(grid));
-for s=grid
-    s 
+acuracias = [];
+for nhIndex=1:length(gridnH)
+    nh = gridnH(nhIndex);
+    
     acMedia = 0;
     for i=1:nIt
+
         [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
 
-        [Wh Wm]=treinaELM(xd,yd,s);
- 
+        [Wh Wm]=treinaELM(xd,yd,nh);
         yc = avaliaElm(xt,Wh,Wm);
 
         [v yci] = max(yc');
@@ -41,16 +49,54 @@ for s=grid
         acuracia = sum( yci == ydi)/length(ydi);
         acMedia = acMedia + acuracia;
     end
-    
     acMedia = acMedia/nIt;
-    medias(ss) = acMedia;
+    acuracias = [acuracias acMedia];
+    
 
-    ss = ss + 1;
-    plot(grid,medias);
-    drawnow;
+    %Plotando acurácias
+    subplot(1,2,1)
+    plot(gridnH(1:(length(acuracias)-1)) , acuracias(2:end))
+    title([ 'Grid Search  ' base ]);
+    xlabel('Número de neurônios')
+    ylabel('Acurácia')
+    drawnow
 end
 
-[v l] = max(medias);
-bestAc = v
-bestS = grid(l)
+[v nh] = max(acuracias);
+fprintf('Valores ótimos encontrados para  a quantidade de neurônios: %d. \n', gridnH(nh));
 
+
+%% Avaliando desempenho
+ 
+ fprintf('Avaliando desempenho final.\n');
+ acuracia = 0;
+ acMedia = 0;
+ cm = zeros(nClasses,nClasses);
+for i=1:nIt
+
+    [xd yd xt yt] = preparaDados(nx,y,pTeste);
+
+     [Wh Wm]=treinaELM(xd,yd,gridnH(nh));
+     yc = avaliaElm(xt,Wh,Wm);
+
+    [v yci] = max(yc');
+    [v ydi] = max(yt');
+    
+    [c o] = confusionmat(int32(yci),int32(ydi));
+    cm(o,o) = cm(o,o) + c;
+
+    acuracia = sum( yci == ydi)/length(ydi);
+    acMedia = acMedia + acuracia;
+end
+        
+ acMedia = acMedia/nIt;  
+
+ cm
+ acMedia
+ fprintf('Avaliação concluída.');
+ 
+ %% Gravando CM
+filename = ['saida/ELM_confusion_'    base   '.csv'];
+saveconfusionMat(filename, cm, labels);
+fprintf('Avaliação concluída.');
+exportEps(base);
