@@ -290,6 +290,7 @@ Foram obtidos os seguintes resultados para os três conjuntos de dados, tabela
 \ref{tab:rbfRes}.
 
 \begin{table}[h]
+\centering
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
 DataSet          & Acurácia & nTreinamento & nTeste & nNeurônios & Sigma \\ \hline
@@ -307,13 +308,17 @@ nNeurônios são as quantidades de de dados de treinamento, quantidade de dados
 de teste e quantidade de neurônios utilizados no treinamento. Sigma é o valor
 de sigma utilizado na gaussiana multivariada.}
 \label{tab:rbfRes}
-\end{table}
+\end{table} 
  
-Foi obtido também a matriz confusão para cada conjunto de dados.
- 
- 
- 
+Foi obtido também a matriz confusão para cada conjunto de dados. Na tabela
+\ref{tab:confRBFIris} temos a matriz confusão resultante do teste do treinamento
+na base de dados da íris, podemos observar que há uma pequena confusão entre as
+classes versicolor e virgínica. Podemos verificar nas tabelas
+\ref{tab:confRBFDerme}, \ref{tab:confRBFVertebra} algo semelhante, pequenas
+confusões entre as classes mais próximas.
+
 \begin{table}[h]
+\centering
 \csvreader[tabular=|c|c|c|c|,
 		   separator=tab,
 		   late after line={\\\hline},
@@ -322,22 +327,27 @@ Foi obtido também a matriz confusão para cada conjunto de dados.
 {\matlabRBFCodePath saida/RBF_confusion_iris.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
 \caption{Matriz confusão obtida para a base da iris}
+\label{tab:confRBFIris}
 \end{table} 
      
-\begin{table}[h]
-\csvreader[tabular=|p{2cm}|c|c|c|c|c|c|,
+\begin{table}[h] 
+\centering
+\csvreader[tabular=|p{2cm}|l|p{1.8cm}|p{1.5cm}|p{1.8cm}|p{1.8cm}|p{1.8cm}|,
 		   separator=tab,
 		   late after line={\\\hline},
 		   no head, table head=\hline
-		   ]
+		   ] 
 {\matlabRBFCodePath saida/RBF_confusion_derme.csv} {}
-{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
+{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi &
+\csvcolvii}
 \caption{Matriz confusão obtida para a base de dados de doenças da derme}
+\label{tab:confRBFDerme}
 \end{table}
 
 
 
 \begin{table}[h]
+\centering
 \csvreader[tabular=|c|c|c|c|,
 		   separator=tab,
 		   late after line={\\\hline},
@@ -346,6 +356,7 @@ Foi obtido também a matriz confusão para cada conjunto de dados.
 {\matlabRBFCodePath saida/RBF_confusion_vertebra.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
 \caption{Matriz confusão obtida para a base de dados de doenças da coluna}
+\label{tab:confRBFVertebra}
 \end{table}
 
 
@@ -367,13 +378,7 @@ saída que representa o resultado da rede.
 	\label{fig:digraph}
 \end{figure}
 
-Na figura \ref{fig:digraph} cada neurônio na rede é calculado de forma
-vetorial de acordo com a equação \ref{eq:neuroActivation}. 
-\begin{align}
-	net_i=s_j*w_j
-\label{eq:neuroActivation}
-\end{align}
-
+Na figura \ref{fig:digraph} temos uma representação de uma rede MLP.
 onde $s_i$ é a camada calculada, $s_j$ é a camada anterior, $w_j$ são os pesos
 da conexão e $f$ é a função de ativação do neurônio. A função de ativação
 costuma ser uma sigmoíde como a tangente hiperbólica ou a logística, porém o
@@ -440,6 +445,8 @@ cálculado na direção oposta. Está técnica é chamada de Gradiente descenden
 \begin{align}
 \Delta w(t)=-\eta * \bigtriangledown E(t)
 \end{align}
+\subsection{Resultados obtidos com o MLP Backpropagation}
+
 
 \subsection{RProp - Resilient backpropagation}
 O algoritmo RProp tem como finalidade eliminar a influência da amplitude das
