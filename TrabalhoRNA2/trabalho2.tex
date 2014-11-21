@@ -16,13 +16,18 @@
 	sumario=tradicional
 	]{abntex2}
 
-\newcommand{\matlabCodePath}{/home/clifte/git/Mestrado/Matlab/}
-\newcommand{\matlabRBFCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/RBF/}
-\newcommand{\matlabMLPCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/MLP/}
-\newcommand{\matlabOLAMCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/OLAM/}
-\newcommand{\matlabELMCodePath}{/home/clifte/git/Mestrado/Matlab/Trabalho_RNA/trabalho2/ELM/}
+
+%\newcommand{\matlabCodePath}{/home/clifte/git/Mestrado/Matlab/}
+ 
+\newcommand{\matlabCodePath}{C:/Users/clifte/git/mestrado/Matlab/} 
+
+\newcommand{\matlabRBFCodePath}{\matlabCodePath Trabalho_RNA/trabalho2/RBF/}
+\newcommand{\matlabMLPCodePath}{\matlabCodePath Trabalho_RNA/trabalho2/MLP/}
+\newcommand{\matlabOLAMCodePath}{\matlabCodePath Trabalho_RNA/trabalho2/OLAM/}
+\newcommand{\matlabELMCodePath}{\matlabCodePath Trabalho_RNA/trabalho2/ELM/}
+\newcommand{\matlabSOMCodePath}{\matlabCodePath Trabalho_RNA/trabalho2/SOM/}
 % ---
-% PACOTES
+% PACOTES 
 % ---
 
 % ---
@@ -183,11 +188,8 @@
 Este trabalho apresenta o resultados obtidos durante o desenvolvimento da
 segunda lista de exercícios propostos pelo professor Ajalmar Roccha no curso de
 mestrado em Ciências da Computação do IFCE. Parte do código fonte é exibido na
-forma de Apêndice ao fim do trabalho.
-   Neural Networks have been extensively used in many fields due to their ability
-to approximate complex nonlinear mappings directly from the input sample; and
-to provide models for a large class of natural and artificial phenomena that are
-difficult to handle using classical parametric techniques. There are many algorithm
+forma de Apêndice ao fim do trabalho. Foram abordados as redes RBF, ELM, MLP,
+OLAM e SOM. Ao final de sessão temos o resultado obtido pelas redes.
 
 
 \section*{OLAM – Optimal Linear Associative Memory} 
@@ -840,31 +842,81 @@ Jogo da Trilha & 98                & 23    &    4,2     &  \\ \cline{1-4}
 
 \newpage
 
-\section*{SON - Self Organize Networks} The Self-Organizing Map (SOM), commonly
-also known as Kohonen network (Kohonen 1982, Kohonen 2001) is a computational
-method for the visualization and analysis of high-dimensional data.
- The
-objective of a Kohonen network is to map input vectors (patterns) of arbitrary
-dimension N onto a discrete map The most significant difference between the
-Kohonen neural network and the feed forward back propagation neural network is
-that the Kohonen network trained in an unsupervised mode.
-This means that the Kohonen network is presented with data, but the correct
-output that corresponds to that data is not specified. Using the Kohonen network
-this data can be classified into groups. We will begin our review of the Kohonen
-network by examining the training process.
+\section*{SOM - Mapeamento auto-organizável} 
+Neste tipo de rede o treinamento é feito
+de forma diferente das outras redes como: MLP, ELM, OLAM. Esta rede
+caracteriza-se por ter um aprendizado não supervisionado.
+Isto significa que é apresentado para a rede os dados de treinamento, já os
+dados com informações dos rótulos são ignorados. Usando esta rede os dados são
+organizados em grupos de forma que estes grupos representam os dados que foram
+passados para o treinamento. A rede SOM , também conhecida como rede de Kohonen.
+ 
 \subsection{Estrutura}
-The Kohonen neural network works differently than the feed forward neural
-network that we learned about in Chapter 5. The Kohonen neural network contains
-only an input and output layer of neurons. There is no hidden layer in a Kohonen
-neural network.In a Kohonen neural network only one of the output neurons
-actually produces a value. Additionally, this single value is either true or
-false. When the pattern is presented to the Kohonen neural network, one single
-output neuron is chosen as the output neuron. Therefore, the output from the
-Kohonen neural network is usually the index of the neuron (i.e. Neuron \#5) that
-fired.
+A rede neural de Kohonen se diferencia das outras redes neurais. Possui apenas
+uma camada de entrada e saída. Apenas um neurônio da camada de saída deve ser
+acionado representando valor verdadeiro ou falso.
+ A rede SOM é uma rede neural de 2 camadas que aceita padrões de N-dimensões
+ como entrada e os mapeia para um conjunto de neurônios de saída, o qual
+ representa o espaço dos dados a serem agrupados. O mapa (camada) de saída, que
+ é tipicamente bi-dimensional, representa as posições dos neurônios em relação
+ aos seus vizinhos. A idéia é que neurônios topologicamente próximos respondam
+ de maneira semelhante a entradas semelhantes. Para isso todos neurônios da
+ camada de entrada são conectados aos neurônios de saída. 
+ Os passos do
+ algoritmo de treinamento da SOM são:
+
+
+\begin{enumerate}
+  \item Inicialização dos pesos de forma aleatória
+  \item Apresente de um padrão de entrada à rede.
+  \item Determinação do neurônio vencedor, neurônio com o maior valor de
+  ativação.
+  \item Atualizaçãdo dos neurônios vizinhos ao vencedor.
+  \item Redução dos fatores de aprendizagem e de alcance dos vizinhos ao
+  vencedor
+  \item Reapresentação do próximo padrão. 
+   
+\end{enumerate}
+\subsection{Resultados}
+
+Abaixo temos os resultados obtidos atravé do uso da rede SOM como classificador.
+Isso foi feito através da atribuição de rótulos aos pesos de acordo com as
+amostras de treinamento. O problema da derme não pode ser exibido devido a sua
+grande quantidade de características porém sua acurácia é exibida na tabela
+\ref{tab:resSom}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+         & Acurácia \\\hline
+derme    & 0.6484   \\\hline
+iris     & 0.9459   \\\hline
+vertebra & 0.7143  \\\hline
+\end{tabular}
+\caption{Acurácia obtida com o classificador SOM}
+\label{tab:resSom}
+\end{table}
 
 
 
+\begin{figure} 
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]
+		{\matlabSOMCodePath2__iris.eps}
+		\caption{Resultado do som para o problema da íris.}
+	\end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]
+		{\matlabSOMCodePath2__vertebra.eps}
+		\caption{Resultado do som para o problema da coluna vertebral.}
+	\end{subfigure}     
+  \caption{Resultado do som para relacionando duas características do problema
+  da íris e da coluna vertebral. A cor do simbolo quadrado deve ser a mesma do
+  triangulo para que a classificação esteja correta.}
+\end{figure}
 % --- 
 % Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
 % ---
@@ -880,7 +932,7 @@ fired.
 % ]  				% FIM DE ARTIGO EM DUAS COLUNAS
 % ---
 
-% ----------------------------------------------------------
+% ----------------------------------------------- -----------
 % Referências bibliográficas
 % ----------------------------------------------------------
 \bibliography{pdi}
@@ -889,7 +941,7 @@ Oxford University Press Inc., New York, USA, 482 p.
  @MISC{Riedmiller94advancedsupervised,
     author = {Martin Riedmiller},
     title = {Advanced Supervised Learning in Multi-layer Perceptrons - From Backpropagation to Adaptive Learning Algorithms},
-    year = {1994}
+    year = {1994} 
 }
 %"http://galaxy.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html"
 %http://jeremykun.com/2012/12/09/neural-networks-and-backpropagation/
@@ -907,25 +959,6 @@ Oxford University Press Inc., New York, USA, 482 p.
 % ----------------------------------------------------------
 % Apêndices
 % ----------------------------------------------------------
-
-% ---
-% Inicia os apêndices 
-% ---
-\begin{apendicesenv} 
-
-% ----------------------------------------------------------
-\chapter{Código fonte: Translação, Rotação e Redimensionamento}
-\label{apend:transRotRed}
-
-	
- 	\lstset{extendedchars=true,inputencoding=utf8/latin1}
- 	\lstinputlisting[frame=single,
- 					 numbers=left]{\matlabCodePath
- 	Trabalho_PDI/q11/topico11.m}
-
-
-
-\end{apendicesenv}
 % ---
 
 % ----------------------------------------------------------

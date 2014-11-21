@@ -26,11 +26,10 @@ w = rand(q,n);
 iEta = 0;
 erro = 0;
 for ep = 1:epochs
-    scatter(data(:,1),data(:,2),'r');
+    sigmas(ep);
     
     %Embaralha os dados
     [data] = preparaDados(data,data,0);
-    
     
     for i = 1:m
         iEta = iEta+1;
@@ -60,13 +59,21 @@ for ep = 1:epochs
         %atualizando os n vizinhos mais próximos do vencedor
         for j = 1:nn
             iN = indices(j);
-            y = exp(-  (distXii(iN)^2) / (2 * (sigmas(ep))^2));                                        % Obtenção do valor de saída.
-            diffs3 = bsxfun(@minus,xii, w(iN,:));
-            w(iN,:) =  w(iN,:) + ...
-                           eta(iEta) * y * diffs3);    % Atualização dos pesos.
+            y = exp(-  distXii(iN) /sigmas(ep) );                                        % Obtenção do valor de saída.
+            diff = xii - w(iN,:);
+            w(iN,:) =  w(iN,:) + eta(iEta) * y * diffs;    % Atualização dos pesos.
         end
         
-        scatter(w(:,1),w(:,2),'b');
+        subplot(1,2,1);
+        title('treina')
+        scatter(data(:,1),data(:,2),'.r');
+        hold on;
+        scatter(w(:,1),w(:,2),'b','LineWidth',sigmas(ep));
+        hold off;
+        
+        subplot(1,2,2);
+        plot(erro);
+        drawnow;
     end
    
 end

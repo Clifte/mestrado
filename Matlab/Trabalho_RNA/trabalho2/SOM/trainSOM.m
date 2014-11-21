@@ -26,11 +26,10 @@ w = rand(q,n);
 iEta = 0;
 erro = 0;
 for ep = 1:epochs
-    sigmas(ep)
+    sigmas(ep);
     
     %Embaralha os dados
     [data] = preparaDados(data,data,0);
-    
     
     for i = 1:m
         iEta = iEta+1;
@@ -66,9 +65,10 @@ for ep = 1:epochs
         end
         
         subplot(1,2,1);
+        title('treinando')
         scatter(data(:,1),data(:,2),'.r');
         hold on;
-        scatter(w(:,1),w(:,2),'.b');
+        scatter(w(:,1),w(:,2),'b','LineWidth',sigmas(ep));
         hold off;
         
         subplot(1,2,2);
