@@ -46,7 +46,7 @@ for nhIndex=1:length(gridnH)
 
         [ xd yd xt yt ] = preparaDados( nx, y, pTeste);
 
-        [Wo Wh] = treinaMLP(xd,yd,-1,nh,taxaAprend,erroEsperado,maxEpoc);
+        [Wo Wh] = treinaMLP_R(xd,yd,-1,nh,taxaAprend,erroEsperado,maxEpoc);
         legend(labels)
         
         yc = mlpAvalia(xt , -1 , Wo , Wh) ;
@@ -84,7 +84,7 @@ for i=1:nIt
 
     [xd yd xt yt] = preparaDados(nx,y,pTeste);
 
-    [Wo Wh] = treinaMLP(xd,yd,-1,gridnH(nh),taxaAprend,erroEsperado,maxEpoc);
+    [Wo Wh] = treinaMLP_R(xd,yd,-1,gridnH(nh),taxaAprend,erroEsperado,maxEpoc);
     legend(labels)
 
     yc = mlpAvalia(xt , -1 , Wo , Wh) ;
@@ -107,6 +107,6 @@ end
  
  %% Gravando CM
 filename = ['saida/MLP_confusion_'    base   '.csv'];
-saveconfusionMat(filename, cm, labels);
+%saveconfusionMat(filename, cm, labels);
 fprintf('Avaliação concluída.');
-exportEps(base);
+%exportEps(base);

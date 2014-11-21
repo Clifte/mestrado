@@ -235,7 +235,9 @@ A acurácia foi obtida após o teste com 50 iterações.
 	Coluna Vertebral & 0.7873   & 232          & 78     \\
 	\hline
 	\end{tabular}
-	\caption{Acurácia obtida para os três conjuntos de dados}
+	\caption{Acurácia obtida para os três conjuntos de dados utilizando o
+	OLAM.nTreinamento e nTeste são as quantidades de dados de
+	treinamento e quantidade de dados de teste utilizados}
 \end{table}  
    
 
@@ -248,7 +250,7 @@ A acurácia foi obtida após o teste com 50 iterações.
 		   ]
 {\matlabOLAMCodePath saida/OLAM_confusion_iris.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
-\caption{Matriz confusão obtida para a base da iris}
+\caption{Matriz confusão obtida para a base da iris utilizando o OLAM}
 \end{table} 
      
   
@@ -263,7 +265,7 @@ A acurácia foi obtida após o teste com 50 iterações.
 		   ]
 {\matlabOLAMCodePath saida/OLAM_confusion_derme.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
-\caption{Matriz confusão obtida para a base da derme}
+\caption{Matriz confusão obtida para a base da derme utilizando o OLAM}
 \end{table} 
 
 
@@ -277,7 +279,7 @@ A acurácia foi obtida após o teste com 50 iterações.
 		   ]
 {\matlabOLAMCodePath saida/OLAM_confusion_vertebra.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
-\caption{Matriz confusão obtida para a base da vertebra}
+\caption{Matriz confusão obtida para a base da vertebra utilizando o OLAM}
 \end{table} 
      
 
@@ -394,12 +396,9 @@ Derme            & 0,9068   & 292          & 73     & 10         & 1,85  \\ \hli
 Coluna Vertebral & 0,8226   & 248          & 62     & 12         & 4,10   \\
 \hline
 \end{tabular}
-  
-   
-
 
 \caption{Resultados obtidos pelo classificador RBF.nTreinamento, nTeste e
-nNeurônios são as quantidades de de dados de treinamento, quantidade de dados
+nNeurônios são as quantidades de dados de treinamento, quantidade de dados
 de teste e quantidade de neurônios utilizados no treinamento. Sigma é o valor
 de sigma utilizado na gaussiana multivariada.}
 \label{tab:rbfRes}
@@ -421,7 +420,7 @@ confusões entre as classes mais próximas.
 		   ]
 {\matlabRBFCodePath saida/RBF_confusion_iris.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
-\caption{Matriz confusão obtida para a base da iris}
+\caption{Matriz confusão obtida para a base da iris utilizando o RBF}
 \label{tab:confRBFIris}
 \end{table} 
      
@@ -435,7 +434,8 @@ confusões entre as classes mais próximas.
 {\matlabRBFCodePath saida/RBF_confusion_derme.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi &
 \csvcolvii}
-\caption{Matriz confusão obtida para a base de dados de doenças da derme}
+\caption{Matriz confusão obtida para a base de dados de doenças da derme
+utilizando o RBF}
 \label{tab:confRBFDerme}
 \end{table}
 
@@ -450,7 +450,8 @@ confusões entre as classes mais próximas.
 		   ]
 {\matlabRBFCodePath saida/RBF_confusion_vertebra.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
-\caption{Matriz confusão obtida para a base de dados de doenças da coluna}
+\caption{Matriz confusão obtida para a base de dados de doenças da coluna
+utilizando o RBF}
 \label{tab:confRBFVertebra}
 \end{table}
  
@@ -506,7 +507,9 @@ A acurácia foi obtida após o teste com 50 iterações.
 	Coluna Vertebral & 0.8152   & 263          & 46    & 27 \\
 	\hline
 	\end{tabular}
-	\caption{Acurácia obtida para os três conjuntos de dados}
+	\caption{Resultados obtidos pelo classificador ELM.nTreinamento, nTeste e
+nNeurônios são as quantidades de dados de treinamento, quantidade de dados
+de teste e quantidade de neurônios utilizados no treinamento. }
 \end{table}  
    
 
@@ -519,7 +522,7 @@ A acurácia foi obtida após o teste com 50 iterações.
 		   ]
 {\matlabELMCodePath saida/ELM_confusion_iris.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
-\caption{Matriz confusão obtida para a base da iris}
+\caption{Matriz confusão obtida para a base da iris utilizando o ELM}
 \label{tab:elm_iris}
 \end{table} 
      
@@ -535,7 +538,7 @@ A acurácia foi obtida após o teste com 50 iterações.
 		   ]
 {\matlabELMCodePath saida/ELM_confusion_derme.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
-\caption{Matriz confusão obtida para a base da derme}
+\caption{Matriz confusão obtida para a base da derme utilizando o ELM}
 \label{tab:elm_derme}
 \end{table} 
 
@@ -550,7 +553,7 @@ A acurácia foi obtida após o teste com 50 iterações.
 		   ]
 {\matlabELMCodePath saida/ELM_confusion_vertebra.csv} {}
 {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
-\caption{Matriz confusão obtida para a base da vertebra}
+\caption{Matriz confusão obtida para a base da vertebra utilizando o ELM}
 \label{tab:elm_vertebra}
 \end{table} 
      
@@ -653,7 +656,7 @@ base em 10 iterações.
 		\includegraphics[width=\textwidth]
 		{\matlabMLPCodePath1_Grid_Search_iris_iris.eps}
 		\caption{Resultado do grid search para o dataset da íris. Melhor resultado foi
-		obtido com 13 neuônios.}
+		obtido com 13 neuônios na camada oculta.}
 	\end{subfigure}
     ~
     \begin{subfigure}[b]{0.4\textwidth}
@@ -662,7 +665,7 @@ base em 10 iterações.
 		\caption{Erro quadrático médio. Perceba que o erro está em escala
 		logaritimica}
 	\end{subfigure}     
-  \caption{Resultado do treinamento da íris}
+  \caption{Resultado do treinamento da íris utilizando o MLP}
 \end{figure}
 
 
@@ -672,7 +675,7 @@ base em 10 iterações.
 		\includegraphics[width=\textwidth]
 		{\matlabMLPCodePath1_Grid_Search_derme_derme.eps}
 		\caption{Resultado do grid search para o dataset da derme. Melhor resultado
-		foi obtido com 17 neuônios.}
+		foi obtido com 17 neuônios neuônios na camada oculta.}
 	\end{subfigure}
     ~
     \begin{subfigure}[b]{0.4\textwidth}
@@ -681,7 +684,7 @@ base em 10 iterações.
 		\caption{Erro quadrático médio. Perceba que o erro está em escala
 		logaritimica}
 	\end{subfigure}     
-  \caption{Resultado do treinamento da derme}
+  \caption{Resultado do treinamento da derme utilizando o MLP}
 \end{figure}
 
 
@@ -691,7 +694,7 @@ base em 10 iterações.
 		\includegraphics[width=\textwidth]
 		{\matlabMLPCodePath1_Grid_Search_vertebra_vertebra.eps}
 		\caption{Resultado do grid search para o dataset da coluna vertebral. Melhor
-		resultado foi obtido com 5 neuônios.}
+		resultado foi obtido com 5 neuônios neuônios na camada oculta.}
 	\end{subfigure}
     ~
     \begin{subfigure}[b]{0.4\textwidth}
@@ -700,7 +703,7 @@ base em 10 iterações.
 		\caption{Erro quadrático médio. Perceba que o erro está em escala
 		logaritimica}
 	\end{subfigure}     
-  \caption{Resultado do treinamento da coluna vertebral}
+  \caption{Resultado do treinamento da coluna vertebral utilizando o MLP}
 \end{figure}
 
 

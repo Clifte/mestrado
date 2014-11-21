@@ -32,12 +32,17 @@ for epoca=1:epochmax
     deltaWkj=zeros(size(Wkj));
     
     for n=1:N
-      xi=[-1 xtreino(n)]; d=dtreino(n); netj=Wji*xi';  yj=(1)./(1+exp(-netj'));  
+      xi=[-1 xtreino(n)]; 
+      d=dtreino(n);
+      netj=Wji*xi'; 
+      yj=(1)./(1+exp(-netj'));  
       z(n)=Wkj*[-1 yj]';
       e=d-z(n);
       
       grWkj=grWkj-e.*[-1 yj]; 
-      grWji=grWji-((yj.*(1-yj)).*(e.*Wkj(:,2:Nh+1)))'*xi;  
+      grWji=grWji-((yj.*(1-yj)).*(e.*Wkj(:,2:Nh+1)))'*xi;
+      
+      
       E(n)=0.5*e^2;
     end
     
