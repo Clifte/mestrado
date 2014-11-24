@@ -4,11 +4,12 @@ clear;
 close all;
 %%
 AREA_TOP_THRESH = 2000;
-AREA_BOT_THRESH = 500;
+AREA_BOT_THRESH = 300;
+
 BOUND_MAX_PERI_THRESH = 400;
 %% leitura da imagem
 img = imread('digitos.png');
-img = imread('digitosCap.jpg');
+img = imread('digitosCap2.jpg');
 %im2=imread('tshape.png');
 
 %% limiar adaptativo
@@ -63,8 +64,6 @@ end
 
 chars(toRemove)=[];
 
-
-
 features = extrair(chars,binary);
 
 %Ordenando por labels
@@ -75,9 +74,32 @@ csvwrite('features.csv',features);
 
 figure;
 plot(features)
-legend('areaRelativa','aspecto','picoPVertical','picoPHorizontal','maxPVertical','maxPHorizontal')
-figure;scatter(features(:,1),features(:,2))
+legend('areaRelativa','aspecto','picoPVertical','picoPHorizontal','maxPVertical','maxPHorizontal','label')
 
 %% mostra imagem
 figure, imshow(img);
 figure, imshow(binary);
+
+
+%% Preparando para classificação
+T = length(features(:,1));
+part = 0.051 * T;
+indices = randperm(T);
+
+teste = features;
+training = teste(indices(1:part),:); 
+teste(indices(1:part),:) = [];
+
+
+y = knnclassify(teste(:,1:(end-1)), training(:,1:(end-1)), training(:,end));
+
+acurracia = sum(y==teste(:,end))/length(y)
+
+
+
+
+
+
+
+
+

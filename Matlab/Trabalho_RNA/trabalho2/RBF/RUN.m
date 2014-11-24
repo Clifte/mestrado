@@ -4,7 +4,7 @@ warning('off','all')
 
 %%
 %Carregando dados
-base = 'derme';
+base = 'ocr';
 
 [ x , y , labels] = carregaDatabase(base);
 [m nClasses] = size(y);

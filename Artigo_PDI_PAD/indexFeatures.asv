@@ -1,0 +1,13 @@
+function [mediaDesvio] = indexFeatures(features)
+[m n] = size(features);
+
+mediaDesvio = zeros (2,9);
+
+for j=1:n
+for i=0:9
+    f = features(features(:,end)==i,1);
+    mediaDesvio(1,i+1) = mean(f);
+    mediaDesvio(2,i+1) = std(f);
+end
+
+end
