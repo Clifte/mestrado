@@ -15,13 +15,12 @@
 
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{mathtools}
-\usepackage{graphicx}
+\usepackage{amsmath} 
+
+\usepackage{graphicx} 
 \usepackage{subfigure}
 \usepackage{float}
 \usepackage{listings}
-\usepackage[numbered, framed]{mcode}
 %\usepackage[colorinlistoftodos]{todonotes}
 
 
@@ -74,13 +73,10 @@ GPGPU aplicada ao reconhecimento ótico de caracteres utilizando técnica de N v
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-
-Este artigo descreve o uso dos k-vizinhos mais próximos, visão computacional e paralelismo para
-analisar o custo das imagens recebidas de um scanner ou outra forma de digitalização
-para reconhecer o dígito manuscrito e classificá-lo de 0-9, ou indefinido, de acordo com
-o valor correspondente. As principais características do sistema são: Controlar o grau
-de acerto, um sistema de autoaprendizagem de fácil implementação e modularizado.
-
+Este trabalho apresento o uso dos k-vizinhos mas próximos aplicados no
+reconhecimento de caracteres opticos em plataforma GPGPU. É apresentado a
+técnica utilizada para extração das características que serão utilizadas no
+K-vizinhos e o speedup obtido em função da quantidade de amostras na memória.
 \end{abstract}
 
 
@@ -92,10 +88,10 @@ reconhecer automaticamente um caractere através de um mecanismo óptico. As ten
 da engenharia em reconhecer caracteres impressos, ou manuscritos, iniciaram antes da
 Segunda Guerra Mundial, mas isso não foi possível até a década de 50, quando a associação
 dos Bancos e a Indústria dos serviços financeiros criaram fundos para a pesquisa e
-desenvolvimento da tecnologia [1].Diante da necessidade de uma abordagem mais simples
-aos temas de visão computacional e algoritmos de inteligência computacional, ambos tem
-custo computacional alto devido as rotinas necessárias para aplicações com OCR, foi
-desenvolvido um sistema para diminuir o custo com o suporte de placas gráficas GPU.
+desenvolvimento da tecnologia [1]. As técnicas de visão computacional
+utilizadas para reconhecimento e classificação de caracteres possuem um custo
+computacional elevado e com a popularização da GPU o tempo necessário para se
+obter uma resposta pode ser diminuido.
 
 Computadores podem executar muitas operações com um tempo consideravelmente
 menor que os humanos poderiam fazer. Contudo, nem sempre, essa rapidez é a melhor
@@ -107,7 +103,10 @@ Homem seria comparar o computador, que é uma máquina serial, com o nosso cére
 que é altamente paralelo e possui como característica principal a capacidade de aprender
 coisas [3].
 
-O k-vizinhos mais próximos (kNN) problema de pesquisa é amplamente utilizado em domínios e aplicações, tais como a classificação, estatísticas e biologia. Neste trabalho, propomos uma implementação baseada em GPU rápida do algoritmo força bruta de busca kNN usando o CUDA
+O k-vizinhos mais próximos (kNN) é amplamente utilizado em aplicações de
+reconhecimento de padrões.
+Neste trabalho, propomos uma implementação baseada em GPGPU do algoritmo
+força bruta de busca kNN usando o CUDA
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{RECONHECIMENTO ÓTICO DE CARACTERES}
@@ -115,31 +114,48 @@ O k-vizinhos mais próximos (kNN) problema de pesquisa é amplamente utilizado e
 \subsection{Pré-Processamento}
 
 O pré-processamento de imagens consiste na aplicação de técnicas para realce
-de imagens, que visam destacar uma região dentro da imagem, permitindo a
+que visam destacar uma região dentro da imagem, permitindo a
 sua visualização com mais detalhes, de modo que a imagem resultante seja mais
 apropriada para uma aplicação específica do que a imagem original. Neste trabalho,
 a fim de analisar a eficácia dessas transformações em imagens digitais,
-foram abordadas algumas técnicas de pré-processamento como limiarização adaptativa, elemento estruturante, dilatação, erosão, detecção de componentes conexos e extração de características.\\
+foram abordadas algumas técnicas de pré-processamento como limiarização
+adaptativa, operadores morfológicos, detecção de componentes conexos e extração
+de características.\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Limiarização Adaptativa}
 
-A segmentação de imagens é um processo que tipicamente particiona o domínio espacial de uma imagem em subconjuntos mutuamente exclusivos, chamados regiões, onde cada região é uniforme e homogênea com respeito a algumas propriedades como tom ou textura e cujos valores diferem, em alguns aspectos e significados, das propriedades de cada região vizinha. 
+A segmentação de imagens é um processo que tipicamente particiona o domínio
+espacial de uma imagem em subconjuntos mutuamente exclusivos, chamados regiões,
+onde cada região é uniforme e homogênea com respeito a algumas propriedades como
+tom ou textura e cujos valores diferem, em alguns aspectos e significados, das
+propriedades de cada região vizinha.
 
-A limiarização de uma imagem digital é um método que se baseia no histograma da imagem, buscando encontrar regiões bem definidas, afim de poder efetuar a divisão da imagem em objetos ou regiões. A continuidade dos níveis de cinza é a primitiva de maior valor na segmentação por região. Assim, a limiarização efetua a subdivisão da imagem em função das regiões realmente significativas contidas no seu histograma [5]. 
+A limiarização de uma imagem digital é um método que se baseia no histograma da
+imagem, buscando encontrar regiões bem definidas, afim de poder efetuar a
+divisão da imagem em objetos ou regiões. A continuidade dos níveis de cinza é a
+primitiva de maior valor na segmentação por região. Assim, a limiarização efetua
+a subdivisão da imagem em função das regiões realmente significativas contidas
+no seu histograma [5].
 
-A limiarização global usa um limiar fixo para todos os pixels na imagem e, por esta razão, resultados realmente satisfatórios serão obtidos quando o histograma de distribuição de níveis de cinza contém cumes distintos e separados que correspondem aos objetos e ao fundo. Isto conduz a conclusão que um limiar local deve ser usado.\\
+A limiarização global usa um limiar fixo para todos os pixels na imagem e, por
+esta razão, resultados realmente satisfatórios serão obtidos quando o histograma
+de distribuição de níveis de cinza contém cumes distintos e separados que
+correspondem aos objetos e ao fundo.
+Imagens provenientes de scanners ou fotografias manuas geralmente possuem
+condições de iluminações diferentes ao longo da imagem. Isso faz com que não
+seja possível distinguir o objeto do fundo utilizando apenas a informação de
+luminosidade. Afim de corrigir este tipo de problema é utilizado uma
+limiarização local, onde o objeto se destaca do fundo de acordo com a diferença
+local de luminosidade.
 
-• A imagem original é dividida em sub-imagens;\\
-
-• Um limiar é determinado independentemente para cada sub-imagem;\\
-
-• Se um limiar não puder ser determinado para alguma sub-imagem, ele pode ser interpolado à partir dos limiares determinados nas sub-imagens vizinhas;\\
-
-• Cada sub-imagem é então processada utilizando seu limiar local.\\
-
-A limiarização adaptativa é uma técnica que analisa diversos aspectos da imagem para definir se determinado pixel será considerado preto ou branco. Esta técnica possui uma literatura repleta de algoritmos, desde soluções simples (que requer pouco custo computacional) ate a solução ótima de limiarização local. Os algoritmos baseiam-se em características variadas da imagem, como o formato do histograma, a entropia do histograma, atributos espaciais, entre outros. Uma definição de um limiar para técnicas adaptativas pode ser denotada
-como sendo:
+A limiarização adaptativa é uma técnica que analisa diversos aspectos da imagem
+para definir se determinado pixel será considerado preto ou branco. Esta técnica
+possui uma literatura repleta de algoritmos, desde soluções simples (que requer
+pouco custo computacional) ate a solução ótima de limiarização local. Os
+algoritmos baseiam-se em características variadas da imagem, como o formato do
+histograma, a entropia do histograma, atributos espaciais, entre outros. Uma
+definição de um limiar para técnicas adaptativas pode ser denotada como sendo:
 
 \begin{align}
 T=T[x,y,p(x,y),f(x,y)]
@@ -152,38 +168,75 @@ componentes no cálculo do limiar para um certo ponto [MIL98]. Para que a influ�
 de ruído ou iluminação possa ser levada em conta, o cálculo dessa propriedade é
 baseado no ambiente em que o ponto em questão está inserido. Um exemplo de
 propriedade é a média dos níveis de cinza em uma vizinhança pré-estabelecida, na
-qual o centro é o ponto em análise. Este método produzirá os resultados desejados.
+qual o centro é o ponto em análise.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Morfologia Matemática}
 
-A morfologia matemática é a parte do processamento de imagem não-linear que tem por objetivo extrair características da imagem associadas à geometria dos objetos. Foi desenvolvida inicialmente por Georges Matheron e Jean Serra na década de 60, para imagens binárias utilizando a teoria de conjuntos. Posteriormente, ela foi estendida para imagens em tons cinza (funções) utilizando a teoria de reticulados, onde uma imagem é vista como a superfície de um relevo.\\
+A morfologia matemática é a parte do processamento de imagem não-linear que tem
+por objetivo extrair características da imagem associadas à geometria dos
+objetos. Foi desenvolvida inicialmente por Georges Matheron e Jean Serra na
+década de 60, para imagens binárias utilizando a teoria de conjuntos.
+Posteriormente, ela foi estendida para imagens em tons cinza (funções),
+onde uma imagem é vista como a superfície de um relevo.\\
 
 \subsubsection{Elemento Estruturante}
 
-Uma transformação morfológica consiste essencialmente da comparação da imagem com outra menor, cuja geometria é conhecida, denominada elemento estruturante. Um elemento estruturante planar é um conjunto de coordenadas de pixel. Por exemplo, o elemento cruz é definido por E = \{(0,1,0);(1,1,1);(0,1,0)\}. Uma transformação morfológica requer uma operação não-linear entre a imagem e o elemento estruturante, o qual desliza sobre a imagem de forma similar à convolução discreta. Neste sentido, o elemento estruturante planar define uma relação de adjacência do tipo (p, q) $\in$ A se q - p $\in$ E. Um elemento estruturante não-planar é um par (E,V) que consiste de um conjunto de coordenadas de pixel E e um conjunto de valores V associados a cada coordenada, assim como uma imagem. Por exemplo, $ V = \{2, 1, 1, 1, 1\} $ para o caso do elemento cruz. Este tipo de elemento é usado apenas em operações com imagens em tons de cinza. Neste caso, o elemento estruturante pode ser visto como uma máscara de convolução, muito embora a operação seja outra. No caso particular, onde todos valores em V são zero, o elemento estruturante se torna planar.\\
+Uma transformação morfológica consiste essencialmente da comparação da imagem
+com outra menor, cuja geometria é conhecida, denominada elemento estruturante.
+Um elemento estruturante planar é um conjunto de coordenadas de pixel. Por
+exemplo, o elemento cruz é definido por:
+\begin{align}
+E = 
+\begin{bmatrix}
+ 0 & 1 & 0 \\
+ 1 & 1 & 1 \\
+ 0 & 1 & 0 \\
+ \end{bmatrix}
+\end{align}
+
+Uma transformação morfológica requer uma operação não-linear entre a imagem e o
+elemento estruturante. Podemos imaginar que o elemento estruturante, durante a
+tranformação desliza sobre a imagem de forma similar à convolução
+discreta.
+Neste sentido, o elemento estruturante planar define uma relação de adjacência do tipo (p, q) $\in$ A se q - p $\in$ E. Um elemento
+estruturante não-planar é um par (E,V) que consiste de um conjunto de
+coordenadas de pixel E e um conjunto de valores V associados a cada coordenada,
+assim como uma imagem. Por exemplo, $ V = \{2, 1, 1, 1, 1\} $ para o caso do
+elemento cruz. Este tipo de elemento é usado apenas em operações com imagens em
+tons de cinza. Neste caso, o elemento estruturante pode ser visto como uma
+máscara de convolução, muito embora a operação seja outra. No caso particular,
+onde todos valores em V são zero, o elemento estruturante se torna planar.\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Dilatação}
 
-É uma transformação morfológica que combina dois conjuntos usando adição vetorial. Seu símbolo é $\oplus$. Como o nome diz, o resultado será uma imagem “engordada”. A dilatação de um conjunto A pelo conjunto B é definida por:
+É uma transformação morfológica que combina dois conjuntos usando adição
+vetorial. Seu símbolo é $\oplus$. Como o nome diz, o resultado será uma imagem
+“engordada”. A dilatação de um conjunto A pelo conjunto B é definida por:
 
 \begin{center}
 \textbf {A $\oplus$ B = \{ c $\mid$ c = a + b , a $\in$ A , b $\in$ B \}} \\
 \end{center}
 
-Onde A representa a imagem sendo operada e B é um segundo conjunto onde é chamado elemento estrutural e sua composição define a natureza especifica da dilatação, sendo assim a dilatação expande uma imagem. Ela pode ser representada pela união A $\oplus$ B = A $\cup$ B.\\
+Onde A representa a imagem sendo operada e B é um segundo conjunto onde é
+chamado elemento estrutural e sua composição define a natureza especifica da
+dilatação, sendo assim a dilatação expande uma imagem. Ela pode ser representada
+pela união A $\oplus$ B = A $\cup$ B.\\
 
-Seja o conjunto A = \{(0,1);(1,1);(2,1);(2,2);(3,0)\} e B = \{(0,0);(0,1)\} então o resultante da dilatação é:\\
+Seja o conjunto A = \{(0,1);(1,1);(2,1);(2,2);(3,0)\} e B = \{(0,0);(0,1)\}
+então o resultante da dilatação é:\\
 
 \textbf A $\oplus$ B = \{A + \{(x1 $\in$ B)\} $\cup$ A + \{(x2 $\in$ B)\}\}
 
-\textbf A $\oplus$ B = \{(0,1);(1,1);(2,1);(3,0);(0,2);(1,2);(2,2);(2,3);(3,1)\}\\
+\textbf A $\oplus$ B =
+\{(0,1);(1,1);(2,1);(3,0);(0,2);(1,2);(2,2);(2,3);(3,1)\}\\
 
-Uma aplicação da dilatação é o preenchimento de buracos, ver Figura \ref{fig:Figura01}:
+Uma aplicação da dilatação é o preenchimento de buracos, ver Figura
+\ref{fig:Figura01}:
 
-\begin{figure}[H]
-\centering
+\begin{figure}[H] \centering
 
 \subfigure[Imagem Original]{ \includegraphics[height=3cm]{dog.jpg}}
 \subfigure[Dilatação - square]{ \includegraphics[height=3cm]{dilate1.jpg}}\\
@@ -195,10 +248,13 @@ Uma aplicação da dilatação é o preenchimento de buracos, ver Figura \ref{fi
 \label{fig:Figura01}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Erosão}
 
-A erosão basicamente encolhe uma imagem e pode ser vista como uma transformação morfológica que combina dois conjuntos usando vetores de subtração. Ela é expressa como a interseção de A e B. Assim e definido A $\ominus$ B = B $\cap$ A. A erosão da imagem A pelo elemento estrutural B pode ser definida como:
+A erosão basicamente encolhe uma imagem e pode ser vista como uma transformação
+morfológica que combina dois conjuntos usando vetores de subtração. Ela é
+expressa como a interseção de A e B. Assim e definido A $\ominus$ B = B $\cap$
+A. A erosão da imagem A pelo elemento estrutural B pode ser definida como:
 
 \begin{center}
 
@@ -210,10 +266,15 @@ ou,\\
 
 \end{center}
 
-Assim define-se que a erosão e o conjunto de todos os pixels, e o elemento estruturante B e transladado pelo c corresponde a um conjunto de pixel em A. O conjunto A $\ominus$ B é o conjunto de translações de B que alinham B sobre o conjunto de pixels pretos em A. Isso Significa que nem todas as translações necessitam ser consideradas, mas somente aquelas que inicialmente localizam sua origem de B em um membro de A. Uma aplicação daerosão é a remoção de detalhes pequenos (irrelevantes),  ver Figura \ref{fig:Figura02}:
+Assim define-se que a erosão e o conjunto de todos os pixels, e o elemento
+estruturante B e transladado pelo c corresponde a um conjunto de pixel em A. O
+conjunto A $\ominus$ B é o conjunto de translações de B que alinham B sobre o
+conjunto de pixels pretos em A. Isso Significa que nem todas as translações
+necessitam ser consideradas, mas somente aquelas que inicialmente localizam sua
+origem de B em um membro de A. Uma aplicação daerosão é a remoção de detalhes
+pequenos (irrelevantes),  ver Figura \ref{fig:Figura02}:
 
-\begin{figure}[H]
-\centering
+\begin{figure}[H] \centering
 
 \subfigure[Imagem Original]{ \includegraphics[height=3cm]{dog.jpg}}
 \subfigure[Erosão - square]{ \includegraphics[height=3cm]{erode1.jpg}}\\
@@ -226,16 +287,18 @@ Assim define-se que a erosão e o conjunto de todos os pixels, e o elemento estr
 \end{figure}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Detecção de Componentes Conexos}
 
-O resultado obtido na localização de componentes normalmente apresenta um elevado número de elementos indesejáveis.
+O resultado obtido na localização de componentes normalmente apresenta um
+elevado número de elementos indesejáveis.
 
-Portanto foram determinadas algumas regras para a filtragem dos componentes da imagem. Estas regras estão listadas a seguir:\\
-1. componentes cuja a área não está nos limites desejáveis. \newline
-2. componentes cujo o perimetro não está nos limites desejáveis.\newline
+Portanto foram determinadas algumas regras para a filtragem dos componentes da
+imagem. Estas regras estão listadas a seguir:\\
+1. componentes cuja a área não está nos limites desejáveis. \newline 2.
+componentes cujo o perimetro não está nos limites desejáveis.\newline
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Extração de Características} 
 
 Em reconhecimento de padrões a extração de características é uma forma de
@@ -470,13 +533,54 @@ As n ordenações também podem ser paralelizadas enquanto as operações realiz
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{RESULTADOS OBTIDOS}
+\subsection{Pre-processamento}
+Como dito anteriormente o trabalho está dividido em tratamento da imagem,
+reconhecimento de objetos(caracteres), classificação e análise de desempenho.
+Nas figuras \ref{} e \ref{} temos alguns resultados da segmentação e do
+reconhecimento de caracteres. Perceba que a técnica de segmentação mostrou-se
+bem empregada a medida que os caracteres puderam ser bem separados do fundo.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{CONCLUSÃO}
-%%%%%%%%%%% COLOCAR TEXTO %%%%%%%%%%%%%%%%
+
+\begin{figure}[H] \centering
+
+\subfigure[Imagem Original]{ \includegraphics[height=3cm]{imagens/chars1.png}}
+\subfigure[Dilatação - square]{
+\includegraphics[height=3cm]{imagens/chars2.png}}\\
+\subfigure[Dilatação - line]{
+\includegraphics[height=3cm]{imagens/segmentacao.png}}
+\subfigure[Dilatação - disk]{
+\includegraphics[height=3cm]{imagens/segmentacao2.png}}
+
+\caption{Resultados da Dilatação com diferentes Elementos Estruturantes}
+\label{fig:Figura01}
+\end{figure}
+
+\subsections{extração de características}
+Os detalhes de como foram obtidas as característica foram exibidas nas sessões
+anteriores. Foram extraidas 22 características de cada caractere. Essas
+características foram armazenadas em um arquivo para que possam ser utilizadas
+no classificador. Ao todo foram extraídas características de 3 mil
+caracteres. Nesse grupo de treinamento contiam dados que foram obtidos através
+de fotografia e escaner. Foram utilizadas 10 fontes de texto diferentes.
+Após a extração de características podemos finalmente utilizar o classificador
+que como dito foi acelerado via GPU.
+
+\subsection{Acurácia}
+São duas as finalidades deste trabalho. Contruir um classificador e utilizar
+GPGPU para acelerá-lo. Foi obtida uma acurácia de 99,8. Esse valor foi obtido ao
+utilizar o banco de 3 mil imagens para o algoritmo de vizinho mais próximos. Foi
+identificado uma pequena confusão entre o 8 e o 9 em algumas fontes, nas outras
+fontes o classificador funcionou perfeitamente.
+
+\subsection{desempenho}
+Para o teste de desempenho foi levado em consideração apenas o tempo necessário
+para realizar os cálculos dos n vizinhos mais próximos, tendo em vista que a
+corretude do algoritmo foi avaliado na subsessão anterior.
+Foram obtidos os seguintes resultados em função da quantidade de entradas:
 
 
-
+\section{CONCLUSÃO}
+Podemos verificar uma melhora no desempenho do algoritmo ao utilizarmos a GPGPU 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%    Bibliografia  %%%%%%%%
 \begin{thebibliography}{1}
