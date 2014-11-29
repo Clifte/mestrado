@@ -33,7 +33,7 @@
 %\usepackage{amssymb}  % assumes amsmath package installed
 
 \title{\LARGE \bf
-GPGPU aplicada ao reconhecimento ótico de caracteres utilizando técnica de N vizinho mais próximos.
+GPGPU aplicada ao reconhecimento ótico de caracteres utilizando técnica de K vizinho mais próximos.
 }
 
 %\author{ \parbox{3 in}{\centering Huibert Kwakernaak*
@@ -238,10 +238,12 @@ Uma aplicação da dilatação é o preenchimento de buracos, ver Figura
 
 \begin{figure}[H] \centering
 
-\subfigure[Imagem Original]{ \includegraphics[height=3cm]{dog.jpg}}
-\subfigure[Dilatação - square]{ \includegraphics[height=3cm]{dilate1.jpg}}\\
-\subfigure[Dilatação - line]{ \includegraphics[height=3cm]{dilate2.jpg}}
-\subfigure[Dilatação - disk]{ \includegraphics[height=3cm]{dilate3.jpg}}
+\subfigure[Imagem Original]{ \includegraphics[height=3cm]
+{imagens/dog.jpg}}
+\subfigure[Dilatação - square]{
+\includegraphics[height=3cm]{imagens/dilate1.jpg}}\\
+\subfigure[Dilatação - line]{ \includegraphics[height=3cm]{imagens/dilate2.jpg}}
+\subfigure[Dilatação - disk]{ \includegraphics[height=3cm]{imagens/dilate3.jpg}}
 
 
 \caption{Resultados da Dilatação com diferentes Elementos Estruturantes}
@@ -276,10 +278,10 @@ pequenos (irrelevantes),  ver Figura \ref{fig:Figura02}:
 
 \begin{figure}[H] \centering
 
-\subfigure[Imagem Original]{ \includegraphics[height=3cm]{dog.jpg}}
-\subfigure[Erosão - square]{ \includegraphics[height=3cm]{erode1.jpg}}\\
-\subfigure[Erosão - line]{ \includegraphics[height=3cm]{erode2.jpg}}
-\subfigure[Erosão - disk]{ \includegraphics[height=3cm]{erode3.jpg}}
+\subfigure[Imagem Original]{ \includegraphics[height=3cm]{imagens/dog.jpg}}
+\subfigure[Erosão - square]{ \includegraphics[height=3cm]{imagens/erode1.jpg}}\\
+\subfigure[Erosão - line]{ \includegraphics[height=3cm]{imagens/erode2.jpg}}
+\subfigure[Erosão - disk]{ \includegraphics[height=3cm]{imagens/erode3.jpg}}
 
 
 \caption{Resultados da Erosão com diferentes Elementos Estruturantes}
@@ -450,49 +452,75 @@ Caractere & Média             & Desvio padrão           & Média              
 
 
 
-
-
 \section{O algoritmo de vizinhos mais próximos}
 
-O algoritmo de vizinho mais próximo foi proposto por Cover e Hart em 1966. Essa técnica é um método de estimação de densidade bastante simples conceitualmente e de fácil implementação.
+O algoritmo de vizinho mais próximo foi proposto por Cover e Hart em 1966. Essa
+técnica é um método de estimação de densidade bastante simples conceitualmente e
+de fácil implementação.
 
-K vizinhos mais próximos é um algoritmo simples que armazena todos os casos disponíveis e classifica novos casos com base em uma medida de similaridade (funções de distância). KNN foi usado na estimativa estatística e reconhecimento de padrões já o início da década de 1970, como uma técnica não-paramétrica.
+K vizinhos mais próximos é um algoritmo simples que armazena todos os casos
+disponíveis e classifica novos casos com base em uma medida de similaridade
+(funções de distância). O KNN foi usado na estimativa estatística e
+reconhecimento de padrões já no início da década de 1970, como uma técnica
+não-paramétrica.
 
-Um caso é classificado pelo voto da maioria de seus vizinhos, com o caso sendo atribuído à classe mais comum entre os seus K vizinhos mais próximos medidos por um função de distância. Se K = 1, então o processo é simplesmente atribuído à classe de seu vizinho mais próximo.
+Um caso é classificado pelo voto da maioria de seus vizinhos, com o caso sendo
+atribuído à classe mais comum entre os seus K vizinhos mais próximos medidos por
+um função de distância. Se K = 1, então o processo é simplesmente atribuído à
+classe de seu vizinho mais próximo.
 
-O Pseudocódigo é definido como uma listagem de etapas sequenciais para resolver um problema computacional. Pseudocódigo é utilizado por programadores de computador para traduzir mentalmente cada passo computacional em um conjunto de instruções de programação envolvendo várias operações matemáticas (adição, subtração, funções multiplicação, divisão, potência e transcendentais, diferenciação / integração, etc.) e recursos (vetores, matrizes, gráficos, de entrada / saída, etc), a fim de resolver um problemas analíticos. Segue uma listagem de pseudocódigo para o método de classificação k-vizinho mais próximo utilizando validação cruzada. \\
-\\
-Inicializa o $n \times n$ distância matriz $\textbf{D}$ \\
-Inicializa o $\Omega \times \Omega$ matriz confusão $\textbf{C}$ \\
+O Pseudocódigo é definido como uma listagem de etapas sequenciais para resolver
+um problema computacional. Pseudocódigo é utilizado por programadores de
+computador para traduzir mentalmente cada passo computacional em um conjunto de
+instruções de programação envolvendo várias operações matemáticas (adição,
+subtração, funções multiplicação, divisão, potência e transcendentais,
+diferenciação / integração, etc.) e recursos (vetores, matrizes, gráficos, de
+entrada / saída, etc), a fim de resolver um problemas analíticos. Segue uma
+listagem de pseudocódigo para o método de classificação k-vizinho mais próximo
+utilizando validação cruzada. \\
 
-set $t \leftarrow 0$, $TotAcc \leftarrow 0$, e define $NumIterations$ equivalente ao número desejado de  iterações (re-partições). 
+Calcula a distância de uma amostra $x$ para todas as outras amostras presentes
+na memória do KNN, $M_m$ onde m é o número de amostras na memória.
+
+Ordena o vetor de distância em ordem crescente.
+
+Realiza uma votação majoritária com a classe dos k primeiros elementos do vetor
+de distância ordenado, moda. Em estatística descritiva, a moda é o valor que
+detém o maior número de observações, ou seja, o valor ou valores mais frequentes
+Assim temos:
+
+\begin{align}
+D_m =  ||x - M_m|| \\
+ordena(D) \\
+K_{vizinhos} = D_i | i = [1 \ldots k] \\
+classe Majoritária = moda(K_{vizinhos})
+\end{align}
  
-Calcular distâncias entre todas as amostras de entrada e armazenar em $n \times n$ matriz $\textbf{D} $. ((Para um grande número de amostras, usar apenas o menor ou triangular superior de $\textbf{D}$ para armazenamento, uma vez que é uma simétrica quadrada matriz).
 
-Para $t \leftarrow 1$ até $NumIterations$ faz set $\textbf{C} \leftarrow 0$, e $n_{total} \leftarrow 0$, particionar as amostras de entrada em $\kappa$ grupos de tamanho igual.
-Para $fold \leftarrow 1$ até $\kappa$ atribuir amostras no $foldth$ partição para testar e usar as amostras restantes para o treinamento. Definir o número de amostras usado para testes quanto  $n_{test}$.\\
 
-set $n_{total} \leftarrow n_{total}+n_{test}$\\
-
-Para $i \leftarrow 1$ to $n_{test}$\ fazer por amostra de teste $\textbf{x}_i$ determinar a
-$k$ próximas amostras de treinamento com base nas distâncias. determinar $\hat{\omega}$ ,o rótulo de classe mais freqüente entre os $k$ mais próximo amostras de treinamento. Incrementar matriz de confusão $\textbf{C}$ por um elemento em $c_{\omega,\hat{\omega}}$ , onde $\omega$ é o verdadeiro $\hat{\omega}$ o rótulo de classe previsto para amostra de teste $\textbf{x}_i$ . Se $\omega =\hat{\omega}$ em seguida, o incremento de um ocorrerá na diagonal da matriz de confusão, de outro modo, o incremento irá ocorrer em um off-diagonal.
-Determinar a precisão da classificação usando $Acc = \frac{\sum_j^{\Omega}c_{jj}}{n_{total}}$ onde $c_{jj}$  é o elemento diagonal da matriz confusão $\textbf{C}$, calcular $TotAcc = TotAcc + Acc$, calcular $AvgAcc = TotAcc/NumIterations$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{ALGORITMO PROPOSTO}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Força Bruta de Busca kNN}
-
+\subsection{KNN - Força bruta}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Princípio}
 
-Seja R = $\{r_1; r_2; \cdots ; r_m\}$ um conjunto de pontos de referência m com valores em $\Re^d$, e deixe Q = $\{q_1; q_2; \cdots ; q_m\}$ um conjunto de pontos de n consulta no mesmo espaço. O problema de pesquisa kNN consiste em procurar os k vizinhos mais próximos de cada ponto de consulta $q_i$ $\in$ Q na referência fixado R dada uma determinada distância. Geralmente, a distância euclidiana ou a Manhattan é usado, mas qualquer outra distância pode ser utilizado em substituição, tais como a norma Chebyshov ou a distância de Mahalanobis. A Figura \ref{fig:Figura03} ilustra o problema kNN com k = 3, bem como um conjunto de pontos com valores de $\Re^2$.
+Seja R = $\{r_1; r_2; \cdots ; r_m\}$ um conjunto de pontos de referência m com
+valores em $\Re^d$, e Q = $\{q_1; q_2; \cdots ; q_m\}$ um conjunto de
+pontos de n consulta no mesmo espaço. O problema de pesquisa kNN consiste em
+procurar os k vizinhos mais próximos de cada ponto de consulta $q_i$ $\in$ Q na
+referência fixado R dada uma determinada distância. Geralmente, a distância
+euclidiana ou a Manhattan é utilizada,outra medidas de distância podem ser
+utilizado como a norma Chebyshov ou a distância de
+Mahalanobis. A Figura \ref{fig:Figura03} ilustra o problema kNN com k = 3, bem
+como um conjunto de pontos com valores de $\Re^2$.
 
 \begin{figure}[H]
 \centering
 
-\includegraphics[height=5cm]{KNN.png}
+\includegraphics[height=5cm]{imagens/knn.png}
 
 \caption{Ilustração do problema de pesquisa kNN em $\Re^2$ com k = 3, utilizando a distância euclidiana.}
 \label{fig:Figura03}
@@ -508,51 +536,88 @@ Uma maneira de procurar o kNN é o algoritmo de "força bruta" (BF observado) ta
 
 4. Repita os passos 1 a 3. para todos os pontos da consulta.\\
 
-A questão principal deste algoritmo é a sua enorme complexidade: O (nmd) para as distâncias nm computadorizada (aproximadamente 2nmd adições / subtrações e multiplicações NMD) e
-O (nmlogm) para os tipos de n realizados (número de comparações dizer).
+A questão principal deste algoritmo é a sua enorme complexidade: O (nmd) para as
+distâncias nm computadorizada (aproximadamente 2nmd adições / subtrações e
+multiplicações NMD) e O (nmlogm) para os tipos de n realizados (número de
+comparações dizer).
 
-Vários algoritmos KNN têm sido propostos a fim de reduzir o tempo de computação. De um modo geral, a ideia consiste em reduzir o número de distâncias calculado [15]. Por exemplo, alguns algoritmos [14] particiona os conjuntos de pontos, utilizando uma estrutura $k_d$-árvore, e só calcular distâncias dentro volumes próximos. De acordo com as nossas experiências, a utilização de um tal método é geralmente mais rápido do que um método CPU-Based BF até o fator 10.\\
+Vários algoritmos KNN têm sido propostos a fim de reduzir o tempo de computação.
+De um modo geral, a ideia consiste em reduzir o número de distâncias calculado
+[15]. Por exemplo, alguns algoritmos [14] particiona os conjuntos de pontos,
+utilizando uma estrutura $k_d$-árvore, e só calcular distâncias dentro volumes
+próximos. De acordo com as nossas experiências, a utilização de um tal método é
+geralmente mais rápido do que um método em cpu baseado em força bruta.\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Algoritmo de Ordenação}
 
-O segundo passo do algoritmo BF é o tipo de as distâncias computadas. Nesta seção, vamos discutir a escolha do algoritmo de classificação.
+O segundo passo do algoritmo BF é o tipo de as distâncias computadas. Nesta
+seção, vamos discutir a escolha do algoritmo de classificação.
 
-O Quicksort é um algoritmo popular que na prática, é um dos algoritmos mais rápidos. No entanto, é recursivo e CUDA não permite funções recursivas. Como consequência, não pode ser usado nessa execução. A complexidade é O(n log n), tanto nos piores e médios casos. É também um dos algoritmos mais rápidos e simples de implementar.
+O Quicksort é um algoritmo popular que na prática, é um dos algoritmos mais
+rápidos. No entanto, é recursivo e CUDA não permite funções recursivas. Como
+consequência, não pode ser usado nessa execução. A complexidade é O(n log n),
+tanto nos piores e médios casos. É também um dos algoritmos mais rápidos e
+simples de implementar.
 
-No entanto, tendo em mente que estamos interessados apenas nas menores k elementos, sendo k geralmente muito pequeno comparado a $N_P$ e $N_Q$, considerou-se usando uma variante tipo de inserção que só produz os menores elementos k.\\ 
+No entanto, tendo em mente que estamos interessados apenas nas menores k
+elementos, sendo k geralmente muito pequeno comparado a $N_P$ e $N_Q$,
+considerou-se usando uma variante tipo de inserção que só produz os menores
+elementos k.\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Implementação CUDA}
 
-O método BF é, por natureza altamente paralelizável. Esta propriedade faz com que o método BF seja perfeitamente adequado para a implementação GPU. O método BF tem duas etapas: a computação distância e da classificação. Para simplificar, supõe que a referência e consulta, ambos contêm n pontos. 
+O método BF é, por natureza altamente paralelizável. Esta propriedade faz com
+que o método BF seja perfeitamente adequado para a implementação GPU. O método
+tem duas etapas: a computação distância e da classificação. Para simplificar,
+supõe que a referência e consulta, ambos contêm n pontos.
 
-O cálculo das distâncias $n^2$ podem ser totalmente paralelizado uma vez que as distâncias entre os pares de pontos são independentes. Dois tipos de memória são utilizados: memória global e memória de textura. A memória global tem uma enorme largura de banda, mas as performances diminuem se os acessos de memória são não-aglutinados. Em tal caso, a memória de textura é uma boa opção porque há menos penalidades para leituras não-aglutinados. Como conseqüência, foi utilizado memória global para armazenar o conjunto de consulta (leituras unidas), e memória de textura para o conjunto de referência (leituras não se uniram). Assim, obtém-se um melhor desempenho do que quando se utiliza a memória global e memória compartilhada como proposto no exemplo multiplicação de matrizes fornecidas no SDK CUDA. 
+O cálculo das distâncias $n^2$ podem ser totalmente paralelizado uma vez que as
+distâncias entre os pares de pontos são independentes. Dois tipos de memória são
+utilizados: memória global e memória de textura. A memória global tem uma enorme
+largura de banda, mas as performances diminuem se os acessos de memória são
+não-aglutinados. Em tal caso, a memória de textura é uma boa opção porque há
+menos penalidades para leituras não-aglutinados. Como conseqüência, foi
+utilizado memória global para armazenar o conjunto de consulta (leituras
+unidas), e memória de textura para o conjunto de referência (leituras não se
+uniram). Assim, obtém-se um melhor desempenho do que quando se utiliza a memória
+global e memória compartilhada como proposto no exemplo multiplicação de
+matrizes fornecidas no SDK CUDA.
 
-As n ordenações também podem ser paralelizadas enquanto as operações realizadas durante um determinada triagem de n valores não são claramente independentes um do outro. Cada segmento classifica todas as distâncias calculadas para um determinado ponto de consulta. A triagem consiste em comparar e trocar muitas distâncias em uma ordem não-previsível. Portanto, os acessos de memória não são aglutinadas, indicando que a memória de textura pode ser apropriado. No entanto, é uma memória só de leitura. Apenas a memória global permite leituras e escritas. Isso penaliza o desempenho de classificação.
+As n ordenações também podem ser paralelizadas enquanto as operações realizadas
+durante um determinada triagem de n valores não são claramente independentes um
+do outro. Cada segmento classifica todas as distâncias calculadas para um
+determinado ponto de consulta. A triagem consiste em comparar e trocar muitas
+distâncias em uma ordem não-previsível. Portanto, os acessos de memória não são
+aglutinadas, indicando que a memória de textura pode ser apropriado. No entanto,
+é uma memória só de leitura. Apenas a memória global permite leituras e
+escritas. Isso penaliza o desempenho de classificação.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{RESULTADOS OBTIDOS}
 \subsection{Pre-processamento}
 Como dito anteriormente o trabalho está dividido em tratamento da imagem,
 reconhecimento de objetos(caracteres), classificação e análise de desempenho.
-Nas figuras \ref{} e \ref{} temos alguns resultados da segmentação e do
-reconhecimento de caracteres. Perceba que a técnica de segmentação mostrou-se
+Na figura \ref{fig:resDil} temos alguns resultados da segmentação e
+do reconhecimento de caracteres. Perceba que a técnica de segmentação mostrou-se
 bem empregada a medida que os caracteres puderam ser bem separados do fundo.
-
+ 
 
 \begin{figure}[H] \centering
 
-\subfigure[Imagem Original]{ \includegraphics[height=3cm]{imagens/chars1.png}}
-\subfigure[Dilatação - square]{
-\includegraphics[height=3cm]{imagens/chars2.png}}\\
-\subfigure[Dilatação - line]{
-\includegraphics[height=3cm]{imagens/segmentacao.png}}
-\subfigure[Dilatação - disk]{
-\includegraphics[height=3cm]{imagens/segmentacao2.png}}
+\subfigure[]{
+\includegraphics[width=3cm]{imagens/chars1.png}} 
+\subfigure[]{
+\includegraphics[width=3cm]{imagens/chars2.png}}\\
+\subfigure[]{
+\includegraphics[width=3cm]{imagens/segmentacao.png}}
+\subfigure[]{
+\includegraphics[width=3cm]{imagens/segmentacao2.png}}
 
-\caption{Resultados da Dilatação com diferentes Elementos Estruturantes}
-\label{fig:Figura01}
+\caption{(a), (b) : Detecção dos componentes conectados (Caracteres) (c), (d)
+Resultado da segmentação das imagens}
+\label{fig:resDil}
 \end{figure}
 
 \subsections{extração de características}
@@ -576,11 +641,40 @@ fontes o classificador funcionou perfeitamente.
 Para o teste de desempenho foi levado em consideração apenas o tempo necessário
 para realizar os cálculos dos n vizinhos mais próximos, tendo em vista que a
 corretude do algoritmo foi avaliado na subsessão anterior.
-Foram obtidos os seguintes resultados em função da quantidade de entradas:
+Foram obtidos os seguintes resultados em função da quantidade de cálculos de
+distancia:
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|l|}
+\hline
+Número de buscas & CPU(i5) (s) & GPU(N Videa 760) (s) & SpeedUp \\ \hline
+408321           & 1.556928    & 3,057118             & 0,5092  \\ \hline
+1633284          & 4.585998    & 3,749130             & 1,2232  \\ \hline
+3674889          & 10.050179   & 5,651431             & 1,7783  \\ \hline
+6533136          & 17.878161   & 8,247075             & 2,1678  \\ \hline
+10208025         & 30.218283   & 11,08178             & 2,7268  \\ \hline
+14699556         & 55.484735   & 14,500927            & 3,8262  \\ \hline
+26132544         & 116.702141  & 23,927431            & 4,8978  \\ \hline
+\end{tabular}
+\caption{Speedup e tempos obtidos em função do número de cálculos realizados
+com o K vizinhos}
+\label{tab:speedup}
+\end{table}
 
+O speedup é uma medida que verifica o
+quanto houve de melhora na performance. Na tabela \ref{tab:speedup} temos o
+speedup obtido bem como os tempos em função do número de cálculos realizados com
+o algoritmo proposto. Podemos verificar um aumento crescente no speedup bem como
+uma melhoria significativa.
 
 \section{CONCLUSÃO}
-Podemos verificar uma melhora no desempenho do algoritmo ao utilizarmos a GPGPU 
+Podemos verificar uma melhora no desempenho do algoritmo ao utilizarmos a GPU. A
+GPU permitiu a utilização de uma grande quantidades de dados como memória
+para o algoritmo knn. Com a melhoria desta técnica é possível realizar uma
+classificação cada vez mais confiável e com uma maior quantidade de dados sem
+perder a generalização.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%    Bibliografia  %%%%%%%%
 \begin{thebibliography}{1}
